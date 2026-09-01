@@ -1,5 +1,5 @@
 ---
-// Interactive Colombia Projects Map Component - Exact 1:1 match with WordPress
+// Interactive Colombia Projects Map Component - Mathematical 1:1 match with WordPress
 const projects = [
   {
     id: 'flandes',
@@ -7,8 +7,8 @@ const projects = [
     client: 'PROYECTO CELSIA',
     title: 'SOLAR YUMA',
     image: '/images/map-project-yuma.jpg',
-    pinX: 50.00,
-    pinY: 57.12,
+    pinX: 48.11,
+    pinY: 55.33,
     align: 'right'
   },
   {
@@ -17,8 +17,8 @@ const projects = [
     client: 'PROYECTO CELSIA',
     title: 'SOLAR DULIMA',
     image: '/images/map-project-dulima.jpg',
-    pinX: 47.61,
-    pinY: 60.93,
+    pinX: 46.61,
+    pinY: 59.70,
     align: 'right'
   },
   {
@@ -27,8 +27,8 @@ const projects = [
     client: 'PROYECTO FOTOVOLTAICO',
     title: 'SOLAR BARANOA',
     image: '/images/map-project-baranoa.jpg',
-    pinX: 45.11,
-    pinY: 16.23,
+    pinX: 44.22,
+    pinY: 12.03,
     align: 'left'
   },
   {
@@ -37,8 +37,8 @@ const projects = [
     client: 'PROYECTO INDUSTRIAL',
     title: 'PARQUE SOLAR CARTAGENA',
     image: '/images/map-project-cartagena.jpg',
-    pinX: 41.28,
-    pinY: 22.68,
+    pinX: 40.83,
+    pinY: 16.57,
     align: 'left'
   },
   {
@@ -47,8 +47,8 @@ const projects = [
     client: 'PROYECTO SOLAR',
     title: 'PARQUE SOLAR VALLEDUPAR',
     image: '/images/map-project-valledupar.jpg',
-    pinX: 47.41,
-    pinY: 20.20,
+    pinX: 48.91,
+    pinY: 15.64,
     align: 'right'
   }
 ];
@@ -58,7 +58,7 @@ const projects = [
   <!-- Top subtle background ambient gradient -->
   <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10 space-y-12 sm:space-y-14">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10 space-y-10 sm:space-y-14">
     
     <!-- 1. Top Section Divider: LLEGANDO LEJOS -->
     <div class="space-y-4">
@@ -69,7 +69,7 @@ const projects = [
         <div class="h-[1px] bg-white/20 flex-1"></div>
       </div>
 
-      <!-- 2. Metrics & Title Row (Exact match with Screenshot 2) -->
+      <!-- 2. Metrics & Title Row (Exact match with WordPress) -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pt-2">
         <!-- Left: +460 CLIENTES satisfechos -->
         <div class="lg:col-span-5 flex items-baseline gap-4 sm:gap-6">
@@ -95,8 +95,8 @@ const projects = [
       </div>
     </div>
 
-    <!-- 3. Exact Panoramic Colombia Map Canvas with Responsive Container -->
-    <div class="relative w-full max-w-5xl mx-auto">
+    <!-- 3. Exact Panoramic Colombia Map Canvas with Clean Margin -->
+    <div class="relative w-full max-w-5xl mx-auto mt-6 sm:mt-10">
       <div class="relative w-full aspect-[1044/604] flex items-center justify-center">
         
         <!-- Silhouette Map Image of Colombia -->
@@ -106,7 +106,7 @@ const projects = [
           class="w-full h-full object-contain filter drop-shadow-[0_12px_30px_rgba(0,0,0,0.5)] pointer-events-none"
         />
 
-        <!-- 5 Interactive Hotspot Pins (Exact Pixel Match with WordPress) -->
+        <!-- 5 Interactive Hotspot Pins (Exact Mathematical Coordinates from WordPress) -->
         {projects.map((proj, idx) => (
           <button
             type="button"
@@ -122,7 +122,7 @@ const projects = [
             data-align={proj.align}
             aria-label={`Ver proyecto en ${proj.city}`}
           >
-            <!-- Pin Structure matching Screenshot 1 -->
+            <!-- Pin Structure matching WordPress -->
             <span class="relative flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7">
               <!-- Outer amber ring border -->
               <span class="pin-ring relative inline-flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-amber-400 bg-black/30 backdrop-blur-xs transition-all shadow-xs">
@@ -140,10 +140,10 @@ const projects = [
         >
           <line
             id="connector-line"
-            x1="50%"
-            y1="57.12%"
-            x2="65%"
-            y2="57.12%"
+            x1="48.11%"
+            y1="55.33%"
+            x2="64%"
+            y2="55.33%"
             stroke="rgba(255,255,255,0.75)"
             stroke-width="1.2"
             stroke-dasharray="3 3"
@@ -154,7 +154,7 @@ const projects = [
         <div
           id="project-overlay-card"
           class="absolute z-30 transition-all duration-300 pointer-events-auto"
-          style="left: 65%; top: 48%;"
+          style="left: 64%; top: 46%;"
         >
           <div class="w-[260px] sm:w-[300px] lg:w-[320px] bg-[#142E16]/95 backdrop-blur-md rounded-xl p-3.5 sm:p-4 border border-white/15 shadow-2xl space-y-2.5 animate-fadeIn">
             
@@ -250,8 +250,8 @@ const projects = [
       const client = pin.getAttribute('data-client') || '';
       const title = pin.getAttribute('data-title') || '';
       const image = pin.getAttribute('data-image') || '';
-      const pinX = parseFloat(pin.getAttribute('data-pin-x') || '50.00');
-      const pinY = parseFloat(pin.getAttribute('data-pin-y') || '57.12');
+      const pinX = parseFloat(pin.getAttribute('data-pin-x') || '48.11');
+      const pinY = parseFloat(pin.getAttribute('data-pin-y') || '55.33');
       const align = pin.getAttribute('data-align') || 'right';
 
       // Update Card Text and Image
