@@ -1,0 +1,35 @@
+---
+const brands = [
+  { name: '3M', img: '/images/3M-1.png' },
+  { name: 'SAFER', img: '/images/SAFER-1.png' },
+  { name: 'LEGRAND', img: '/images/LEGRAND-1.png' },
+  { name: 'LEVITON', img: '/images/LEVITON-1.png' },
+  { name: 'STEELPRO', img: '/images/STEELPRO-1.png' },
+  { name: 'ADLER', img: '/images/ADLER-1.png' },
+  { name: 'CEMEX', img: '/images/CEMEX-1.png' },
+  { name: 'GERFOR', img: '/images/gerfor.png' },
+  { name: 'PAVCO', img: '/images/pavco.png' },
+  { name: 'MAKITA', img: '/images/makita.png' },
+  { name: 'TRUPER', img: '/images/truper.png' },
+  { name: 'PRYSMIAN', img: '/images/Prysmian.png' },
+  { name: 'FLUKE', img: '/images/FLUKE-1.jpeg' },
+  { name: 'TUBOSA', img: '/images/tubosa.png' }
+];
+---
+
+<section class="py-14 bg-gray-50 border-b border-gray-100 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8">
+    <p class="text-center font-display text-xs sm:text-sm font-bold uppercase tracking-widest text-gray-500 mb-8">
+      Distribuimos las marcas líderes de la industria
+    </p>
+
+    <!-- Brands Grid -->
+    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-6 items-center">
+      {brands.map((b) => (
+        <div class="bg-white p-4 rounded-xl shadow-xs border border-gray-100 flex items-center justify-center h-20 hover:shadow-md transition-shadow">
+          <img src={b.img} alt={b.name} class="max-h-10 max-w-full object-contain grayscale hover:grayscale-0 transition-all opacity-70 hover:opacity-100" />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

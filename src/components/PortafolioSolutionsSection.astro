@@ -1,0 +1,125 @@
+---
+const solutions = [
+  {
+    title: 'Suministros de calidad para el sector energético',
+    desc: 'Productos certificados para sistemas fotovoltaicos: cableado, conectores, tuberías y accesorios.',
+    link: '/suministros/energia-solar',
+    linkText: 'Conocer productos'
+  },
+  {
+    title: 'Ferretería para el sector de la construcción',
+    desc: 'Insumos y herramientas para obras seguras, duraderas y bien ejecutadas.',
+    link: '/suministros/construccion',
+    linkText: 'Conocer herramientas'
+  },
+  {
+    title: 'Equipamos para una adecuada Protección',
+    desc: 'Equipos certificados para cuidar a quienes hacen posible cada proyecto.',
+    link: '/suministros/proteccion-personal',
+    linkText: 'Conocer los insumos'
+  }
+];
+---
+
+<!-- 1. Infinite Seamless Animated Marquee: Asesoría . Eficiencia . Cumplimiento . -->
+<div class="w-full py-7 bg-white border-t border-b border-gray-100 overflow-hidden relative select-none">
+  <div class="marquee-track-asesoria flex w-max gap-8 items-center">
+    {[1, 2, 3, 4, 5, 6, 7, 8].map(() => (
+      <div class="flex items-center gap-4 text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight whitespace-nowrap">
+        <span class="text-[#1C6521]">Asesoría</span>
+        <span class="text-[#7BBE6F] font-bold mx-2">.</span>
+        <span class="text-[#1C6521]">Eficiencia</span>
+        <span class="text-[#7BBE6F] font-bold mx-2">.</span>
+        <span class="text-[#7BBE6F] italic font-semibold">Cumplimiento</span>
+        <span class="text-[#7BBE6F] font-bold mx-2">.</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<!-- 2. Dark Green Portafolio Solutions Section -->
+<section class="relative py-20 sm:py-28 bg-[#0A1E0D] text-white overflow-hidden">
+  <!-- Background contour curves -->
+  <div class="absolute inset-0 pointer-events-none opacity-25 mix-blend-screen">
+    <img
+      src="/images/vertical-waves.png"
+      alt=""
+      class="w-full h-full object-cover object-center"
+    />
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      
+      <!-- Left Column: Portafolio Tag, Main Headline & Outlined Button -->
+      <div class="lg:col-span-6 space-y-8">
+        <div class="space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-jimaco-orange font-display">
+              PORTAFOLIO
+            </span>
+            <span class="w-8 h-[2px] bg-jimaco-orange inline-block"></span>
+          </div>
+
+          <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15]">
+            Herramientas, suministros y soluciones poderosas que engrandecen tu proyecto
+          </h2>
+        </div>
+
+        <div>
+          <a
+            href="/sobre-jimaco"
+            class="inline-flex items-center gap-4 border border-white/40 hover:border-white px-6 py-3.5 rounded-lg text-sm font-display font-bold uppercase tracking-wider text-white hover:bg-white hover:text-[#0A1E0D] transition-all group shadow-lg"
+          >
+            <span>Conoce más de nosotros</span>
+            <span class="text-jimaco-orange group-hover:text-[#0A1E0D] group-hover:translate-x-1.5 transition-transform text-base font-extrabold">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Three Stacked Service Rows with Horizontal Dividers -->
+      <div class="lg:col-span-6 border-t border-white/20">
+        {solutions.map((item) => (
+          <div class="py-8 border-b border-white/20 space-y-3 group hover:pl-2 transition-all">
+            <h3 class="font-display text-xl sm:text-2xl font-bold text-white group-hover:text-[#88D67C] transition-colors leading-snug">
+              {item.title}
+            </h3>
+            <p class="text-emerald-100/70 text-sm sm:text-base leading-relaxed">
+              {item.desc}
+            </p>
+            <div class="pt-1">
+              <a
+                href={item.link}
+                class="inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-jimaco-orange hover:text-jimaco-orangeHover uppercase tracking-wider font-display"
+              >
+                <span>{item.linkText}</span>
+                <span class="text-base group-hover:translate-x-1.5 transition-transform">→</span>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes marqueeAsesoria {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track-asesoria {
+    animation: marqueeAsesoria 28s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-track-asesoria:hover {
+    animation-play-state: paused;
+  }
+</style>

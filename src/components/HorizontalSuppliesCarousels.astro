@@ -1,0 +1,229 @@
+---
+const solarProducts = [
+  { img: '/images/placa-proteccion-subterranea.jpg', title: 'Placa Protección Subterránea' },
+  { img: '/images/placa-subterranea-resistente.jpg', title: 'Placa Subterránea Resistente' },
+  { img: '/images/cables-fotovoltaicos-1.jpg', title: 'Cables Fotovoltaicos Certificados' },
+  { img: '/images/Conectores-MC4-1.jpg', title: 'Conectores MC4 & en Y' },
+  { img: '/images/terminal-tipo-pala.jpg', title: 'Terminales Tipo Pala' },
+  { img: '/images/terminal-tipo-ojal.jpg', title: 'Terminales Tipo Ojal' },
+  { img: '/images/varilla-cobre.jpg', title: 'Varilla de Cobre' },
+  { img: '/images/accesorios-PEAD.jpg', title: 'Accesorios PEAD' },
+  { img: '/images/cinta-plastica-peligro-alta-tension.jpg', title: 'Cinta Plástica Peligro' }
+];
+
+const constProducts = [
+  { img: '/images/5-tornillos-1-1.jpg', title: 'Tornillería y Pernos en Acero' },
+  { img: '/images/4-polisombras-2.jpg', title: 'Polisombras y Mallas' },
+  { img: '/images/3-varillas-1.jpg', title: 'Varillas de Acero Estructural' },
+  { img: '/images/2-herramientas-3-1024x1024.jpg', title: 'Herramientas Manuales & Eléctricas' },
+  { img: '/images/1-tuberia-sanitaria-1.jpg', title: 'Tubería Sanitaria & PVC' },
+  { img: '/images/6-adhesivos-1.jpg', title: 'Adhesivos y Sellantes' }
+];
+
+const eppProducts = [
+  { img: '/images/fondo-proteccion-home.jpg', title: 'Impermeables y Overoles de Protección' },
+  { img: '/images/5-seguridad-alturas-2.jpg', title: 'Seguridad en Alturas & Arneses' },
+  { img: '/images/4-proteccion-respiratoria-1.jpg', title: 'Protección Respiratoria' },
+  { img: '/images/1-visual-1a-1024x1024.jpg', title: 'Gafas de Seguridad & Protección Visual' },
+  { img: '/images/1-proteccion-oido-2.jpg', title: 'Protectores Auditivos' },
+  { img: '/images/6-seguridad-manos-1.jpg', title: 'Guantes Dieléctricos y de Vaqueta' },
+  { img: '/images/8-proteccion-piernas-1-1024x1024.jpg', title: 'Botas y Protección de Piernas' }
+];
+---
+
+<div class="space-y-12 pb-16 bg-white overflow-hidden">
+  
+  <!-- CAROUSEL 1: CONSTRUCCIÓN (Screenshot 2: Green Box) -->
+  <div class="w-full relative group">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch bg-gray-50 border-t border-b border-gray-200">
+      
+      <!-- Left Carousel Images -->
+      <div class="lg:col-span-8 overflow-hidden relative p-4 flex items-center">
+        <button class="carousel-prev-btn absolute left-4 z-20 w-10 h-10 rounded-full bg-white/90 text-[#134716] shadow-lg flex items-center justify-center hover:bg-[#134716] hover:text-white transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+
+        <div class="carousel-track flex gap-4 overflow-x-auto scroll-smooth no-scrollbar py-2 w-full">
+          {constProducts.map((p) => (
+            <div class="shrink-0 w-64 sm:w-72 h-80 sm:h-96 rounded-xl overflow-hidden shadow-md relative bg-white border border-gray-100 group/card">
+              <img src={p.img} alt={p.title} class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <p class="absolute bottom-4 left-4 right-4 text-white font-display font-bold text-sm leading-snug">
+                {p.title}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <button class="carousel-next-btn absolute right-4 z-20 w-10 h-10 rounded-full bg-white/90 text-[#134716] shadow-lg flex items-center justify-center hover:bg-[#134716] hover:text-white transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+      </div>
+
+      <!-- Right Feature Card (Forest Green #0D4E1F) -->
+      <div class="lg:col-span-4 bg-[#0D4E1F] text-white p-8 sm:p-12 flex flex-col justify-between space-y-6 relative overflow-hidden">
+        <!-- Background watermark -->
+        <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none">
+          <svg class="w-64 h-64" viewBox="0 0 24 24" fill="currentColor"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        </div>
+
+        <div class="space-y-4 relative z-10">
+          <h3 class="font-display text-3xl sm:text-4xl font-extrabold leading-tight">
+            ¿Tienes un proyecto de construcción?
+          </h3>
+          <p class="text-emerald-100 text-sm leading-relaxed">
+            <strong class="text-white font-bold">Ofrecemos suministros de calidad para el sector industrial.</strong> Distribuimos insumos y herramientas para construcción con calidad garantizada, disponibilidad inmediata y asesoría técnica personalizada.
+          </p>
+        </div>
+
+        <div class="relative z-10 pt-4">
+          <a
+            href="https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20cotizar%20materiales%20de%20construcci%C3%B3n"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 border border-white/60 hover:bg-white hover:text-[#0D4E1F] text-white px-6 py-2.5 rounded-md font-display font-bold uppercase text-xs tracking-wider transition-all"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+            <span>Cotiza</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CAROUSEL 2: PROTECCIÓN PERSONAL EPP (Screenshot 3: Yellow Box) -->
+  <div class="w-full relative group">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch bg-[#FFFDF0] border-t border-b border-amber-200">
+      
+      <!-- Left Feature Card (Golden Yellow #FFCE38) -->
+      <div class="lg:col-span-4 bg-[#FFCE38] text-[#0B1E02] p-8 sm:p-12 flex flex-col justify-between space-y-6 relative overflow-hidden">
+        <!-- Background watermark helmet -->
+        <div class="absolute -right-6 -bottom-6 opacity-15 pointer-events-none">
+          <svg class="w-64 h-64" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+        </div>
+
+        <div class="space-y-4 relative z-10">
+          <h3 class="font-display text-3xl sm:text-4xl font-extrabold leading-tight text-[#0B1E02]">
+            ¿Buscas artículos de protección personal?
+          </h3>
+          <p class="text-[#2B3B24] text-sm leading-relaxed">
+            <strong class="text-[#0B1E02] font-bold">Ofrecemos suministros de calidad que protegen al personal de obra.</strong> Nuestra línea de protección industrial ofrece equipos certificados que cumplen con normativas nacionales e internacionales, garantizando seguridad, confort y durabilidad.
+          </p>
+        </div>
+
+        <div class="relative z-10 pt-4">
+          <a
+            href="https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20cotizar%20equipos%20de%20protecci%C3%B3n%20personal%20EPP"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 border border-[#0B1E02] hover:bg-[#0B1E02] hover:text-white text-[#0B1E02] px-6 py-2.5 rounded-md font-display font-bold uppercase text-xs tracking-wider transition-all"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+            <span>Contáctanos</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Carousel Images -->
+      <div class="lg:col-span-8 overflow-hidden relative p-4 flex items-center">
+        <button class="carousel-prev-btn absolute left-4 z-20 w-10 h-10 rounded-full bg-white/90 text-[#FFCE38] shadow-lg flex items-center justify-center hover:bg-[#FFCE38] hover:text-[#0B1E02] transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+
+        <div class="carousel-track flex gap-4 overflow-x-auto scroll-smooth no-scrollbar py-2 w-full">
+          {eppProducts.map((p) => (
+            <div class="shrink-0 w-64 sm:w-72 h-80 sm:h-96 rounded-xl overflow-hidden shadow-md relative bg-white border border-gray-100 group/card">
+              <img src={p.img} alt={p.title} class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <p class="absolute bottom-4 left-4 right-4 text-white font-display font-bold text-sm leading-snug">
+                {p.title}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <button class="carousel-next-btn absolute right-4 z-20 w-10 h-10 rounded-full bg-white/90 text-[#FFCE38] shadow-lg flex items-center justify-center hover:bg-[#FFCE38] hover:text-[#0B1E02] transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CAROUSEL 3: SOLAR (Dark Green Box) -->
+  <div class="w-full relative group">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch bg-emerald-950 border-t border-b border-emerald-900">
+      
+      <!-- Left Carousel Images -->
+      <div class="lg:col-span-8 overflow-hidden relative p-4 flex items-center">
+        <button class="carousel-prev-btn absolute left-4 z-20 w-10 h-10 rounded-full bg-white/90 text-[#0B1E02] shadow-lg flex items-center justify-center hover:bg-[#1C6521] hover:text-white transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+
+        <div class="carousel-track flex gap-4 overflow-x-auto scroll-smooth no-scrollbar py-2 w-full">
+          {solarProducts.map((p) => (
+            <div class="shrink-0 w-64 sm:w-72 h-80 sm:h-96 rounded-xl overflow-hidden shadow-md relative bg-white border border-gray-100 group/card">
+              <img src={p.img} alt={p.title} class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <p class="absolute bottom-4 left-4 right-4 text-white font-display font-bold text-sm leading-snug">
+                {p.title}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <button class="carousel-next-btn absolute right-4 z-20 w-10 h-10 rounded-full bg-white/90 text-[#0B1E02] shadow-lg flex items-center justify-center hover:bg-[#1C6521] hover:text-white transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+      </div>
+
+      <!-- Right Feature Card (Dark Green) -->
+      <div class="lg:col-span-4 bg-[#0A2610] text-white p-8 sm:p-12 flex flex-col justify-between space-y-6 relative overflow-hidden">
+        <div class="space-y-4 relative z-10">
+          <h3 class="font-display text-3xl sm:text-4xl font-extrabold leading-tight">
+            ¿Tienes un proyecto de granja solar?
+          </h3>
+          <p class="text-emerald-100 text-sm leading-relaxed">
+            <strong class="text-white font-bold">Ofrecemos suministros de calidad para el sector energético.</strong> Como importadores directos en Colombia, en JIMACO entregamos suministros certificados, garantizando rendimiento, seguridad y soporte técnico para proyectos fotovoltaicos.
+          </p>
+        </div>
+
+        <div class="relative z-10 pt-4">
+          <a
+            href="https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20cotizar%20suministros%20para%20un%20proyecto%20solar"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 border border-white/60 hover:bg-white hover:text-[#0A2610] text-white px-6 py-2.5 rounded-md font-display font-bold uppercase text-xs tracking-wider transition-all"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+            <span>Escríbenos</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function setupScrollButtons() {
+    const tracks = document.querySelectorAll('.carousel-track');
+    tracks.forEach((track) => {
+      const parent = track.parentElement;
+      const prev = parent.querySelector('.carousel-prev-btn');
+      const next = parent.querySelector('.carousel-next-btn');
+
+      if (prev) {
+        prev.onclick = () => { track.scrollBy({ left: -320, behavior: 'smooth' }); };
+      }
+      if (next) {
+        next.onclick = () => { track.scrollBy({ left: 320, behavior: 'smooth' }); };
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupScrollButtons);
+  document.addEventListener('astro:after-swap', setupScrollButtons);
+</script>

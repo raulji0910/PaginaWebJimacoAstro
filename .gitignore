@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Production build output
+dist/
+
+# Astro cache & generated files
+.astro/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Temporary and packaging files
+*.zip
+*.log
+
+# Operating System & Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

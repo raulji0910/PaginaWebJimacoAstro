@@ -1,0 +1,239 @@
+---
+const slides = [
+  {
+    id: 1,
+    titleDark: 'JIMACO estará en',
+    titleLight: 'ExpoSolar Colombia 2026',
+    subtitle: 'El evento más importante de energías renovables en Colombia y la región. Conectamos soluciones, impulsamos el futuro.',
+    dateSede: '28 - 30 OCTUBRE 2026 | BOGOTÁ, CORFERIAS',
+    link: '/suministros/energia-solar',
+    linkText: 'Ver más',
+    image: '/images/NoticiaExposolar.png',
+    badge: 'Evento Internacional • Energías Renovables'
+  },
+  {
+    id: 2,
+    titleDark: 'Soluciones industriales',
+    titleLight: 'que impulsan el futuro',
+    subtitle: 'Conoce todos los insumos y suministros que tenemos para tu industria.',
+    link: '/suministros/energia-solar',
+    linkText: 'Ver más',
+    image: '/images/bg-solar.jpg',
+    badge: 'Energías Renovables & Infraestructura'
+  },
+  {
+    id: 3,
+    titleDark: 'Estamos en el negocio de',
+    titleLight: 'la energía limpia',
+    subtitle: 'Encuentra suministros para la construcción de ese proyecto ambicioso.',
+    link: '/suministros/energia-solar',
+    linkText: 'Ver más',
+    image: '/images/Portada-home-JIMACO.jpg',
+    badge: 'Suministro Fotovoltaico Especializado'
+  },
+  {
+    id: 4,
+    titleDark: 'Crecemos cuando juntos',
+    titleLight: 'cuidamos del talento humano',
+    subtitle: 'Conoce cómo cuidar a quienes hacen posible cada proyecto con equipos certificados.',
+    link: '/suministros/proteccion-personal',
+    linkText: 'Ver más',
+    image: '/images/hero-worker.jpg',
+    badge: 'Seguridad Industrial & EPP'
+  }
+];
+---
+
+<section class="relative w-full h-[620px] sm:h-[680px] lg:h-[760px] overflow-hidden bg-[#0A1A0D]" id="hero-slider">
+  <!-- Slides Container -->
+  {slides.map((slide, index) => (
+    <div
+      class={`hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === 0 ? 'opacity-100 z-20' : 'opacity-0 z-10 pointer-events-none'}`}
+      data-index={index}
+    >
+      <!-- Background Image -->
+      <div class="absolute inset-0">
+        <img
+          src={slide.image}
+          alt={slide.titleDark}
+          class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-[7000ms] ease-out slide-bg-zoom"
+        />
+        <!-- Dark gradient & wave overlays -->
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0B1E02]/90 via-[#0B1E02]/50 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0B1E02]/80 via-transparent to-black/20"></div>
+        <!-- Decorative contour waves graphic if available -->
+        <img src="/images/vertical-waves.png" alt="" class="absolute left-0 bottom-0 h-full w-auto opacity-30 pointer-events-none mix-blend-screen" />
+      </div>
+
+      <!-- Slide Content -->
+      <div class="relative z-30 max-w-7xl mx-auto h-full px-4 sm:px-8 flex flex-col justify-between py-16 sm:py-20">
+        <!-- Main Titles & CTA Box -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-auto mb-auto pt-6">
+          
+          <!-- Left: Staggered Main Title -->
+          <div class="lg:col-span-8 space-y-2">
+            <span class="inline-block bg-jimaco-primary/80 backdrop-blur-sm text-jimaco-accent text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full border border-emerald-500/30 mb-2 slide-anim-item">
+              {slide.badge}
+            </span>
+            <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
+              <span class="text-[#88D67C] block drop-shadow-md slide-anim-item">{slide.titleDark}</span>
+              <span class="text-white block drop-shadow-lg slide-anim-item">{slide.titleLight}</span>
+            </h1>
+          </div>
+
+          <!-- Right: Text Description Box + Link -->
+          <div class="lg:col-span-4 bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-white/20 shadow-2xl space-y-4 max-w-md slide-anim-item">
+            <p class="text-white/90 text-sm sm:text-base leading-relaxed text-justify">
+              {slide.subtitle}
+            </p>
+            {slide.dateSede && (
+              <div class="text-xs sm:text-sm font-extrabold text-[#88D67C] tracking-wide uppercase pt-1">
+                {slide.dateSede}
+              </div>
+            )}
+            <div class="pt-2">
+              <a
+                href={slide.link}
+                class="inline-flex items-center gap-2 text-jimaco-orange hover:text-jimaco-orangeHover font-display font-extrabold uppercase text-sm tracking-wider group"
+              >
+                <span>{slide.linkText}</span>
+                <span class="group-hover:translate-x-1.5 transition-transform text-lg">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Banner Overlay inside Slider -->
+        <div class="pt-4 border-t border-white/15 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs tracking-wider uppercase text-white/80 font-display font-semibold">
+          <p class="text-center sm:text-left max-w-2xl">
+            Más de 10 años acompañando proyectos de construcción, energía y mantenimiento con suministro técnico y respaldo confiable.
+          </p>
+          <div class="flex items-center gap-2 shrink-0">
+            <a href="/contacto" class="bg-jimaco-orange hover:bg-jimaco-orangeHover text-white px-4 py-2 rounded-lg font-bold transition-all">
+              Cotizar Ahora
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  ))}
+
+  <!-- Slider Controls (Prev / Next & Indicator Dots) -->
+  <div class="absolute bottom-6 right-6 sm:right-12 z-40 flex items-center gap-3">
+    <!-- Prev Button -->
+    <button
+      id="slider-prev"
+      class="w-11 h-11 rounded-full bg-white/15 hover:bg-white/30 backdrop-blur-md text-white flex items-center justify-center transition-all border border-white/20 focus:outline-none"
+      aria-label="Diapositiva anterior"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </button>
+
+    <!-- Slide Numbers / Indicators -->
+    <div class="flex items-center gap-2 px-2">
+      {slides.map((_, i) => (
+        <button
+          class={`slider-dot w-8 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-jimaco-orange w-10' : 'bg-white/40 hover:bg-white/70'}`}
+          data-dot-index={i}
+          aria-label={`Ir a diapositiva ${i + 1}`}
+        ></button>
+      ))}
+    </div>
+
+    <!-- Next Button -->
+    <button
+      id="slider-next"
+      class="w-11 h-11 rounded-full bg-jimaco-orange hover:bg-jimaco-orangeHover text-white flex items-center justify-center transition-all shadow-lg focus:outline-none"
+      aria-label="Siguiente diapositiva"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<style>
+  .slide-bg-zoom {
+    animation: zoomSlow 7s infinite alternate;
+  }
+  @keyframes zoomSlow {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+  }
+</style>
+
+<script>
+  function setupHeroSlider() {
+    const slider = document.getElementById('hero-slider');
+    if (!slider) return;
+
+    const slides = slider.querySelectorAll('.hero-slide');
+    const dots = slider.querySelectorAll('.slider-dot');
+    const prevBtn = document.getElementById('slider-prev');
+    const nextBtn = document.getElementById('slider-next');
+
+    let current = 0;
+    const total = slides.length;
+    let timer;
+
+    function showSlide(index) {
+      slides.forEach((s, i) => {
+        if (i === index) {
+          s.classList.remove('opacity-0', 'pointer-events-none', 'z-10');
+          s.classList.add('opacity-100', 'z-20');
+        } else {
+          s.classList.remove('opacity-100', 'z-20');
+          s.classList.add('opacity-0', 'pointer-events-none', 'z-10');
+        }
+      });
+
+      dots.forEach((d, i) => {
+        if (i === index) {
+          d.classList.add('bg-jimaco-orange', 'w-10');
+          d.classList.remove('bg-white/40', 'w-8');
+        } else {
+          d.classList.remove('bg-jimaco-orange', 'w-10');
+          d.classList.add('bg-white/40', 'w-8');
+        }
+      });
+
+      current = index;
+    }
+
+    function nextSlide() {
+      showSlide((current + 1) % total);
+    }
+
+    function prevSlide() {
+      showSlide((current - 1 + total) % total);
+    }
+
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(nextSlide, 6000);
+    }
+
+    if (nextBtn) {
+      nextBtn.onclick = () => { nextSlide(); startAuto(); };
+    }
+    if (prevBtn) {
+      prevBtn.onclick = () => { prevSlide(); startAuto(); };
+    }
+
+    dots.forEach((d, i) => {
+      d.onclick = () => { showSlide(i); startAuto(); };
+    });
+
+    slider.onmouseenter = () => clearInterval(timer);
+    slider.onmouseleave = () => startAuto();
+
+    startAuto();
+  }
+
+  document.addEventListener('DOMContentLoaded', setupHeroSlider);
+  document.addEventListener('astro:after-swap', setupHeroSlider);
+</script>

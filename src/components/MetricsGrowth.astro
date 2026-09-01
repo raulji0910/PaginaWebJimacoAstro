@@ -1,0 +1,124 @@
+---
+const metrics = [
+  {
+    number: '+10',
+    subtitle: 'AÑOS DE EXPERIENCIA',
+    desc: 'Nos certifican como la empresa líder del sector',
+    icon: '/images/icono-expertise-innovacion.png'
+  },
+  {
+    number: '+46',
+    subtitle: 'CLIENTES INDUSTRIALES',
+    desc: 'Comprueban nuestra eficiencia y cumplimiento',
+    icon: '/images/icono-clientes-1.png'
+  },
+  {
+    number: '1257',
+    subtitle: 'PRODUCTOS ENTREGADOS',
+    desc: 'Como distribuidores autorizados en Colombia',
+    icon: '/images/icono-productos-entregados-1.png'
+  }
+];
+---
+
+<!-- 1. Infinite Seamless Animated Marquee: Engranando futuro juntos . -->
+<div class="w-full py-7 bg-white border-t border-b border-gray-100 overflow-hidden relative select-none">
+  <div class="marquee-track-futuro flex w-max gap-8 items-center">
+    {[1, 2, 3, 4, 5, 6, 7, 8].map(() => (
+      <div class="flex items-center gap-3 text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight whitespace-nowrap">
+        <span class="text-[#1C6521]">Engranando futuro</span>
+        <span class="text-[#7BBE6F] italic font-semibold">juntos</span>
+        <span class="text-[#7BBE6F] font-bold mx-2">.</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<!-- 2. Nuestro Crecimiento: 3 Dark Green Metric Cards with Metallic Icons -->
+<section class="py-16 sm:py-24 bg-gray-50/60 overflow-hidden border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 space-y-12">
+    
+    <!-- Top Header & Outlined Button -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-extrabold uppercase tracking-widest text-jimaco-orange font-display">
+            DATOS DE INTERÉS
+          </span>
+          <span class="w-8 h-[2px] bg-jimaco-orange inline-block"></span>
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B1E02] tracking-tight">
+          Nuestro crecimiento
+        </h2>
+      </div>
+
+      <div>
+        <a
+          href="/sobre-jimaco"
+          class="inline-flex items-center gap-3 border border-gray-300 hover:border-gray-900 bg-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-display font-bold uppercase tracking-wider text-gray-800 hover:bg-gray-900 hover:text-white transition-all group shadow-xs"
+        >
+          <span>Ver sobre nosotros</span>
+          <span class="text-jimaco-orange group-hover:text-white group-hover:translate-x-1 transition-transform text-sm font-extrabold">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3 Dark Green Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      {metrics.map((m) => (
+        <div class="bg-[#0B1E02] text-white p-8 sm:p-9 rounded-2xl shadow-xl border border-emerald-950 flex flex-col justify-between space-y-6 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+          
+          <!-- Top Row: Number & Metallic 3D Icon -->
+          <div class="flex items-center justify-between gap-4">
+            <div class="space-y-1">
+              <span class="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-[#88D67C] tracking-tight block leading-none">
+                {m.number}
+              </span>
+              <span class="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white block pt-1">
+                {m.subtitle}
+              </span>
+            </div>
+
+            <!-- Metallic Icon Image -->
+            <div class="w-20 h-20 shrink-0 flex items-center justify-center p-1 group-hover:scale-108 transition-transform duration-300">
+              <img
+                src={m.icon}
+                alt={m.subtitle}
+                class="w-full h-full object-contain filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.6)]"
+              />
+            </div>
+          </div>
+
+          <!-- Bottom Row: Subtitle / Description Text -->
+          <div class="pt-4 border-t border-white/10">
+            <p class="text-xs sm:text-sm text-emerald-100/85 font-medium leading-snug">
+              {m.desc}
+            </p>
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  @keyframes marqueeFuturo {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track-futuro {
+    animation: marqueeFuturo 28s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-track-futuro:hover {
+    animation-play-state: paused;
+  }
+</style>

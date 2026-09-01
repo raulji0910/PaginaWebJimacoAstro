@@ -1,0 +1,82 @@
+---
+const brands = [
+  { name: 'CEMEX', img: '/images/CEMEX-1.png' },
+  { name: 'AdlerTec', img: '/images/ADLER-1.png' },
+  { name: '3M', img: '/images/3M-1.png' },
+  { name: 'Safer', img: '/images/SAFER-1.png' },
+  { name: 'STEELPRO SAFETY', img: '/images/STEELPRO-1.png' },
+  { name: 'Fluke Networks', img: '/images/FLUKE-1.jpeg' },
+  { name: 'Prysmian', img: '/images/Prysmian.png' },
+  { name: 'Gerfor', img: '/images/gerfor.png' },
+  { name: 'Pavco', img: '/images/pavco.png' },
+  { name: 'Makita', img: '/images/makita.png' }
+];
+---
+
+<!-- Single Continuous Animated Row of Partner Brands with 1px Vertical Dividers -->
+<section class="bg-white border-t border-b border-gray-300 overflow-hidden select-none relative w-full py-0">
+  <div class="relative w-full overflow-hidden">
+    
+    <!-- Seamless Infinite Scrolling Track in 1 Single Line -->
+    <div class="brand-single-track flex w-max items-center">
+      
+      <!-- Set 1 -->
+      {brands.map((b) => (
+        <div class="w-48 sm:w-60 lg:w-72 h-28 sm:h-36 flex items-center justify-center p-6 border-r border-gray-300 bg-white hover:bg-gray-50/80 transition-colors group shrink-0">
+          <img
+            src={b.img}
+            alt={b.name}
+            class="max-h-11 sm:max-h-14 max-w-[140px] sm:max-w-[170px] object-contain group-hover:scale-110 transition-transform duration-300 filter grayscale-20 group-hover:grayscale-0"
+            loading="lazy"
+          />
+        </div>
+      ))}
+
+      <!-- Duplicate Set 2 for Infinite Loop -->
+      {brands.map((b) => (
+        <div class="w-48 sm:w-60 lg:w-72 h-28 sm:h-36 flex items-center justify-center p-6 border-r border-gray-300 bg-white hover:bg-gray-50/80 transition-colors group shrink-0">
+          <img
+            src={b.img}
+            alt={b.name}
+            class="max-h-11 sm:max-h-14 max-w-[140px] sm:max-w-[170px] object-contain group-hover:scale-110 transition-transform duration-300 filter grayscale-20 group-hover:grayscale-0"
+            loading="lazy"
+          />
+        </div>
+      ))}
+
+      <!-- Duplicate Set 3 for Seamlessness on Ultrawide Screens -->
+      {brands.map((b) => (
+        <div class="w-48 sm:w-60 lg:w-72 h-28 sm:h-36 flex items-center justify-center p-6 border-r border-gray-300 bg-white hover:bg-gray-50/80 transition-colors group shrink-0">
+          <img
+            src={b.img}
+            alt={b.name}
+            class="max-h-11 sm:max-h-14 max-w-[140px] sm:max-w-[170px] object-contain group-hover:scale-110 transition-transform duration-300 filter grayscale-20 group-hover:grayscale-0"
+            loading="lazy"
+          />
+        </div>
+      ))}
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  @keyframes brandSingleScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-33.3333%);
+    }
+  }
+
+  .brand-single-track {
+    animation: brandSingleScroll 28s linear infinite;
+    will-change: transform;
+  }
+
+  .brand-single-track:hover {
+    animation-play-state: paused;
+  }
+</style>

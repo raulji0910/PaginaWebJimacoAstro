@@ -1,0 +1,474 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CommercialTeamBanner from '../components/CommercialTeamBanner.astro';
+import BrandLogosBorderGrid from '../components/BrandLogosBorderGrid.astro';
+
+const listLeft = [
+  'TUBERÍA PVC Y GALVANIZADA',
+  'HERRAMIENTAS',
+  'VARILLAS',
+  'POLISOMBRAS'
+];
+
+const listRight = [
+  'TORNILLOS',
+  'ADHESIVOS Y SELLANTES',
+  'PINTURAS Y SEÑALIZACIÓN'
+];
+
+const products = [
+  {
+    num: '001',
+    category: 'Tubería',
+    title: 'Tubería PVC, tubería galvanizada',
+    desc: 'Facilita la conducción de fluidos y la protección del cableado en obras civiles, industriales y solares con tuberías certificadas de alta durabilidad.',
+    images: ['/images/detail-shot-pipes.jpg', '/images/tubos-para-sanitario.jpg']
+  },
+  {
+    num: '002',
+    category: 'Herramienta',
+    title: 'Llaves, martillos, guadañadoras, alicates',
+    desc: 'Equipa tus proyectos con herramientas manuales y eléctricas de alto rendimiento para instalación, montaje de estructuras y obra civil.',
+    images: ['/images/2-herramientas-1.jpg', '/images/2-herramientas-2.jpg']
+  },
+  {
+    num: '003',
+    category: 'Varilla',
+    title: 'Varilla corrugada 3/8, 1/2, 5/8',
+    desc: 'Refuerza estructuras de soporte, placas y cimentación con aceros y varillas resistentes que cumplen las normas NSR-10.',
+    images: ['/images/3-varillas-1.jpg', '/images/3-varillas-2.jpg']
+  },
+  {
+    num: '004',
+    category: 'Polisombra',
+    title: 'Polisombra verde, polisombra negra en diferentes densidades',
+    desc: 'Protege tus zonas de trabajo, delimita áreas y resguarda materiales con mallas y cerramientos confiables y de alta protección UV.',
+    images: ['/images/4-polisombras-1.jpg', '/images/4-polisombras-2.jpg']
+  },
+  {
+    num: '005',
+    category: 'Tornillos',
+    title: 'Tornillería de alta resistencia, chazos, pernos',
+    desc: 'Optimiza la sujeción estructural en instalaciones solares y de obra civil con pernos, tuercas y tornillos de máxima resistencia a la tracción.',
+    images: ['/images/5-tornillos-1-1.jpg', '/images/5-tornillos-2.jpg']
+  },
+  {
+    num: '006',
+    category: 'Adhesivos y Sellantes',
+    title: 'Siliconas, pegantes y espumas expansivas, Cintas industriales',
+    desc: 'Garantiza uniones estancas, fijaciones químicas y sellados profesionales ante la intemperie y vibraciones mecánicas.',
+    images: ['/images/6-adhesivos-1.jpg', '/images/6-adhesivos-2.jpg']
+  },
+  {
+    num: '007',
+    category: 'Pinturas y señalización',
+    title: 'Pintura de tráfico, aerosoles marcadores, señales de seguridad y cintas reflectivas',
+    desc: 'Refuerza la seguridad y visibilidad en obra con demarcación de tráfico pesado, señalización reglamentaria y cintas reflectivas.',
+    images: ['/images/7-pinturas-1.jpg', '/images/7-pinturas-2.jpg']
+  }
+];
+---
+
+<Layout 
+  title="Suministros para Construcción y Obra Civil — JIMACO"
+  description="Insumos, herramientas, tuberías y aceros para construcción en Colombia: tubería PVC y galvanizada, herramientas, varillas, tornillería y sellantes."
+>
+
+  <!-- 1. Hero Section with Background Video (Grinding Pipe with Sparks) -->
+  <section class="relative w-full h-[520px] sm:h-[580px] lg:h-[650px] overflow-hidden bg-[#0A1A0D] flex items-center">
+    
+    <!-- Background Video: Suministros para Construcción -->
+    <div class="absolute inset-0 z-0">
+      <video
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="none"
+        poster="/images/pic-construccion.jpg"
+        class="w-full h-full object-cover object-center lazy-bg-video"
+        data-src="/videos/suministros-para-construccion.mp4"
+      >
+      </video>
+
+      <!-- Gradient Overlays & Contour Wave Graphic -->
+      <div class="absolute inset-0 bg-gradient-to-r from-[#0B1E02]/90 via-[#0B1E02]/60 to-black/35"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0B1E02]/90 via-transparent to-black/20"></div>
+      
+      <!-- Green Contour Wave Overlay -->
+      <img
+        src="/images/vertical-waves.png"
+        alt=""
+        class="absolute left-0 bottom-0 h-full w-auto opacity-35 pointer-events-none mix-blend-screen"
+      />
+    </div>
+
+    <!-- Hero Content (Left Aligned matching jimaco-local) -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full flex flex-col justify-between h-full py-16 sm:py-20">
+      
+      <div class="max-w-3xl space-y-4 my-auto">
+        <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08] drop-shadow-xl">
+          Obras y <span class="text-[#88D67C]">Construcción</span>
+        </h1>
+
+        <div class="flex items-center gap-3 pt-2">
+          <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-jimaco-orange font-display">
+            SUMINISTROS
+          </span>
+          <span class="w-10 h-[2px] bg-jimaco-orange inline-block"></span>
+        </div>
+
+        <p class="text-emerald-100/90 text-base sm:text-xl font-medium tracking-wide pt-1">
+          Solidez y confianza para cada obra
+        </p>
+      </div>
+
+      <!-- Bottom Right Badge -->
+      <div class="flex justify-end pt-4">
+        <span class="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-white/80 border border-white/20 bg-black/30 backdrop-blur-md px-4 py-2 rounded-full">
+          SOMOS IMPORTADORES DIRECTOS Y AUTORIZADOS EN COLOMBIA.
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2. Dark Green Marquee: Calidad para proyectos eficientes. -->
+  <div class="w-full py-5 sm:py-6 bg-[#063A16] border-t border-b border-black/20 overflow-hidden relative select-none">
+    <div class="marquee-track-const flex w-max gap-8 sm:gap-12 items-center">
+      {[1, 2, 3, 4, 5, 6, 7, 8].map(() => (
+        <div class="flex items-center gap-3 sm:gap-4 text-2xl sm:text-3xl lg:text-4xl font-display tracking-tight whitespace-nowrap">
+          <span class="text-white/90 font-bold">Calidad</span>
+          <span class="text-white/80 font-medium">para proyectos</span>
+          <span class="text-[#88D67C] font-extrabold italic">eficientes.</span>
+          <span class="text-[#88D67C]/50 font-bold mx-2">.</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 3. BANNER 1: TODO LO QUE TU PROYECTO NECESITA (Fondo Verde Oscuro con Líneas y Bullets) -->
+  <section class="py-16 sm:py-24 bg-[#0B1E02] text-white relative overflow-hidden">
+    <!-- Contour curve overlay -->
+    <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-screen">
+      <img src="/images/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10 space-y-10 sm:space-y-12">
+      
+      <!-- Headline & Subparagraph -->
+      <div class="max-w-4xl space-y-4">
+        <h2 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight">
+          <span class="text-[#88D67C] italic">Todo lo que tu proyecto necesita,</span><br />
+          en un solo lugar
+        </h2>
+        <p class="text-emerald-100/90 text-sm sm:text-base lg:text-lg leading-relaxed text-justify sm:text-left text-pretty max-w-3xl">
+          Distribuimos insumos y herramientas para construcción con calidad garantizada, disponibilidad inmediata en bodega y asesoría técnica personalizada.
+        </p>
+      </div>
+
+      <!-- 2 Columns with 1px divider lines & Orange Bullet Icons -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-0 pt-4">
+        
+        <!-- Left Column -->
+        <div class="divide-y divide-white/15 border-t border-b border-white/15">
+          {listLeft.map((item) => (
+            <div class="py-3.5 sm:py-4 flex items-center gap-3 group hover:pl-2 transition-all">
+              <svg class="w-4 h-4 text-[#FF6A1C] shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+              </svg>
+              <span class="font-display font-bold text-xs sm:text-sm tracking-wider uppercase text-white/90 group-hover:text-[#88D67C] transition-colors">
+                {item}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <!-- Right Column -->
+        <div class="divide-y divide-white/15 border-t border-b border-white/15">
+          {listRight.map((item) => (
+            <div class="py-3.5 sm:py-4 flex items-center gap-3 group hover:pl-2 transition-all">
+              <svg class="w-4 h-4 text-[#FF6A1C] shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+              </svg>
+              <span class="font-display font-bold text-xs sm:text-sm tracking-wider uppercase text-white/90 group-hover:text-[#88D67C] transition-colors">
+                {item}
+              </span>
+            </div>
+          ))}
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. BANNER 2: SOMOS EL ALIADO DE CONFIANZA (Fondo Blanco con Foto Izquierda y Contenido Derecha) -->
+  <section class="py-16 sm:py-24 bg-white border-b border-gray-100 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+      
+      <!-- Left Column: Image of Construction Site -->
+      <div class="lg:col-span-6">
+        <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-100 bg-black/5 group relative">
+          <img
+            src="/images/pic-construccion.jpg"
+            alt="Suministros para Obras y Construcción JIMACO"
+            class="w-full h-[360px] sm:h-[480px] object-cover object-center group-hover:scale-103 transition-transform duration-700"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- Right Column: Tag, Headline, Subheadline, Text, and Cotiza Ahora Button -->
+      <div class="lg:col-span-6 space-y-6">
+        
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-extrabold uppercase tracking-widest text-[#FF6A1C] font-display">
+            CONTÁCTANOS AHORA
+          </span>
+          <span class="w-8 h-[2px] bg-[#FF6A1C] inline-block"></span>
+        </div>
+
+        <div class="space-y-2">
+          <h2 class="font-display text-3xl sm:text-5xl font-extrabold text-[#0B1E02] leading-tight tracking-tight">
+            Somos el aliado de confianza
+          </h2>
+          <p class="font-display font-bold text-base sm:text-xl text-gray-700">
+            Para proyectos de construcción
+          </p>
+        </div>
+
+        <p class="text-gray-600 text-sm sm:text-base leading-relaxed text-justify sm:text-left text-pretty">
+          Apoyamos a los sectores industrial, de construcción y energético, garantizando cumplimiento, respaldo y eficiencia en cada una de nuestras entregas a nivel nacional.
+        </p>
+
+        <div class="pt-2">
+          <a
+            href="https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20asesor%C3%ADa%20y%20cotizaci%C3%B3n%20para%20materiales%20de%20construcci%C3%B3n"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-3 bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase text-xs sm:text-sm tracking-wider px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5"
+          >
+            <span>Cotiza Ahora</span>
+            <span class="text-base">→</span>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. Series de Productos (001 a 007) con Diseño Idéntico a jimaco-local -->
+  <section class="py-16 sm:py-24 bg-gray-50/70 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 space-y-16">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-jimaco-orange font-display">
+          LÍNEA DE PRODUCTOS
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B1E02]">
+          Catálogo Técnico de Construcción
+        </h2>
+        <p class="text-gray-600 text-sm sm:text-base">
+          Materiales, herramientas e insumos certificados para obra civil, acabados y mantenimiento industrial.
+        </p>
+      </div>
+
+      <!-- Products Stack -->
+      <div class="space-y-12">
+        {products.map((item) => (
+          <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-gray-200/80 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center hover:border-emerald-500/40 transition-all duration-300 group">
+            
+            <!-- Left Info: Number, Category Tag, Title, Desc -->
+            <div class="lg:col-span-7 space-y-4">
+              <div class="flex items-center gap-4">
+                <span class="font-display font-black text-3xl sm:text-4xl text-[#88D67C]">
+                  {item.num}
+                </span>
+                <span class="bg-emerald-50 text-[#1C6521] border border-emerald-200 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider font-display">
+                  {item.category}
+                </span>
+              </div>
+
+              <h3 class="font-display font-bold text-2xl sm:text-3xl text-gray-900 leading-snug group-hover:text-[#1C6521] transition-colors">
+                {item.title}
+              </h3>
+
+              <p class="text-gray-600 text-sm sm:text-base leading-relaxed text-justify sm:text-left text-pretty">
+                {item.desc}
+              </p>
+
+              <div class="pt-2">
+                <a
+                  href={`https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20cotizar:%20${encodeURIComponent(item.title)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-jimaco-orange hover:text-jimaco-orangeHover uppercase tracking-wider font-display"
+                >
+                  <span>Solicitar cotización de {item.category}</span>
+                  <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Right Image Grid -->
+            <div class="lg:col-span-5 grid grid-cols-2 gap-3">
+              {item.images.map((img) => (
+                <div class="aspect-square rounded-2xl overflow-hidden shadow-xs border border-gray-100 bg-gray-50 group-hover:scale-102 transition-transform duration-300">
+                  <img src={img} alt={item.title} class="w-full h-full object-cover" loading="lazy" />
+                </div>
+              ))}
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6. Banner CTA: ¿Buscas otros insumos para tu proyecto? -->
+  <section class="py-16 sm:py-20 bg-[#0B1E02] text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8">
+      <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 p-8 sm:p-14 lg:p-16 min-h-[380px] sm:min-h-[440px] flex items-center group">
+        
+        <!-- Background Photo: Construction CTA -->
+        <div class="absolute inset-0 z-0">
+          <img
+            src="/images/bghero-cta-construccion-2.jpg"
+            alt="Suministros para Construcción"
+            class="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-700"
+          />
+          <div class="absolute inset-0 bg-gradient-to-r from-[#0B1E02]/95 via-[#0B1E02]/85 to-black/40"></div>
+          <img
+            src="/images/vertical-waves.png"
+            alt=""
+            class="absolute left-0 bottom-0 h-full w-auto opacity-35 pointer-events-none mix-blend-screen"
+          />
+        </div>
+
+        <!-- Left Content -->
+        <div class="relative z-10 max-w-2xl space-y-4">
+          <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-tight">
+            ¿Buscas <span class="text-[#88D67C]">otros insumos</span> para tu proyecto?
+          </h2>
+          <p class="text-white/90 text-sm sm:text-base leading-relaxed text-justify sm:text-left text-pretty font-normal">
+            En JIMACO contamos con un amplio portafolio para cubrir integralmente las necesidades en construcción y obra civil. Nuestro equipo puede ayudarte a consolidar todos los suministros requeridos en un solo pedido, optimizando tiempos, costos y logística.
+          </p>
+
+          <div class="pt-4">
+            <a
+              href="https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20solicitar%20el%20portafolio%20de%20construcci%C3%B3n"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-3 border-2 border-[#BAFF32] hover:bg-[#BAFF32] text-[#BAFF32] hover:text-[#0B1E02] font-display font-extrabold uppercase text-xs sm:text-sm tracking-wider px-7 py-3.5 rounded-lg transition-all shadow-md group/btn"
+            >
+              <span>Solicitar portafolio</span>
+              <span class="text-jimaco-orange group-hover/btn:translate-x-1 transition-transform text-base">→</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. PANEL PANORÁMICO CONSTRUCCIÓN: AGREGAMOS VALOR REAL A TUS PROYECTOS -->
+  <section class="relative w-full h-[460px] sm:h-[540px] lg:h-[620px] overflow-hidden bg-[#0A1A0D] flex items-center">
+    
+    <!-- Panoramic Construction Site Background Image -->
+    <div class="absolute inset-0 z-0">
+      <img
+        src="/images/bg-seccion-construccion-1.jpg"
+        alt="Obras y Construcción JIMACO"
+        class="w-full h-full object-cover object-center"
+      />
+
+      <!-- Gradient Vignette & Wave Overlays -->
+      <div class="absolute inset-0 bg-gradient-to-r from-black/40 via-[#0B1E02]/60 to-[#0B1E02]/90"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+      <!-- Circular Green Contour Curves Overlay -->
+      <img
+        src="/images/vertical-waves.png"
+        alt=""
+        class="absolute right-0 bottom-0 h-full w-auto opacity-40 pointer-events-none mix-blend-screen scale-110"
+      />
+    </div>
+
+    <!-- Content Aligned to the Right -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full flex justify-end">
+      <div class="max-w-xl text-right space-y-4">
+        
+        <h2 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.08] tracking-tight drop-shadow-xl">
+          Agregamos<br />
+          <span class="text-[#88D67C] italic">valor real</span> a<br />
+          tus proyectos
+        </h2>
+
+        <div class="space-y-1 pt-3">
+          <span class="text-[#88D67C] font-extrabold uppercase text-xs sm:text-sm tracking-widest font-display block">
+            NUESTRA PRIORIDAD:
+          </span>
+          <p class="text-white font-extrabold text-xs sm:text-base uppercase tracking-wider font-display">
+            GARANTIZAR HERRAMIENTAS DE CALIDAD, EFICIENTES Y DURADERAS.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Commercial Team CTA Banner -->
+  <CommercialTeamBanner />
+
+  <!-- 9. Partner Brands Border Grid & Animation -->
+  <BrandLogosBorderGrid />
+
+
+<script>
+  // Non-blocking deferred background video loader
+  function initLazyVideos() {
+    const lazyVideos = document.querySelectorAll('video.lazy-bg-video[data-src]');
+    lazyVideos.forEach((v) => {
+      const src = v.getAttribute('data-src');
+      if (src && !v.querySelector('source')) {
+        const source = document.createElement('source');
+        source.src = src;
+        source.type = 'video/mp4';
+        v.appendChild(source);
+        v.load();
+        v.play().catch(() => {});
+      }
+    });
+  }
+
+  if (document.readyState === 'complete') {
+    setTimeout(initLazyVideos, 100);
+  } else {
+    window.addEventListener('load', () => setTimeout(initLazyVideos, 100));
+  }
+</script>
+
+</Layout>
+
+<style>
+  @keyframes marqueeConst {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track-const {
+    animation: marqueeConst 26s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-track-const:hover {
+    animation-play-state: paused;
+  }
+</style>

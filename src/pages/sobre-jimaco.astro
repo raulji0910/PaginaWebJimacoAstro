@@ -1,0 +1,353 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductsGalleryCarousel from '../components/ProductsGalleryCarousel.astro';
+
+const pillars = [
+  {
+    title: 'Compromiso con la calidad',
+    desc: 'Cada producto y entrega cumple los más altos estándares del sector.',
+    icon: '/images/icono-calidad.jpg'
+  },
+  {
+    title: 'Un paso adelante en Innovación',
+    desc: 'Buscamos nuevas soluciones para un mercado en evolución constante.',
+    icon: '/images/icono-expertise-innovacion.jpg'
+  },
+  {
+    title: 'Excelencia en el servicio',
+    desc: 'Atendemos con cercanía, conocimiento y responsabilidad.',
+    icon: '/images/icono-servicio.jpg'
+  }
+];
+
+const differentiators = [
+  {
+    title: 'Importación Directa y Autorizada',
+    desc: 'Garantizamos disponibilidad inmediata y precios competitivos de las marcas líderes del mundo.'
+  },
+  {
+    title: 'Asesoría Técnica Especializada',
+    desc: 'Nuestro equipo de ingenieros y especialistas acompaña la selección correcta de cada insumo según la norma RETIE / NSR-10.'
+  },
+  {
+    title: 'Trazabilidad y Cumplimiento',
+    desc: 'Documentación técnica completa, fichas y certificados de conformidad en cada entrega.'
+  },
+  {
+    title: 'Cobertura Nacional',
+    desc: 'Despachos oportunos a parques solares, obras civiles e industrias en todo el territorio colombiano.'
+  }
+];
+---
+
+<Layout title="Sobre Jimaco — Calidad, Innovación y Compromiso">
+  
+  <!-- 1. Hero Section with Background Drone Video (Exact match to jimaco-local) -->
+  <section class="relative w-full h-[500px] sm:h-[580px] lg:h-[650px] overflow-hidden bg-[#0A1A0D] flex items-center">
+    
+    <!-- Drone Aerial Background Video -->
+    <div class="absolute inset-0 z-0">
+      <video
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="none"
+        poster="/images/Oficina-Ferreteria-Industrial-Jimaco.jpg"
+        class="w-full h-full object-cover object-center lazy-bg-video"
+        data-src="/videos/Oficina-Ferreteria-Industrial-Jimaco.mp4"
+      >
+      </video>
+
+      <!-- Gradient Overlays & Circular Wave Graphic -->
+      <div class="absolute inset-0 bg-gradient-to-r from-[#0B1E02]/90 via-[#0B1E02]/60 to-black/30"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0B1E02]/90 via-transparent to-black/20"></div>
+      
+      <!-- Green Contour Wave Overlay -->
+      <img
+        src="/images/vertical-waves.png"
+        alt=""
+        class="absolute left-0 bottom-0 h-full w-auto opacity-35 pointer-events-none mix-blend-screen"
+      />
+    </div>
+
+    <!-- Hero Content (Left Aligned matching jimaco-local) -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full">
+      <div class="max-w-3xl space-y-4">
+        
+        <h1 class="font-display text-3xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.12] drop-shadow-xl">
+          Calidad, <span class="text-[#88D67C]">innovación</span> y compromiso con la industria
+        </h1>
+
+        <div class="flex items-center gap-3 pt-2">
+          <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-jimaco-orange font-display">
+            SOBRE NOSOTROS
+          </span>
+          <span class="w-10 h-[2px] bg-jimaco-orange inline-block"></span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Infinite Seamless Marquee: Calidad . Relación . Confianza . -->
+  <div class="w-full py-6 sm:py-7 bg-white border-t border-b border-gray-100 overflow-hidden relative select-none">
+    <div class="marquee-track-sobre flex w-max gap-6 sm:gap-8 items-center">
+      {[1, 2, 3, 4, 5, 6, 7, 8].map(() => (
+        <div class="flex items-center gap-3 sm:gap-4 text-2xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight whitespace-nowrap">
+          <span class="text-[#1C6521]">Calidad</span>
+          <span class="text-[#7BBE6F] font-bold mx-1 sm:mx-2">.</span>
+          <span class="text-[#1C6521]">Relación</span>
+          <span class="text-[#7BBE6F] font-bold mx-1 sm:mx-2">.</span>
+          <span class="text-[#7BBE6F] italic font-semibold">Confianza</span>
+          <span class="text-[#7BBE6F] font-bold mx-1 sm:mx-2">.</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 3. GREEN SECTION: HISTORIA Y PROPÓSITO + 2.013 + FOTO Y TEXTO LADO A LADO -->
+  <section class="py-16 sm:py-28 bg-[#15591C] text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10 space-y-10 sm:space-y-16">
+      
+      <!-- Top Tag & Horizontal Divider Line -->
+      <div class="flex items-center gap-4 sm:gap-6">
+        <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white font-display whitespace-nowrap">
+          HISTORIA Y PROPÓSITO
+        </span>
+        <div class="h-[1px] bg-white/20 flex-1"></div>
+      </div>
+
+      <!-- Counter Grid: Desde el año / 2.013 / Consolidando nuestra trayectoria -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
+        
+        <!-- Left: Desde el año -->
+        <div class="md:col-span-3">
+          <p class="font-display font-medium uppercase text-xs sm:text-base tracking-widest text-white/90">
+            Desde el año
+          </p>
+        </div>
+
+        <!-- Center: Giant 2.013 -->
+        <div class="md:col-span-4 flex justify-start md:justify-center">
+          <span class="font-display text-6xl sm:text-8xl lg:text-9xl font-black text-[#88D67C] tracking-tight leading-none">
+            2.013
+          </span>
+        </div>
+
+        <!-- Right: Headline -->
+        <div class="md:col-span-5">
+          <h3 class="font-display text-xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight">
+            Consolidando nuestra trayectoria en todo el país
+          </h3>
+        </div>
+
+      </div>
+
+      <!-- Main Lower Row: Left Photo with Colombia Map + Right Text Paragraphs -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center pt-2 sm:pt-4">
+        
+        <!-- Left: Photo with Overlaid Colombia Map Silhouette -->
+        <div class="lg:col-span-6 relative">
+          <div class="rounded-2xl overflow-hidden shadow-2xl border-4 border-white/15 bg-black/20 group">
+            <img
+              src="/images/pic-nosotros-feria-solar.jpg"
+              alt="Oficinas e Instalaciones JIMACO"
+              class="w-full h-[300px] sm:h-[460px] object-cover object-center group-hover:scale-103 transition-transform duration-700"
+            />
+          </div>
+
+          <!-- Overlaid Colombia Map Silhouette on top-left -->
+          <div class="absolute -top-4 -left-4 sm:-top-6 sm:-left-6 w-24 sm:w-36 pointer-events-none drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]">
+            <img
+              src="/images/map-colombia.png"
+              alt="Cobertura Colombia"
+              class="w-full h-auto object-contain opacity-95"
+            />
+          </div>
+        </div>
+
+        <!-- Right: Text Paragraphs with Balanced Justification -->
+        <div class="lg:col-span-6 space-y-4 sm:space-y-6 text-white/95">
+          <p class="text-sm sm:text-lg lg:text-xl font-normal leading-relaxed sm:leading-loose text-justify sm:text-left text-pretty hyphens-auto">
+            <strong class="font-bold text-white">JIMACO</strong> nació con la visión de ofrecer soluciones técnicas confiables, integrando conocimiento, calidad y compromiso para fortalecer los proyectos de nuestros clientes.
+          </p>
+
+          <p class="text-sm sm:text-lg lg:text-xl font-normal leading-relaxed sm:leading-loose text-emerald-100/90 text-justify sm:text-left text-pretty hyphens-auto">
+            Hoy, más de una década después, seguimos engranando futuro junto a los sectores de energía, construcción y mantenimiento industrial.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. VISIÓN Y VALORES: 2 COLUMNAS (Exact match to Screenshot 2) -->
+  <section class="py-16 sm:py-28 bg-[#F7F5F0] relative overflow-hidden border-b border-gray-200">
+    <!-- Contour curves background overlay -->
+    <div class="absolute inset-0 pointer-events-none opacity-30 mix-blend-multiply">
+      <img src="/images/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+        
+        <!-- Left Column: VISIÓN Y VALORES + Headline -->
+        <div class="lg:col-span-5 space-y-3 sm:space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-jimaco-orange font-display">
+              VISIÓN Y VALORES
+            </span>
+            <span class="w-8 h-[2px] bg-jimaco-orange inline-block"></span>
+          </div>
+
+          <h2 class="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B1E02] tracking-tight leading-[1.15]">
+            Nuestra forma de construir relaciones duraderas
+          </h2>
+        </div>
+
+        <!-- Right Column: 3 Horizontal Rows with Dark 3D Icons & Divider Lines -->
+        <div class="lg:col-span-7 border-t border-gray-300">
+          {pillars.map((p) => (
+            <div class="py-5 sm:py-7 border-b border-gray-300 flex items-center gap-4 sm:gap-8 group hover:pl-2 transition-all">
+              
+              <!-- Dark Green Square Icon Box with 3D Silver Emblem -->
+              <div class="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shadow-md shrink-0 border border-gray-200 group-hover:scale-105 transition-transform duration-300 bg-[#0B1E02]">
+                <img
+                  src={p.icon}
+                  alt={p.title}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+
+              <!-- Title & Description with balanced text -->
+              <div class="space-y-1 flex-1">
+                <h3 class="font-display font-bold text-base sm:text-xl text-[#1C6521] leading-snug group-hover:text-[#0B1E02] transition-colors">
+                  {p.title}
+                </h3>
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed text-justify sm:text-left text-pretty font-medium">
+                  {p.desc}
+                </p>
+              </div>
+
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. CTA Banner: Conoce Nuestra Política de Calidad -->
+  <section class="py-12 sm:py-16 bg-[#0B1E02] text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#7BBE6F_1px,transparent_1px)] [background-size:20px_20px]"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
+      <div class="space-y-2 sm:space-y-3 text-center md:text-left">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-[#88D67C] font-display">
+          SISTEMA DE GESTIÓN DE CALIDAD
+        </span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-white">
+          Conoce nuestra política de calidad y objetivos
+        </h2>
+        <p class="text-emerald-100/70 text-xs sm:text-base max-w-2xl text-justify sm:text-left">
+          Descubre los 6 pilares y 5 objetivos que garantizan la excelencia en cada uno de nuestros suministros.
+        </p>
+      </div>
+
+      <div class="shrink-0 w-full sm:w-auto text-center">
+        <a
+          href="/politica-de-calidad"
+          class="inline-flex items-center justify-center gap-3 bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase text-xs sm:text-sm tracking-wider px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-0.5 w-full sm:w-auto"
+        >
+          <span>Ver Política de Calidad</span>
+          <span class="text-base sm:text-lg">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Nuestros Diferenciadores: Por qué las empresas confían en Jimaco -->
+  <section class="py-16 sm:py-20 bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 space-y-10 sm:space-y-14">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-2 sm:space-y-3">
+        <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-jimaco-orange font-display">
+          NUESTROS DIFERENCIADORES
+        </span>
+        <h2 class="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B1E02]">
+          Por qué las empresas confían en Jimaco
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        {differentiators.map((d, index) => (
+          <div class="p-5 sm:p-6 bg-gray-50 rounded-2xl border border-gray-100 space-y-3 hover:bg-emerald-50/50 hover:border-emerald-200 transition-all duration-300">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-100 text-[#1C6521] flex items-center justify-center font-display font-extrabold text-xs sm:text-sm">
+              {`0${index + 1}`}
+            </div>
+            <h3 class="font-display font-bold text-base sm:text-lg text-gray-900 leading-snug">
+              {d.title}
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed text-justify sm:text-left text-pretty">
+              {d.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. Galería Carrusel de Insumos y Seguridad (Screenshot User) -->
+  <ProductsGalleryCarousel />
+
+
+
+
+<script>
+  // Non-blocking deferred background video loader
+  function initLazyVideos() {
+    const lazyVideos = document.querySelectorAll('video.lazy-bg-video[data-src]');
+    lazyVideos.forEach((v) => {
+      const src = v.getAttribute('data-src');
+      if (src && !v.querySelector('source')) {
+        const source = document.createElement('source');
+        source.src = src;
+        source.type = 'video/mp4';
+        v.appendChild(source);
+        v.load();
+        v.play().catch(() => {});
+      }
+    });
+  }
+
+  if (document.readyState === 'complete') {
+    setTimeout(initLazyVideos, 100);
+  } else {
+    window.addEventListener('load', () => setTimeout(initLazyVideos, 100));
+  }
+</script>
+
+</Layout>
+
+<style>
+  @keyframes marqueeSobre {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track-sobre {
+    animation: marqueeSobre 28s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-track-sobre:hover {
+    animation-play-state: paused;
+  }
+</style>

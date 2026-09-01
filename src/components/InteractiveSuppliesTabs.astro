@@ -1,0 +1,190 @@
+---
+const solarProducts = [
+  { title: 'Placa Protección Subterránea', img: '/images/placa-proteccion-subterranea.jpg', tag: 'Solar' },
+  { title: 'Placa Subterránea Resistente', img: '/images/placa-subterranea-resistente.jpg', tag: 'Solar' },
+  { title: 'Cables Fotovoltaicos Certificados', img: '/images/cables-fotovoltaicos-1.jpg', tag: 'Solar' },
+  { title: 'Conectores MC4 & Conectores en Y', img: '/images/Conectores-MC4-1.jpg', tag: 'Solar' },
+  { title: 'Varilla de Cobre Puesta a Tierra', img: '/images/varilla-cobre.jpg', tag: 'Solar' },
+  { title: 'Tubería PEAD Corrugada', img: '/images/accesorios-PEAD.jpg', tag: 'Solar' },
+  { title: 'Cinta Plástica Peligro Alta Tensión', img: '/images/cinta-plastica-peligro-alta-tension.jpg', tag: 'Solar' },
+  { title: 'Terminales Tipo Ojal / Bimetálicas', img: '/images/terminal-tipo-ojal.jpg', tag: 'Solar' }
+];
+
+const constProducts = [
+  { title: 'Tubería Sanitaria & Conducción', img: '/images/1-tuberia-sanitaria-1.jpg', tag: 'Construcción' },
+  { title: 'Herramientas Manuales & Eléctricas', img: '/images/2-herramientas-3-1024x1024.jpg', tag: 'Construcción' },
+  { title: 'Varillas y Perfiles de Acero', img: '/images/3-varillas-1.jpg', tag: 'Construcción' },
+  { title: 'Polisombras y Mallas de Cerramiento', img: '/images/4-polisombras-2.jpg', tag: 'Construcción' },
+  { title: 'Tornillería Especializada', img: '/images/5-tornillos-2.jpg', tag: 'Construcción' },
+  { title: 'Adhesivos y Sellantes de Alto Desempeño', img: '/images/6-adhesivos-1.jpg', tag: 'Construcción' }
+];
+
+const eppProducts = [
+  { title: 'Seguridad en Alturas & Arneses', img: '/images/5-seguridad-alturas-2.jpg', tag: 'EPP' },
+  { title: 'Protección Respiratoria Certificada', img: '/images/4-proteccion-respiratoria-1.jpg', tag: 'EPP' },
+  { title: 'Protección Visual & Gafas de Seguridad', img: '/images/1-visual-1a-1024x1024.jpg', tag: 'EPP' },
+  { title: 'Protección Auditiva (Orejeras / Tapones)', img: '/images/1-proteccion-oido-2.jpg', tag: 'EPP' },
+  { title: 'Guantes Dieléctricos & de Vaqueta', img: '/images/6-seguridad-manos-1.jpg', tag: 'EPP' },
+  { title: 'Calzado y Protección de Piernas', img: '/images/8-proteccion-piernas-1-1024x1024.jpg', tag: 'EPP' }
+];
+---
+
+<section class="py-20 bg-[#F9FBF9] border-t border-b border-gray-100" id="catalogo-tabulado">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8">
+    
+    <!-- Section Title -->
+    <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+      <span class="text-xs sm:text-sm font-bold uppercase tracking-widest text-jimaco-orange font-display">
+        Nuestros Suministros
+      </span>
+      <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-jimaco-dark">
+        Catálogo especializado para <span class="text-jimaco-primary">cada requerimiento</span>
+      </h2>
+      <p class="text-jimaco-grayText text-sm sm:text-base">
+        Explora nuestros productos más solicitados por categoría con disponibilidad inmediata y fichas técnicas.
+      </p>
+    </div>
+
+    <!-- Category Tabs Navigation -->
+    <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12">
+      <button
+        class="tab-btn active px-6 py-3 rounded-full font-display font-bold text-sm tracking-wider uppercase transition-all shadow-md bg-jimaco-primary text-white"
+        data-tab="solar"
+      >
+        ☀️ ¿Granja Solar?
+      </button>
+      <button
+        class="tab-btn px-6 py-3 rounded-full font-display font-bold text-sm tracking-wider uppercase transition-all shadow-sm bg-white text-gray-700 hover:bg-emerald-50 hover:text-jimaco-primary border border-gray-200"
+        data-tab="construccion"
+      >
+        🏗️ ¿Construcción?
+      </button>
+      <button
+        class="tab-btn px-6 py-3 rounded-full font-display font-bold text-sm tracking-wider uppercase transition-all shadow-sm bg-white text-gray-700 hover:bg-emerald-50 hover:text-jimaco-primary border border-gray-200"
+        data-tab="epp"
+      >
+        🛡️ ¿Protección Personal?
+      </button>
+    </div>
+
+    <!-- Tab 1: Solar -->
+    <div id="tab-content-solar" class="tab-panel grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {solarProducts.map((p) => (
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col justify-between group">
+          <div class="h-48 overflow-hidden relative bg-gray-50">
+            <img src={p.img} alt={p.title} class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" />
+            <span class="absolute top-3 left-3 bg-emerald-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
+              {p.tag}
+            </span>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <h4 class="font-display font-bold text-gray-900 text-base leading-snug group-hover:text-jimaco-primary transition-colors">
+              {p.title}
+            </h4>
+            <div class="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between">
+              <a
+                href={`https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20cotizar:%20${encodeURIComponent(p.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-xs font-bold text-jimaco-orange hover:text-jimaco-orangeHover inline-flex items-center gap-1"
+              >
+                Cotizar por WhatsApp →
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Tab 2: Construcción -->
+    <div id="tab-content-construccion" class="tab-panel hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {constProducts.map((p) => (
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col justify-between group">
+          <div class="h-52 overflow-hidden relative bg-gray-50">
+            <img src={p.img} alt={p.title} class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" />
+            <span class="absolute top-3 left-3 bg-orange-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
+              {p.tag}
+            </span>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <h4 class="font-display font-bold text-gray-900 text-base leading-snug group-hover:text-jimaco-primary transition-colors">
+              {p.title}
+            </h4>
+            <div class="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between">
+              <a
+                href={`https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20cotizar:%20${encodeURIComponent(p.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-xs font-bold text-jimaco-orange hover:text-jimaco-orangeHover inline-flex items-center gap-1"
+              >
+                Cotizar por WhatsApp →
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Tab 3: EPP -->
+    <div id="tab-content-epp" class="tab-panel hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {eppProducts.map((p) => (
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col justify-between group">
+          <div class="h-52 overflow-hidden relative bg-gray-50">
+            <img src={p.img} alt={p.title} class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" />
+            <span class="absolute top-3 left-3 bg-emerald-800 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
+              {p.tag}
+            </span>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <h4 class="font-display font-bold text-gray-900 text-base leading-snug group-hover:text-jimaco-primary transition-colors">
+              {p.title}
+            </h4>
+            <div class="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between">
+              <a
+                href={`https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20cotizar:%20${encodeURIComponent(p.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-xs font-bold text-jimaco-orange hover:text-jimaco-orangeHover inline-flex items-center gap-1"
+              >
+                Cotizar por WhatsApp →
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function setupTabs() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-tab');
+
+        tabBtns.forEach((b) => {
+          b.classList.remove('bg-jimaco-primary', 'text-white', 'shadow-md');
+          b.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-200');
+        });
+
+        btn.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-200');
+        btn.classList.add('bg-jimaco-primary', 'text-white', 'shadow-md');
+
+        panels.forEach((p) => {
+          if (p.id === `tab-content-${tab}`) {
+            p.classList.remove('hidden');
+          } else {
+            p.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupTabs);
+  document.addEventListener('astro:after-swap', setupTabs);
+</script>

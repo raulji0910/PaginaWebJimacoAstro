@@ -1,0 +1,81 @@
+---
+const items = [
+  { img: '/images/bg-proteccion-2.jpg', alt: 'Protección Auditiva y EPP' },
+  { img: '/images/varilla-de-cobre.jpg', alt: 'Varillas de Cobre Puesta a Tierra' },
+  { img: '/images/placa-subterranea-resistente.jpg', alt: 'Placa de Protección Subterránea' },
+  { img: '/images/1-cascos-3.jpg', alt: 'Cascos de Seguridad y Barbuquejo' },
+  { img: '/images/6-seguridad-manos-1.jpg', alt: 'Guantes de Vaqueta y Protección Manual' },
+  { img: '/images/7-seguridad-corporal-2.jpg', alt: 'Seguridad y Protección Corporal' },
+  { img: '/images/Bota_llanera_venus_suela.webp', alt: 'Calzado de Seguridad Industrial' },
+  { img: '/images/9-primeros-aiuxilios-3.jpg', alt: 'Botiquín y Primeros Auxilios' },
+  { img: '/images/detail-shot-pipes.jpg', alt: 'Tubería y Conducción Especializada' },
+  { img: '/images/tubos-para-sanitario.jpg', alt: 'Tubería Sanitaria e Insumos' }
+];
+---
+
+<section class="py-12 sm:py-16 bg-white overflow-hidden border-t border-gray-100 relative">
+  <div class="relative w-full">
+    
+    <!-- Continuous Smooth Infinite Scrolling Track with 5+ items per view -->
+    <div class="products-gallery-track flex w-max gap-4 sm:gap-6 items-center select-none">
+      
+      <!-- Sequence Set 1 -->
+      {items.map((item) => (
+        <div class="w-48 sm:w-56 md:w-64 lg:w-72 aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-gray-100 bg-gray-50 shrink-0 group transition-all duration-300 transform hover:-translate-y-1">
+          <img
+            src={item.img}
+            alt={item.alt}
+            class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+            loading="lazy"
+          />
+        </div>
+      ))}
+
+      <!-- Duplicate Sequence Set for Seamless Loop -->
+      {items.map((item) => (
+        <div class="w-48 sm:w-56 md:w-64 lg:w-72 aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-gray-100 bg-gray-50 shrink-0 group transition-all duration-300 transform hover:-translate-y-1">
+          <img
+            src={item.img}
+            alt={item.alt}
+            class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+            loading="lazy"
+          />
+        </div>
+      ))}
+
+    </div>
+
+    <!-- Navigation Arrows Overlay (Aesthetic Indicator) -->
+    <div class="absolute inset-y-0 left-4 sm:left-8 flex items-center pointer-events-none">
+      <div class="w-10 h-10 rounded-full bg-white/90 shadow-lg border border-gray-200 text-jimaco-orange flex items-center justify-center font-bold text-lg pointer-events-auto cursor-pointer hover:bg-white transition-all">
+        ←
+      </div>
+    </div>
+    <div class="absolute inset-y-0 right-4 sm:right-8 flex items-center pointer-events-none">
+      <div class="w-10 h-10 rounded-full bg-white/90 shadow-lg border border-gray-200 text-jimaco-orange flex items-center justify-center font-bold text-lg pointer-events-auto cursor-pointer hover:bg-white transition-all">
+        →
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  @keyframes productsScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .products-gallery-track {
+    animation: productsScroll 32s linear infinite;
+    will-change: transform;
+  }
+
+  .products-gallery-track:hover {
+    animation-play-state: paused;
+  }
+</style>

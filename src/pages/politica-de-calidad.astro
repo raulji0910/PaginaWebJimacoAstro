@@ -1,0 +1,471 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Política de Calidad y Objetivos — JIMACO" 
+  description="Conoce la misión, visión, política de calidad y objetivos certificados de Ferretería Industrial JIMACO."
+>
+  <div class="py-6 sm:py-10 bg-[#F8FAF7] min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 space-y-12 lg:space-y-20">
+      
+      <!-- SLIDE 1: PORTADA PRINCIPAL DE CALIDAD (HERO CON ENTRADA SUAVE) -->
+      <div id="slide-portada" class="calidad-panel reveal-slide rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#0A2610] via-[#0F4A1C] to-[#1C6521] text-white border border-white/10 relative group">
+        <div class="absolute inset-0 z-0 opacity-20 pointer-events-none mix-blend-luminosity">
+          <img src="/images/pic-feria-solar.jpg" alt="" class="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-1000" />
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0A2610]/95 via-[#0A2610]/80 to-transparent z-0"></div>
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#7BBE6F]/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 p-6 sm:p-14 lg:p-20 max-w-3xl space-y-5">
+          <span class="inline-block text-xs font-extrabold uppercase tracking-widest text-[#FF6A1C] font-display animate-pulse">
+            — CALIDAD —
+          </span>
+          <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight drop-shadow-md">
+            Nuestro compromiso<br />
+            con la calidad,<br />
+            <span class="text-[#7BBE6F]">paso a paso</span>
+          </h1>
+          <p class="text-emerald-100 text-sm sm:text-lg leading-relaxed max-w-xl text-justify sm:text-left">
+            Desliza hacia abajo para conocer nuestra misión, política y objetivos de calidad.
+          </p>
+
+          <div class="pt-2 flex items-center">
+            <a 
+              href="#slide-mision" 
+              class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-[#7BBE6F] hover:bg-[#7BBE6F] hover:text-[#0A2610] flex items-center justify-center text-[#7BBE6F] transition-all duration-300 transform hover:scale-110 shadow-lg cursor-pointer"
+              title="Ir a Misión y Visión"
+            >
+              <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Bottom 4 Pillars Bar -->
+        <div class="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-black/40 backdrop-blur-md border-t border-white/10 px-6 sm:px-8 py-6">
+          <div class="flex items-center gap-3 hover:translate-x-1 transition-transform">
+            <div class="w-9 h-9 rounded-lg bg-[#7BBE6F]/20 text-[#7BBE6F] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <h4 class="font-display font-bold text-xs uppercase tracking-wider text-white">CALIDAD QUE INSPIRA</h4>
+              <p class="text-[11px] text-white/70">Principios que respaldan nuestro servicio</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 hover:translate-x-1 transition-transform">
+            <div class="w-9 h-9 rounded-lg bg-[#7BBE6F]/20 text-[#7BBE6F] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <h4 class="font-display font-bold text-xs uppercase tracking-wider text-white">PROCESOS QUE GARANTIZAN</h4>
+              <p class="text-[11px] text-white/70">Misión, visión y valores corporativos</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 hover:translate-x-1 transition-transform">
+            <div class="w-9 h-9 rounded-lg bg-[#7BBE6F]/20 text-[#7BBE6F] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div>
+              <h4 class="font-display font-bold text-xs uppercase tracking-wider text-white">ESTÁNDARES QUE RESPALDAN</h4>
+              <p class="text-[11px] text-white/70">Política de calidad certificada</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 hover:translate-x-1 transition-transform">
+            <div class="w-9 h-9 rounded-lg bg-[#7BBE6F]/20 text-[#7BBE6F] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+            </div>
+            <div>
+              <h4 class="font-display font-bold text-xs uppercase tracking-wider text-white">MEJORA CONTINUA</h4>
+              <p class="text-[11px] text-white/70">Evolución constante de procesos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: MISIÓN, VISIÓN Y VALORES (REVEAL SLIDE) -->
+      <div id="slide-mision" class="calidad-panel reveal-slide rounded-3xl bg-white p-6 sm:p-12 lg:p-14 shadow-xl border border-gray-200/80 space-y-8 sm:space-y-10">
+        <div class="text-center space-y-3 max-w-2xl mx-auto">
+          <span class="inline-block text-xs font-extrabold uppercase tracking-widest text-[#FF6A1C] font-display">
+            — IDENTIDAD Y DIRECCIÓN —
+          </span>
+          <h2 class="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B1E02] tracking-tight">
+            Misión, visión y valores corporativos
+          </h2>
+          <p class="text-gray-600 text-xs sm:text-base">
+            Lo que somos, hacia dónde vamos y cómo construimos relaciones de confianza.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          <div class="bg-[#F8FAF7] border border-[#E2ECE0] rounded-2xl p-6 sm:p-8 space-y-3 hover:shadow-xl hover:border-[#1C6521] hover:-translate-y-1.5 transition-all duration-300 group">
+            <span class="inline-block bg-[#E8F5E5] text-[#1C6521] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider group-hover:bg-[#1C6521] group-hover:text-white transition-colors">
+              01 • MISIÓN
+            </span>
+            <h3 class="font-display text-xl sm:text-2xl font-extrabold text-[#0B1E02] group-hover:text-[#1C6521] transition-colors">Nuestra Misión</h3>
+            <p class="text-gray-700 leading-relaxed text-xs sm:text-base text-justify sm:text-left">
+              Garantizar un suministro integral de soluciones de ferretería industrial, construcción, protección personal y energía solar, brindando un servicio eficiente, asesoría técnica experta y contribuyendo al crecimiento sostenible del sector.
+            </p>
+          </div>
+
+          <div class="bg-[#F8FAF7] border border-[#E2ECE0] rounded-2xl p-6 sm:p-8 space-y-3 hover:shadow-xl hover:border-[#1C6521] hover:-translate-y-1.5 transition-all duration-300 group">
+            <span class="inline-block bg-[#E8F5E5] text-[#1C6521] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider group-hover:bg-[#1C6521] group-hover:text-white transition-colors">
+              02 • VISIÓN
+            </span>
+            <h3 class="font-display text-xl sm:text-2xl font-extrabold text-[#0B1E02] group-hover:text-[#1C6521] transition-colors">Nuestra Visión</h3>
+            <p class="text-gray-700 leading-relaxed text-xs sm:text-base text-justify sm:text-left">
+              Posicionarnos como el aliado estratégico líder dentro de la industria de la construcción, energía y mantenimiento a nivel nacional, expandiendo nuestra presencia y consolidando nuestro compromiso con la calidad y cumplimiento.
+            </p>
+          </div>
+        </div>
+
+        <!-- Valores en acción -->
+        <div class="bg-[#0B1E02] text-white rounded-2xl p-6 sm:p-10 space-y-6 shadow-xl relative overflow-hidden">
+          <div class="absolute -bottom-10 -right-10 w-48 h-48 bg-[#7BBE6F]/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div>
+            <h4 class="font-display text-lg sm:text-2xl font-extrabold text-white">Nuestros Valores en Acción</h4>
+            <p class="text-emerald-200/70 text-xs sm:text-sm mt-1">Principios que orientan cada interacción con clientes, proveedores y colaboradores:</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <div class="flex gap-3 group hover:translate-x-1 transition-transform">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#FF6A1C] mt-1.5 shrink-0 group-hover:scale-125 transition-transform"></span>
+              <div class="space-y-1">
+                <strong class="text-[#7BBE6F] block font-display text-sm sm:text-base group-hover:text-white transition-colors">Confianza</strong>
+                <p class="text-xs sm:text-sm text-gray-300 text-justify sm:text-left">Actuamos con honestidad y transparencia para relaciones duraderas.</p>
+              </div>
+            </div>
+            <div class="flex gap-3 group hover:translate-x-1 transition-transform">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#FF6A1C] mt-1.5 shrink-0 group-hover:scale-125 transition-transform"></span>
+              <div class="space-y-1">
+                <strong class="text-[#7BBE6F] block font-display text-sm sm:text-base group-hover:text-white transition-colors">Calidad y Puntualidad</strong>
+                <p class="text-xs sm:text-sm text-gray-300 text-justify sm:text-left">Productos certificados y suministro oportuno en obra.</p>
+              </div>
+            </div>
+            <div class="flex gap-3 group hover:translate-x-1 transition-transform">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#FF6A1C] mt-1.5 shrink-0 group-hover:scale-125 transition-transform"></span>
+              <div class="space-y-1">
+                <strong class="text-[#7BBE6F] block font-display text-sm sm:text-base group-hover:text-white transition-colors">Relación Cercana</strong>
+                <p class="text-xs sm:text-sm text-gray-300 text-justify sm:text-left">Escucha activa y asesoría personalizada a la medida.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: POLÍTICA DE CALIDAD (REVEAL SLIDE) -->
+      <div id="slide-politica" class="calidad-panel reveal-slide rounded-3xl bg-white p-6 sm:p-12 lg:p-14 shadow-xl border border-gray-200/80 space-y-8 sm:space-y-10">
+        <div class="space-y-2">
+          <span class="inline-block text-xs font-extrabold uppercase tracking-widest text-[#FF6A1C] font-display">
+            — POLÍTICA DE CALIDAD —
+          </span>
+          <h2 class="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B1E02] tracking-tight leading-tight">
+            Nuestro compromiso con la satisfacción y la mejora continua
+          </h2>
+          <p class="text-gray-600 text-xs sm:text-base">
+            Estándares rigurosos que garantizan excelencia en cada entrega.
+          </p>
+        </div>
+
+        <!-- Corporate Policy Box with Clean Text Justification -->
+        <div class="bg-[#F3F7F2] border-l-4 border-[#1C6521] rounded-2xl p-5 sm:p-8 shadow-xs hover:border-[#FF6A1C] transition-colors duration-300">
+          <p class="text-gray-800 text-xs sm:text-base leading-relaxed sm:leading-loose text-justify text-pretty hyphens-auto font-normal">
+            <strong class="text-[#0B1E02] font-bold font-display">FERRETERÍA INDUSTRIAL JIMACO S.A.S.</strong>, empresa dedicada a la comercialización de materiales, herramientas, maquinaria e insumos para la industria de la construcción, con cobertura en todo el territorio nacional, está comprometida con la satisfacción de las partes interesadas. Nuestro enfoque está en prestar un servicio ágil, oportuno y eficiente, optimizar nuestros procesos internos y brindar productos y servicios con altos estándares de calidad, apoyados en el análisis de información y estrategias de mejora continua.
+          </p>
+        </div>
+
+        <!-- 6 PILARES EXACTOS CON HOVER INTERACTIVO -->
+        <div class="space-y-4 pt-2">
+          <h3 class="font-display font-extrabold text-xs sm:text-sm uppercase tracking-wider text-[#0F4A1C]">6 PILARES</h3>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <!-- Transparencia -->
+            <div class="pilar-card bg-white border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 flex items-center gap-4 sm:gap-5 hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group cursor-default">
+              <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                <svg viewBox="0 0 64 64" class="w-8 h-8 sm:w-9 sm:h-9 group-hover:scale-110 transition-transform duration-300">
+                  <ellipse cx="32" cy="32" rx="20" ry="11" fill="none" stroke="#0F4A1C" class="group-hover:stroke-white transition-colors" stroke-width="2.5" />
+                  <circle cx="32" cy="32" r="5.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                  <path d="M12 32c0-8 8.9-15 20-15s20 7 20 15-8.9 15-20 15-20-7-20-15z" fill="none" stroke="#7BBE6F" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.6"/>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">TRANSPARENCIA</h4>
+                <p class="text-xs text-gray-500 mt-0.5">Con nuestros clientes.</p>
+              </div>
+            </div>
+
+            <!-- Comunicación -->
+            <div class="pilar-card bg-white border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 flex items-center gap-4 sm:gap-5 hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group cursor-default">
+              <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                <svg viewBox="0 0 64 64" class="w-8 h-8 sm:w-9 sm:h-9 group-hover:scale-110 transition-transform duration-300">
+                  <rect x="15" y="16" width="26" height="19" rx="5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                  <rect x="23" y="27" width="26" height="19" rx="5" fill="#1C6521" class="group-hover:fill-[#7BBE6F] transition-colors" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">COMUNICACIÓN</h4>
+                <p class="text-xs text-gray-500 mt-0.5">Canales eficientes.</p>
+              </div>
+            </div>
+
+            <!-- Satisfacción -->
+            <div class="pilar-card bg-white border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 flex items-center gap-4 sm:gap-5 hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group cursor-default">
+              <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                <svg viewBox="0 0 64 64" class="w-8 h-8 sm:w-9 sm:h-9 group-hover:scale-110 transition-transform duration-300">
+                  <circle cx="30" cy="22" r="6.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                  <path d="M17 44c0-7.2 5.8-13 13-13s13 5.8 13 13v2H17v-2z" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                  <path d="M38 37.5c0-1.8 1.4-3.2 3.2-3.2 1 0 1.9.5 2.5 1.2.6-.7 1.5-1.2 2.5-1.2 1.8 0 3.2 1.4 3.2 3.2 0 2.8-5.7 6.3-5.7 6.3s-5.7-3.5-5.7-6.3z" fill="#FF6A1C" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">SATISFACCIÓN</h4>
+                <p class="text-xs text-gray-500 mt-0.5">Enfoque en el cliente.</p>
+              </div>
+            </div>
+
+            <!-- Suministro -->
+            <div class="pilar-card bg-white border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 flex items-center gap-4 sm:gap-5 hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group cursor-default">
+              <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                <svg viewBox="0 0 64 64" class="w-8 h-8 sm:w-9 sm:h-9 group-hover:scale-110 transition-transform duration-300">
+                  <rect x="18" y="19" width="12" height="12" rx="2" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                  <rect x="34" y="19" width="12" height="12" rx="2" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                  <rect x="26" y="34" width="12" height="12" rx="2" fill="#0F4A1C" class="group-hover:fill-[#7BBE6F] transition-colors" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">SUMINISTRO</h4>
+                <p class="text-xs text-gray-500 mt-0.5">Cadena y distribución.</p>
+              </div>
+            </div>
+
+            <!-- Mejora Continua -->
+            <div class="pilar-card bg-white border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 flex items-center gap-4 sm:gap-5 hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group cursor-default">
+              <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                <svg viewBox="0 0 64 64" class="w-8 h-8 sm:w-9 sm:h-9 group-hover:scale-110 transition-transform duration-300">
+                  <rect x="17" y="36" width="7" height="12" rx="1.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                  <rect x="28" y="27" width="7" height="21" rx="1.5" fill="#1C6521" class="group-hover:fill-[#7BBE6F] transition-colors" />
+                  <rect x="39" y="17" width="7" height="31" rx="1.5" fill="#FF6A1C" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">MEJORA CONTINUA</h4>
+                <p class="text-xs text-gray-500 mt-0.5">Fortalecemos procesos.</p>
+              </div>
+            </div>
+
+            <!-- Cumplimiento -->
+            <div class="pilar-card bg-white border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 flex items-center gap-4 sm:gap-5 hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group cursor-default">
+              <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                <svg viewBox="0 0 64 64" class="w-8 h-8 sm:w-9 sm:h-9 group-hover:scale-110 transition-transform duration-300">
+                  <rect x="18" y="14" width="28" height="36" rx="4" fill="none" stroke="#0F4A1C" class="group-hover:stroke-white transition-colors" stroke-width="2.5" />
+                  <line x1="25" y1="23" x2="39" y2="23" stroke="#0F4A1C" class="group-hover:stroke-white transition-colors" stroke-width="2.5" stroke-linecap="round" />
+                  <line x1="25" y1="30" x2="39" y2="30" stroke="#0F4A1C" class="group-hover:stroke-white transition-colors" stroke-width="2.5" stroke-linecap="round" />
+                  <polyline points="26,39 30,43 38,35" fill="none" stroke="#1C6521" class="group-hover:stroke-[#7BBE6F] transition-colors" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">CUMPLIMIENTO</h4>
+                <p class="text-xs text-gray-500 mt-0.5">Requisitos vigentes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: OBJETIVOS DE CALIDAD (REVEAL SLIDE) -->
+      <div id="slide-objetivos" class="calidad-panel reveal-slide rounded-3xl bg-white p-6 sm:p-12 lg:p-14 shadow-xl border border-gray-200/80 space-y-8 sm:space-y-10">
+        
+        <!-- Header with Top-Right 3 Vertical Bars -->
+        <div class="flex justify-between items-start">
+          <div class="space-y-2">
+            <h2 class="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B1E02] tracking-tight">
+              Objetivos de calidad
+            </h2>
+            <p class="text-gray-600 text-xs sm:text-base max-w-2xl text-justify sm:text-left">
+              De la estrategia a la acción: objetivos que convierten nuestro compromiso en acciones medibles y oportunidades de mejora.
+            </p>
+          </div>
+          <!-- 3 Vertical Bars Indicator -->
+          <div class="flex gap-1.5 items-end h-8 sm:h-10">
+            <span class="w-1.5 h-4 sm:h-5 bg-[#0F4A1C] rounded-full animate-pulse"></span>
+            <span class="w-1.5 h-6 sm:h-7 bg-[#1C6521] rounded-full animate-pulse" style="animation-delay: 200ms;"></span>
+            <span class="w-1.5 h-8 sm:h-10 bg-[#FF6A1C] rounded-full animate-pulse" style="animation-delay: 400ms;"></span>
+          </div>
+        </div>
+
+        <!-- Objetivo General Box -->
+        <div class="bg-[#063A16] text-white rounded-2xl p-5 sm:p-8 flex flex-col md:flex-row gap-3 md:gap-8 items-start md:items-center shadow-lg hover:bg-[#07471b] transition-colors duration-300">
+          <span class="font-display font-black text-xs uppercase tracking-wider text-[#7BBE6F] shrink-0">
+            OBJETIVO GENERAL
+          </span>
+          <p class="font-display font-bold text-sm sm:text-lg text-white leading-snug text-justify sm:text-left">
+            Crear alianzas estratégicas basadas en la confianza y respaldo brindado por una correcta ejecución de procesos.
+          </p>
+        </div>
+
+        <!-- Objetivos Específicos Section -->
+        <div class="space-y-6">
+          <div class="flex flex-wrap gap-4 items-baseline">
+            <span class="font-display font-black text-xs sm:text-sm uppercase tracking-wider text-[#0F4A1C]">OBJETIVOS ESPECÍFICOS</span>
+            <span class="text-xs sm:text-sm text-gray-500">Cinco enfoques para fortalecer la calidad de nuestros procesos.</span>
+          </div>
+
+          <!-- Row 1: 3 Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <!-- 01 CLIENTE -->
+            <div class="objetivo-card bg-[#F8FAF7] border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 space-y-3 hover:bg-white hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group">
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-black text-[#1C6521] bg-[#E8F5E5] group-hover:bg-[#1C6521] group-hover:text-white px-2 py-0.5 rounded-md font-display transition-colors">01</span>
+                <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors">
+                  <svg viewBox="0 0 64 64" class="w-6 h-6 sm:w-7 sm:h-7 group-hover:scale-110 transition-transform">
+                    <circle cx="32" cy="22" r="7" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <path d="M18 46c0-7.7 6.3-14 14-14s14 6.3 14 14v2H18v-2z" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                  </svg>
+                </div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">CLIENTE</h4>
+              </div>
+              <p class="text-xs text-gray-600 leading-relaxed text-justify sm:text-left">Asesorar a nuestros clientes con el fin de garantizar una compra satisfactoria cumpliendo sus expectativas.</p>
+            </div>
+
+            <!-- 02 PROVEEDORES -->
+            <div class="objetivo-card bg-[#F8FAF7] border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 space-y-3 hover:bg-white hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group">
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-black text-[#1C6521] bg-[#E8F5E5] group-hover:bg-[#1C6521] group-hover:text-white px-2 py-0.5 rounded-md font-display transition-colors">02</span>
+                <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors">
+                  <svg viewBox="0 0 64 64" class="w-6 h-6 sm:w-7 sm:h-7 group-hover:scale-110 transition-transform">
+                    <rect x="18" y="19" width="12" height="12" rx="2" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <rect x="34" y="19" width="12" height="12" rx="2" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <rect x="26" y="34" width="12" height="12" rx="2" fill="#0F4A1C" class="group-hover:fill-[#7BBE6F] transition-colors" />
+                  </svg>
+                </div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">PROVEEDORES</h4>
+              </div>
+              <p class="text-xs text-gray-600 leading-relaxed text-justify sm:text-left">Realizar una selección, evaluación y reevaluación de proveedores asegurando una correcta cadena de suministro con altos estándares de calidad.</p>
+            </div>
+
+            <!-- 03 TALENTO -->
+            <div class="objetivo-card bg-[#F8FAF7] border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 space-y-3 hover:bg-white hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group">
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-black text-[#1C6521] bg-[#E8F5E5] group-hover:bg-[#1C6521] group-hover:text-white px-2 py-0.5 rounded-md font-display transition-colors">03</span>
+                <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors">
+                  <svg viewBox="0 0 64 64" class="w-6 h-6 sm:w-7 sm:h-7 group-hover:scale-110 transition-transform">
+                    <circle cx="22" cy="24" r="3.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <circle cx="32" cy="24" r="3.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <circle cx="42" cy="24" r="3.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <rect x="17" y="34" width="30" height="9" rx="4.5" fill="#0F4A1C" class="group-hover:fill-[#7BBE6F] transition-colors" />
+                  </svg>
+                </div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">TALENTO</h4>
+              </div>
+              <p class="text-xs text-gray-600 leading-relaxed text-justify sm:text-left">Fortalecer las competencias de nuestro recurso humano enfocado al cumplimiento de política establecida.</p>
+            </div>
+          </div>
+
+          <!-- Row 2: 2 Cards Centered -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-3xl mx-auto pt-2">
+            <!-- 04 MEJORA -->
+            <div class="objetivo-card bg-[#F8FAF7] border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 space-y-3 hover:bg-white hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group">
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-black text-[#1C6521] bg-[#E8F5E5] group-hover:bg-[#1C6521] group-hover:text-white px-2 py-0.5 rounded-md font-display transition-colors">04</span>
+                <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors">
+                  <svg viewBox="0 0 64 64" class="w-6 h-6 sm:w-7 sm:h-7 group-hover:scale-110 transition-transform">
+                    <rect x="17" y="36" width="7" height="12" rx="1.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <rect x="28" y="27" width="7" height="21" rx="1.5" fill="#1C6521" class="group-hover:fill-[#7BBE6F] transition-colors" />
+                    <rect x="39" y="17" width="7" height="31" rx="1.5" fill="#FF6A1C" />
+                  </svg>
+                </div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">MEJORA</h4>
+              </div>
+              <p class="text-xs text-gray-600 leading-relaxed text-justify sm:text-left">Analizar información y datos históricos buscando siempre la mejora continua.</p>
+            </div>
+
+            <!-- 05 PARTES INTERESADAS -->
+            <div class="objetivo-card bg-[#F8FAF7] border border-[#E1ECE0] rounded-2xl p-5 sm:p-6 space-y-3 hover:bg-white hover:border-[#1C6521] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group">
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-black text-[#1C6521] bg-[#E8F5E5] group-hover:bg-[#1C6521] group-hover:text-white px-2 py-0.5 rounded-md font-display transition-colors">05</span>
+                <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E1F2DF] group-hover:bg-[#1C6521] flex items-center justify-center shrink-0 transition-colors">
+                  <svg viewBox="0 0 64 64" class="w-6 h-6 sm:w-7 sm:h-7 group-hover:scale-110 transition-transform">
+                    <circle cx="32" cy="32" r="5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <circle cx="32" cy="17" r="3.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <circle cx="32" cy="47" r="3.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <circle cx="17" cy="32" r="3.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                    <circle cx="47" cy="32" r="3.5" fill="#0F4A1C" class="group-hover:fill-white transition-colors" />
+                  </svg>
+                </div>
+                <h4 class="font-display font-black text-xs sm:text-sm uppercase text-[#0B1E02] group-hover:text-[#1C6521] tracking-wider transition-colors">PARTES INTERESADAS</h4>
+              </div>
+              <p class="text-xs text-gray-600 leading-relaxed text-justify sm:text-left">Satisfacer las expectativas de las organizaciones involucradas.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Footer Bar matching Screenshot 1 -->
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-gray-100">
+          <span class="font-display font-bold text-xs text-[#0F4A1C] tracking-wider uppercase">JIMACO • Engranando futuro juntos</span>
+          <div class="bg-[#063A16] text-white px-6 py-2 rounded-full font-display font-extrabold text-xs tracking-widest uppercase shadow-md hover:shadow-lg transition-shadow">
+            <span class="text-[#7BBE6F]">MEJORAR</span> • <span class="text-[#7BBE6F]">MEDIR</span> • <span class="text-[#7BBE6F]">CUMPLIR</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Base visibility and smooth hover animations */
+  .calidad-panel {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+
+  /* Progressive smooth entrance animation */
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(25px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-in {
+    animation: slideInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+
+<script>
+  function initCalidadAnimations() {
+    const panels = document.querySelectorAll('.calidad-panel');
+    if (!('IntersectionObserver' in window)) {
+      panels.forEach(p => p.classList.add('animate-slide-in'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -30px 0px'
+    });
+
+    panels.forEach((p) => observer.observe(p));
+  }
+
+  // Run immediately and on page load events
+  initCalidadAnimations();
+  document.addEventListener('DOMContentLoaded', initCalidadAnimations);
+  document.addEventListener('astro:page-load', initCalidadAnimations);
+</script>

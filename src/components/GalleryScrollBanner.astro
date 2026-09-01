@@ -1,0 +1,67 @@
+---
+const galleryItems = [
+  { img: '/images/cinta-plastica-peligro-alta-tension.jpg', alt: 'Cinta de Señalización y Seguridad' },
+  { img: '/images/accesorios-PEAD.jpg', alt: 'Accesorios y Tubería PEAD' },
+  { img: '/images/7-pinturas-1.jpg', alt: 'Insumos y Sellantes de Construcción' },
+  { img: '/images/4-polisombras-1.jpg', alt: 'Polisombras y Cerramiento de Obra' },
+  { img: '/images/5-seguridad-alturas-1.jpg', alt: 'Trabajo en Alturas y Seguridad Industrial' },
+  { img: '/images/detail-shot-pipes.jpg', alt: 'Tubería Especializada' },
+  { img: '/images/tubos-para-sanitario.jpg', alt: 'Conducción y Tubería Sanitaria' },
+  { img: '/images/varilla-de-cobre.jpg', alt: 'Puestas a Tierra y Cobre' },
+  { img: '/images/6-seguridad-manos-1.jpg', alt: 'Protección Manual' },
+  { img: '/images/1-tuberia-sanitaria-1.jpg', alt: 'Tubería y Conexiones' }
+];
+---
+
+<section class="w-full py-12 sm:py-16 bg-white overflow-hidden border-b border-gray-100">
+  <div class="relative w-full">
+    <!-- Continuous Infinite Scrolling Track -->
+    <div class="gallery-marquee-track flex w-max gap-4 sm:gap-6 items-center select-none">
+      
+      <!-- Sequence Set 1 -->
+      {galleryItems.map((item) => (
+        <div class="w-48 sm:w-56 md:w-64 aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-gray-100 bg-gray-50 shrink-0 group transition-all duration-300 transform hover:-translate-y-1">
+          <img
+            src={item.img}
+            alt={item.alt}
+            class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+            loading="lazy"
+          />
+        </div>
+      ))}
+
+      <!-- Duplicate Sequence Set for Seamless Loop -->
+      {galleryItems.map((item) => (
+        <div class="w-48 sm:w-56 md:w-64 aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-gray-100 bg-gray-50 shrink-0 group transition-all duration-300 transform hover:-translate-y-1">
+          <img
+            src={item.img}
+            alt={item.alt}
+            class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+            loading="lazy"
+          />
+        </div>
+      ))}
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes galleryScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .gallery-marquee-track {
+    animation: galleryScroll 35s linear infinite;
+    will-change: transform;
+  }
+
+  .gallery-marquee-track:hover {
+    animation-play-state: paused;
+  }
+</style>

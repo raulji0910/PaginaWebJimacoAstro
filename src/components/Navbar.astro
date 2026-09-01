@@ -1,0 +1,139 @@
+---
+const navLinks = [
+  {
+    name: 'Sobre Jimaco',
+    href: '/sobre-jimaco',
+    dropdown: [
+      { name: 'Quiénes Somos', href: '/sobre-jimaco' },
+      { name: 'Política de Calidad', href: '/politica-de-calidad' }
+    ]
+  },
+  {
+    name: 'Suministros',
+    href: '/suministros',
+    dropdown: [
+      { name: 'Energías Renovables', href: '/suministros-de-energia-solar' },
+      { name: 'Obras y Construcción', href: '/suministros-para-construccion' },
+      { name: 'Protección Personal', href: '/suministros-para-proteccion-personal' }
+    ]
+  },
+  {
+    name: 'Ponte en Contacto',
+    href: '/ponte-en-contacto'
+  }
+];
+---
+
+<header class="sticky top-0 z-50 bg-white shadow-xs border-b border-gray-100 transition-all duration-300">
+  <!-- Main Navigation Bar -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between h-20 sm:h-24">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 group">
+      <img
+        src="/images/logo-horizontal.png"
+        alt="JIMACO - Engranando futuro juntos"
+        class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-102"
+      />
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="hidden md:flex items-center space-x-2 lg:space-x-8">
+      {navLinks.map((link) => (
+        <div class="relative group">
+          <a
+            href={link.href}
+            class="px-2 py-2 text-base font-bold font-display text-jimaco-dark hover:text-jimaco-primary transition-colors inline-flex items-center gap-1.5"
+          >
+            <span>{link.name}</span>
+            {link.dropdown && (
+              <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 opacity-60 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            )}
+          </a>
+          
+          {link.dropdown && (
+            <div class="absolute left-0 top-full hidden group-hover:block group-focus-within:block w-64 pt-2 z-50">
+              <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 py-2.5 overflow-hidden animate-fadeIn">
+                {link.dropdown.map((subItem) => (
+                  <a
+                    href={subItem.href}
+                    class="block px-5 py-3 text-sm font-bold text-gray-700 hover:bg-emerald-50 hover:text-jimaco-primary transition-colors font-display"
+                  >
+                    {subItem.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </nav>
+
+    <!-- Right Side: Cotizar CTA Button & Orange Drawer Icon -->
+    <div class="flex items-center gap-3">
+      <a
+        href="https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20solicitar%20una%20cotizaci%C3%B3n"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden sm:inline-flex bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display uppercase tracking-wider font-extrabold text-xs px-5 py-3 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5"
+      >
+        Cotizar Ahora
+      </a>
+
+      <!-- Orange Hamburger / Side Menu Toggle -->
+      <button
+        id="mobile-menu-btn"
+        class="w-11 h-11 bg-jimaco-orange hover:bg-jimaco-orangeHover text-white rounded-lg flex flex-col items-center justify-center gap-1 shadow-sm transition-all focus:outline-none"
+        aria-label="Abrir Menú"
+      >
+        <span class="w-5 h-0.5 bg-white rounded-full"></span>
+        <span class="w-5 h-0.5 bg-white rounded-full"></span>
+        <span class="w-5 h-0.5 bg-white rounded-full"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile / Side Drawer Menu -->
+  <div id="mobile-menu" class="hidden bg-white border-b border-gray-200 px-6 pt-4 pb-8 space-y-3 shadow-xl">
+    <a href="/sobre-jimaco" class="block py-2 font-display font-bold text-gray-900 hover:text-jimaco-primary text-lg">Sobre Jimaco</a>
+    <a href="/politica-de-calidad" class="block pl-4 py-1 text-sm text-gray-600 hover:text-jimaco-primary">↳ Política de Calidad y Objetivos</a>
+    <div class="pt-2"></div>
+    <a href="/suministros" class="block py-2 font-display font-bold text-gray-900 hover:text-jimaco-primary text-lg">Suministros</a>
+    <a href="/suministros-de-energia-solar" class="block pl-4 py-1 text-sm text-gray-600 hover:text-jimaco-primary">↳ Energías Renovables</a>
+    <a href="/suministros-para-construccion" class="block pl-4 py-1 text-sm text-gray-600 hover:text-jimaco-primary">↳ Obras y Construcción</a>
+    <a href="/suministros-para-proteccion-personal" class="block pl-4 py-1 text-sm text-gray-600 hover:text-jimaco-primary">↳ Protección Personal</a>
+    <div class="pt-2"></div>
+    <a href="/ponte-en-contacto" class="block py-2 font-display font-bold text-gray-900 hover:text-jimaco-primary text-lg">Ponte en Contacto</a>
+    <div class="pt-4">
+      <a
+        href="https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20solicitar%20una%20cotizaci%C3%B3n"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block text-center w-full bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-bold uppercase py-3 rounded-lg shadow-md"
+      >
+        Cotizar por WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  function setupMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if (btn && menu) {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('hidden');
+      };
+      document.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target && !menu.contains(target) && !btn.contains(target)) {
+          menu.classList.add('hidden');
+        }
+      });
+    }
+  }
+  setupMobileMenu();
+</script>

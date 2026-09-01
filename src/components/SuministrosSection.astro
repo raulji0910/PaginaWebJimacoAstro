@@ -1,0 +1,107 @@
+---
+const lines = [
+  {
+    title: 'Energía Solar y Fotovoltaica',
+    subtitle: '¿Tienes un proyecto de granja solar?',
+    desc: 'Como importadores directos en Colombia, en JIMACO entregamos suministros certificados, garantizando rendimiento, seguridad y soporte técnico para proyectos fotovoltaicos.',
+    items: ['Placas subterráneas', 'Tubería PEAD corrugada', 'Tubería conduit / EMT', 'Terminales bimetálicas', 'Cable fotovoltaico', 'Varillas copperweld', 'Conectores MC4 y en Y'],
+    image: '/images/bg-solar.jpg',
+    link: '/suministros/energia-solar',
+    tag: 'Energías Renovables'
+  },
+  {
+    title: 'Obras y Construcción',
+    subtitle: '¿Tienes un proyecto de construcción?',
+    desc: 'Distribuimos insumos y herramientas para construcción con calidad garantizada, disponibilidad inmediata y asesoría técnica personalizada.',
+    items: ['Tubería PVC y galvanizada', 'Herramientas manuales y eléctricas', 'Varillas y perfiles', 'Polisombras y mallas', 'Tornillería especializada', 'Adhesivos y sellantes'],
+    image: '/images/tuberia-galvanizada.jpg',
+    link: '/suministros/construccion',
+    tag: 'Infraestructura'
+  },
+  {
+    title: 'Equipos de Protección Personal (EPP)',
+    subtitle: '¿Buscas artículos de protección personal?',
+    desc: 'Nuestra línea de protección industrial ofrece equipos certificados que cumplen con normativas nacionales e internacionales, garantizando seguridad, confort y durabilidad.',
+    items: ['Cascos dieléctricos', 'Gafas de seguridad', 'Orejeras y tapabocas', 'Arnés y líneas de vida', 'Guantes dieléctricos', 'Chalecos reflectivos', 'Botas de seguridad'],
+    image: '/images/hero-worker.jpg',
+    link: '/suministros/proteccion-personal',
+    tag: 'Seguridad Industrial'
+  }
+];
+---
+
+<section class="py-20 bg-gray-50/70 border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+      <span class="text-xs sm:text-sm font-bold uppercase tracking-widest text-jimaco-orange font-display">Nuestros Suministros</span>
+      <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-jimaco-dark">
+        Tres líneas, una misma promesa: <span class="text-jimaco-primary">eficiencia y confianza</span>
+      </h2>
+      <p class="text-jimaco-grayText text-base sm:text-lg">
+        Garantizamos disponibilidad, trazabilidad y cumplimiento en cada entrega para que tus proyectos avancen sin contratiempos.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {lines.map((line) => (
+        <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col overflow-hidden group">
+          <!-- Card Image Header -->
+          <div class="relative h-52 overflow-hidden">
+            <img
+              src={line.image}
+              alt={line.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+            <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-jimaco-primary font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
+              {line.tag}
+            </span>
+            <div class="absolute bottom-3 left-4 right-4 text-white">
+              <h3 class="font-display text-xl font-bold leading-tight">{line.title}</h3>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <p class="text-xs font-bold text-jimaco-orange uppercase tracking-wider">{line.subtitle}</p>
+              <p class="text-sm text-gray-600 leading-relaxed">{line.desc}</p>
+              
+              <div class="pt-2 border-t border-gray-100">
+                <p class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-2">Destacados:</p>
+                <ul class="space-y-1.5 text-xs text-gray-600">
+                  {line.items.slice(0, 4).map((item) => (
+                    <li class="flex items-center gap-1.5">
+                      <svg class="w-3.5 h-3.5 text-jimaco-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
+              <a
+                href={line.link}
+                class="text-jimaco-primary hover:text-jimaco-primaryDark font-display font-bold text-sm inline-flex items-center gap-1 group-hover:translate-x-1 transition-all"
+              >
+                Explorar línea
+                <span>→</span>
+              </a>
+              <a
+                href={`https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20cotizar%20productos%20de%20la%20l%C3%ADnea%20${encodeURIComponent(line.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-xs bg-emerald-50 hover:bg-emerald-100 text-jimaco-primary font-bold px-3 py-1.5 rounded-md transition-colors"
+              >
+                Cotizar
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
