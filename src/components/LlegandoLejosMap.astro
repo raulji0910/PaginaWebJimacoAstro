@@ -1,110 +1,340 @@
 ---
+// Interactive Colombia Projects Map Component - Exact 1:1 match with WordPress
+const projects = [
+  {
+    id: 'flandes',
+    city: 'Flandes, Tolima.',
+    client: 'PROYECTO CELSIA',
+    title: 'SOLAR YUMA',
+    image: '/images/map-project-yuma.jpg',
+    pinX: 50.00,
+    pinY: 57.12,
+    align: 'right'
+  },
+  {
+    id: 'dulima',
+    city: 'Chicoral, Tolima.',
+    client: 'PROYECTO CELSIA',
+    title: 'SOLAR DULIMA',
+    image: '/images/map-project-dulima.jpg',
+    pinX: 47.61,
+    pinY: 60.93,
+    align: 'right'
+  },
+  {
+    id: 'baranoa',
+    city: 'Baranoa, Atlántico.',
+    client: 'PROYECTO FOTOVOLTAICO',
+    title: 'SOLAR BARANOA',
+    image: '/images/map-project-baranoa.jpg',
+    pinX: 45.11,
+    pinY: 16.23,
+    align: 'left'
+  },
+  {
+    id: 'cartagena',
+    city: 'Cartagena, Bolívar.',
+    client: 'PROYECTO INDUSTRIAL',
+    title: 'PARQUE SOLAR CARTAGENA',
+    image: '/images/map-project-cartagena.jpg',
+    pinX: 41.28,
+    pinY: 22.68,
+    align: 'left'
+  },
+  {
+    id: 'valledupar',
+    city: 'Valledupar, Cesar.',
+    client: 'PROYECTO SOLAR',
+    title: 'PARQUE SOLAR VALLEDUPAR',
+    image: '/images/map-project-valledupar.jpg',
+    pinX: 47.41,
+    pinY: 20.20,
+    align: 'right'
+  }
+];
 ---
-<section class="py-20 sm:py-24 bg-[#0A1E0D] text-white relative overflow-hidden">
-  <!-- Subtle ambient green glow in background -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10 space-y-12">
+<section class="py-20 sm:py-28 bg-[#142E16] text-white relative overflow-hidden select-none">
+  <!-- Top subtle background ambient gradient -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10 space-y-12 sm:space-y-14">
     
-    <!-- Top Header: LLEGANDO LEJOS with Horizontal Line -->
-    <div class="flex items-center gap-6">
-      <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#7BBE6F] font-display whitespace-nowrap">
-        LLEGANDO LEJOS
-      </span>
-      <div class="h-[1px] bg-white/20 flex-1"></div>
+    <!-- 1. Top Section Divider: LLEGANDO LEJOS -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-6">
+        <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#7BBE6F] font-display whitespace-nowrap">
+          LLEGANDO LEJOS
+        </span>
+        <div class="h-[1px] bg-white/20 flex-1"></div>
+      </div>
+
+      <!-- 2. Metrics & Title Row (Exact match with Screenshot 2) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pt-2">
+        <!-- Left: +460 CLIENTES satisfechos -->
+        <div class="lg:col-span-5 flex items-baseline gap-4 sm:gap-6">
+          <span class="font-display text-6xl sm:text-7xl lg:text-8xl font-black text-[#88D67C] tracking-tight leading-none">
+            +460
+          </span>
+          <div class="space-y-0.5">
+            <p class="font-display font-black uppercase text-sm sm:text-base tracking-wider text-white">
+              CLIENTES
+            </p>
+            <p class="font-display font-medium text-xs sm:text-sm text-emerald-200/80">
+              satisfechos
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: Más de una década impulsando proyectos en toda Colombia -->
+        <div class="lg:col-span-7">
+          <h3 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight">
+            Más de una década impulsando proyectos en <span class="text-[#88D67C]">toda Colombia</span>
+          </h3>
+        </div>
+      </div>
     </div>
 
-    <!-- Main Grid: Left Metric, Center Map with Pins, Right Headline -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-      
-      <!-- Left: Big Number Counter -->
-      <div class="lg:col-span-4 flex items-baseline gap-4 sm:gap-6">
-        <span class="font-display text-6xl sm:text-7xl lg:text-8xl font-black text-[#88D67C] tracking-tight leading-none">
-          +460
-        </span>
-        <div class="space-y-1">
-          <p class="font-display font-bold uppercase text-xs sm:text-sm tracking-wider text-white">
-            Clientes
-          </p>
-          <p class="font-display font-medium text-xs sm:text-sm text-emerald-200/80">
-            satisfechos
-          </p>
-        </div>
-      </div>
+    <!-- 3. Exact Panoramic Colombia Map Canvas with Responsive Container -->
+    <div class="relative w-full max-w-5xl mx-auto">
+      <div class="relative w-full aspect-[1044/604] flex items-center justify-center">
+        
+        <!-- Silhouette Map Image of Colombia -->
+        <img
+          src="/images/mapa-de-colombia.png"
+          alt="Mapa de Cobertura de Proyectos en Colombia JIMACO"
+          class="w-full h-full object-contain filter drop-shadow-[0_12px_30px_rgba(0,0,0,0.5)] pointer-events-none"
+        />
 
-      <!-- Center: Map of Colombia with Pulsing Location Pins -->
-      <div class="lg:col-span-4 relative flex justify-center py-4">
-        <div class="relative w-full max-w-[320px] sm:max-w-[380px]">
-          <img
-            src="/images/map-colombia.png"
-            alt="Mapa de Cobertura en Colombia JIMACO"
-            class="w-full h-auto object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.5)] opacity-90"
+        <!-- 5 Interactive Hotspot Pins (Exact Pixel Match with WordPress) -->
+        {projects.map((proj, idx) => (
+          <button
+            type="button"
+            class={`map-pin-btn absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer z-30 focus:outline-none transition-transform hover:scale-125 ${idx === 0 ? 'active-pin' : ''}`}
+            style={`left: ${proj.pinX}%; top: ${proj.pinY}%;`}
+            data-id={proj.id}
+            data-city={proj.city}
+            data-client={proj.client}
+            data-title={proj.title}
+            data-image={proj.image}
+            data-pin-x={proj.pinX}
+            data-pin-y={proj.pinY}
+            data-align={proj.align}
+            aria-label={`Ver proyecto en ${proj.city}`}
+          >
+            <!-- Pin Structure matching Screenshot 1 -->
+            <span class="relative flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7">
+              <!-- Outer amber ring border -->
+              <span class="pin-ring relative inline-flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-amber-400 bg-black/30 backdrop-blur-xs transition-all shadow-xs">
+                <!-- Center crisp solid white dot -->
+                <span class="pin-dot w-2 h-2 rounded-full bg-white transition-all shadow-xs"></span>
+              </span>
+            </span>
+          </button>
+        ))}
+
+        <!-- SVG Dashed Connector Line -->
+        <svg
+          id="connector-svg"
+          class="absolute inset-0 w-full h-full pointer-events-none z-20 hidden md:block"
+        >
+          <line
+            id="connector-line"
+            x1="50%"
+            y1="57.12%"
+            x2="65%"
+            y2="57.12%"
+            stroke="rgba(255,255,255,0.75)"
+            stroke-width="1.2"
+            stroke-dasharray="3 3"
           />
+        </svg>
 
-          <!-- Pulsing Pin 1: Costa / Barranquilla / Guajira -->
-          <div class="absolute top-[16%] left-[44%] -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
-            <span class="relative flex h-5 w-5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-5 w-5 bg-white/30 border-2 border-emerald-400 items-center justify-center">
-                <span class="h-1.5 w-1.5 rounded-full bg-[#88D67C]"></span>
-              </span>
-            </span>
+        <!-- Active Project Info Card Overlay -->
+        <div
+          id="project-overlay-card"
+          class="absolute z-30 transition-all duration-300 pointer-events-auto"
+          style="left: 65%; top: 48%;"
+        >
+          <div class="w-[260px] sm:w-[300px] lg:w-[320px] bg-[#142E16]/95 backdrop-blur-md rounded-xl p-3.5 sm:p-4 border border-white/15 shadow-2xl space-y-2.5 animate-fadeIn">
+            
+            <!-- Location Header with Map Pin -->
+            <div class="flex items-center gap-1.5 text-white">
+              <svg class="w-4 h-4 text-[#88D67C] shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+              </svg>
+              <h4 id="card-city" class="text-sm sm:text-base font-bold tracking-tight text-white font-display">
+                Flandes, Tolima.
+              </h4>
+            </div>
+
+            <!-- Project Thumbnail Image -->
+            <div class="w-full aspect-[16/9] rounded-lg overflow-hidden shadow-md border border-white/10 bg-black/40">
+              <img
+                id="card-image"
+                src="/images/map-project-yuma.jpg"
+                alt="Proyecto Solar Yuma"
+                class="w-full h-full object-cover transition-opacity duration-200"
+              />
+            </div>
+
+            <!-- Client & Project Name -->
+            <div class="space-y-0.5 pt-0.5">
+              <p id="card-client" class="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-emerald-300 font-display">
+                PROYECTO CELSIA
+              </p>
+              <h3 id="card-title" class="text-sm sm:text-base font-black uppercase text-white tracking-wide font-display">
+                SOLAR YUMA
+              </h3>
+            </div>
+
           </div>
-
-          <!-- Pulsing Pin 2: Antioquia / Medellín -->
-          <div class="absolute top-[38%] left-[36%] -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
-            <span class="relative flex h-5 w-5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-5 w-5 bg-white/30 border-2 border-emerald-400 items-center justify-center">
-                <span class="h-1.5 w-1.5 rounded-full bg-[#88D67C]"></span>
-              </span>
-            </span>
-          </div>
-
-          <!-- Pulsing Pin 3: Bogotá / Cundinamarca (Sede Principal) -->
-          <div class="absolute top-[52%] left-[45%] -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
-            <span class="relative flex h-6 w-6">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-90"></span>
-              <span class="relative inline-flex rounded-full h-6 w-6 bg-jimaco-orange/40 border-2 border-orange-400 items-center justify-center">
-                <span class="h-2 w-2 rounded-full bg-jimaco-orange"></span>
-              </span>
-            </span>
-          </div>
-
-          <!-- Pulsing Pin 4: Llanos Orientales / Casanare / Meta -->
-          <div class="absolute top-[48%] left-[62%] -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
-            <span class="relative flex h-5 w-5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-5 w-5 bg-white/30 border-2 border-emerald-400 items-center justify-center">
-                <span class="h-1.5 w-1.5 rounded-full bg-[#88D67C]"></span>
-              </span>
-            </span>
-          </div>
-
-          <!-- Pulsing Pin 5: Suroccidente / Valle / Cali -->
-          <div class="absolute top-[60%] left-[32%] -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
-            <span class="relative flex h-5 w-5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-5 w-5 bg-white/30 border-2 border-emerald-400 items-center justify-center">
-                <span class="h-1.5 w-1.5 rounded-full bg-[#88D67C]"></span>
-              </span>
-            </span>
-          </div>
-
         </div>
-      </div>
 
-      <!-- Right: Headline Copy -->
-      <div class="lg:col-span-4 lg:pl-6 space-y-4">
-        <h3 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight">
-          Más de una década impulsando proyectos en <span class="text-[#88D67C]">toda Colombia</span>
-        </h3>
-        <p class="text-sm sm:text-base text-emerald-100/80 leading-relaxed text-justify sm:text-left text-pretty">
-          Presencia estratégica y distribución oportuna de insumos fotovoltaicos, eléctricos, de construcción y seguridad en los parques solares y obras civiles más importantes del país.
-        </p>
       </div>
-
     </div>
 
   </div>
 </section>
+
+<style>
+  /* Active pin style */
+  .active-pin .pin-ring {
+    border-color: #F59E0B;
+    background-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+    transform: scale(1.2);
+  }
+  .active-pin .pin-dot {
+    background-color: #FBBF24;
+    transform: scale(1.25);
+  }
+
+  @keyframes fadeInCard {
+    from {
+      opacity: 0.6;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeInCard 0.25s ease-out forwards;
+  }
+</style>
+
+<script>
+  function setupInteractiveMap() {
+    const pins = document.querySelectorAll('.map-pin-btn');
+    const card = document.getElementById('project-overlay-card');
+    const cityEl = document.getElementById('card-city');
+    const clientEl = document.getElementById('card-client');
+    const titleEl = document.getElementById('card-title');
+    const imageEl = document.getElementById('card-image') as HTMLImageElement;
+    const connectorLine = document.getElementById('connector-line');
+
+    if (!pins.length || !card || !cityEl || !clientEl || !titleEl || !imageEl || !connectorLine) return;
+
+    let currentIndex = 0;
+    let isUserInteracting = false;
+    let autoRotateTimer: any = null;
+
+    function activatePin(pin: Element) {
+      pins.forEach(p => p.classList.remove('active-pin'));
+      pin.classList.add('active-pin');
+
+      const city = pin.getAttribute('data-city') || '';
+      const client = pin.getAttribute('data-client') || '';
+      const title = pin.getAttribute('data-title') || '';
+      const image = pin.getAttribute('data-image') || '';
+      const pinX = parseFloat(pin.getAttribute('data-pin-x') || '50.00');
+      const pinY = parseFloat(pin.getAttribute('data-pin-y') || '57.12');
+      const align = pin.getAttribute('data-align') || 'right';
+
+      // Update Card Text and Image
+      cityEl.textContent = city;
+      clientEl.textContent = client;
+      titleEl.textContent = title;
+      imageEl.src = image;
+      imageEl.alt = title;
+
+      // Position the card and connector line based on alignment
+      if (window.innerWidth >= 768) {
+        if (align === 'left') {
+          // Card to the left of the pin
+          const cardLeft = Math.max(2, pinX - 32);
+          const cardTop = Math.max(4, pinY - 8);
+          card.style.left = `${cardLeft}%`;
+          card.style.top = `${cardTop}%`;
+
+          connectorLine.setAttribute('x1', `${cardLeft + 25}%`);
+          connectorLine.setAttribute('y1', `${pinY}%`);
+          connectorLine.setAttribute('x2', `${pinX}%`);
+          connectorLine.setAttribute('y2', `${pinY}%`);
+        } else {
+          // Card to the right of the pin
+          const cardLeft = Math.min(68, pinX + 15);
+          const cardTop = Math.max(4, pinY - 8);
+          card.style.left = `${cardLeft}%`;
+          card.style.top = `${cardTop}%`;
+
+          connectorLine.setAttribute('x1', `${pinX}%`);
+          connectorLine.setAttribute('y1', `${pinY}%`);
+          connectorLine.setAttribute('x2', `${cardLeft}%`);
+          connectorLine.setAttribute('y2', `${pinY}%`);
+        }
+      } else {
+        // Mobile layout: centered card near bottom
+        card.style.left = '50%';
+        card.style.top = '75%';
+        card.style.transform = 'translateX(-50%)';
+      }
+
+      // Trigger animation
+      card.firstElementChild?.classList.remove('animate-fadeIn');
+      void (card.firstElementChild as HTMLElement)?.offsetWidth;
+      card.firstElementChild?.classList.add('animate-fadeIn');
+    }
+
+    // Attach listeners
+    pins.forEach((pin, idx) => {
+      pin.addEventListener('mouseenter', () => {
+        isUserInteracting = true;
+        currentIndex = idx;
+        activatePin(pin);
+      });
+
+      pin.addEventListener('click', (e) => {
+        e.preventDefault();
+        isUserInteracting = true;
+        currentIndex = idx;
+        activatePin(pin);
+      });
+    });
+
+    // Auto-cycle through projects every 5 seconds if not hovering
+    function startCycle() {
+      if (autoRotateTimer) clearInterval(autoRotateTimer);
+      autoRotateTimer = setInterval(() => {
+        if (!isUserInteracting) {
+          currentIndex = (currentIndex + 1) % pins.length;
+          activatePin(pins[currentIndex]);
+        }
+      }, 5000);
+    }
+
+    startCycle();
+
+    pins.forEach(pin => {
+      pin.addEventListener('mouseleave', () => {
+        setTimeout(() => { isUserInteracting = false; }, 8000);
+      });
+    });
+  }
+
+  // Run on page load
+  setupInteractiveMap();
+</script>
