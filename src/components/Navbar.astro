@@ -1,6 +1,11 @@
 ---
 const navLinks = [
   {
+    name: 'Tienda Virtual',
+    href: '/tienda',
+    badge: 'NUEVO'
+  },
+  {
     name: 'Sobre Jimaco',
     href: '/sobre-jimaco',
     dropdown: [
@@ -45,6 +50,11 @@ const navLinks = [
             class="px-2 py-2 text-base font-bold font-display text-jimaco-dark hover:text-jimaco-primary transition-colors inline-flex items-center gap-1.5"
           >
             <span>{link.name}</span>
+            {link.badge && (
+              <span class="bg-jimaco-orange text-white text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full tracking-wider animate-pulse">
+                {link.badge}
+              </span>
+            )}
             {link.dropdown && (
               <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 opacity-60 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
@@ -70,8 +80,23 @@ const navLinks = [
       ))}
     </nav>
 
-    <!-- Right Side: Cotizar CTA Button & Orange Drawer Icon -->
-    <div class="flex items-center gap-3">
+    <!-- Right Side: Carrito Flotante, Cotizar CTA Button & Orange Drawer Icon -->
+    <div class="flex items-center gap-2.5 sm:gap-3">
+      <!-- Botón Carrito Interactivo con Contador Badge -->
+      <button
+        type="button"
+        class="trigger-open-cart relative w-11 h-11 rounded-lg bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-jimaco-primary border border-gray-200/90 hover:border-jimaco-primary/50 flex items-center justify-center transition-all shadow-2xs group cursor-pointer"
+        aria-label="Abrir Carrito de Compras"
+        title="Ver Carrito de Compras"
+      >
+        <svg class="w-5 h-5 text-jimaco-dark group-hover:text-jimaco-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+        <span class="cart-count-badge absolute -top-1.5 -right-1.5 bg-jimaco-orange text-white text-[10px] font-extrabold w-5 h-5 rounded-full items-center justify-center hidden shadow-xs">
+          0
+        </span>
+      </button>
+
       <a
         href="https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20solicitar%20una%20cotizaci%C3%B3n"
         target="_blank"
@@ -96,6 +121,10 @@ const navLinks = [
 
   <!-- Mobile / Side Drawer Menu -->
   <div id="mobile-menu" class="hidden bg-white border-b border-gray-200 px-6 pt-4 pb-8 space-y-3 shadow-xl">
+    <a href="/tienda" class="flex items-center justify-between py-2 font-display font-bold text-jimaco-primary hover:text-jimaco-primaryDark text-lg border-b border-gray-100 pb-3">
+      <span>Tienda Virtual & Catálogo</span>
+      <span class="bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full">Nuevo</span>
+    </a>
     <a href="/sobre-jimaco" class="block py-2 font-display font-bold text-gray-900 hover:text-jimaco-primary text-lg">Sobre Jimaco</a>
     <a href="/politica-de-calidad" class="block pl-4 py-1 text-sm text-gray-600 hover:text-jimaco-primary">↳ Política de Calidad y Objetivos</a>
     <div class="pt-2"></div>

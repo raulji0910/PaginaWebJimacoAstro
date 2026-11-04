@@ -1,0 +1,228 @@
+---
+// QuickViewModal.astro - Modal de Vista Rápida estilo Mercado Libre / WooCommerce
+---
+
+<div id="quick-view-modal" class="fixed inset-0 z-[9990] hidden items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-xs overflow-y-auto">
+  <div class="relative bg-white rounded-3xl max-w-3xl w-full shadow-2xl border border-gray-100 overflow-hidden my-auto animate-fadeIn">
+    <!-- Botón Cerrar -->
+    <button
+      id="close-quick-view-btn"
+      type="button"
+      class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors focus:outline-none cursor-pointer"
+      aria-label="Cerrar ventana"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 sm:p-8">
+      <!-- Columna Izquierda: Galería e Imagen -->
+      <div class="flex flex-col justify-between">
+        <div class="relative bg-gray-50 rounded-2xl p-6 border border-gray-100 flex items-center justify-center min-h-[280px] sm:min-h-[340px]">
+          <span id="qv-badge" class="absolute top-3 left-3 bg-amber-500 text-white font-display font-bold uppercase text-[10px] px-2.5 py-1 rounded-md tracking-wider">
+            NUEVO
+          </span>
+          <img id="qv-image" src="" alt="Producto" class="max-h-64 sm:max-h-72 w-auto object-contain transition-transform duration-300 hover:scale-105" />
+        </div>
+
+        <div class="mt-4 flex items-center justify-between text-xs text-gray-500 bg-gray-50 rounded-xl p-3 border border-gray-100">
+          <div class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Stock Certificado JIMACO</span>
+          </div>
+          <span id="qv-stock" class="font-bold text-gray-800">En bodega</span>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Información, Precios y Compra -->
+      <div class="flex flex-col justify-between">
+        <div>
+          <!-- Marca y SKU -->
+          <div class="flex items-center justify-between text-xs text-gray-500 mb-1.5">
+            <span id="qv-brand" class="font-extrabold uppercase tracking-wider text-jimaco-primary font-display text-sm">MARCA</span>
+            <span class="font-mono text-gray-400">SKU: <span id="qv-sku" class="text-gray-700 font-bold">---</span></span>
+          </div>
+
+          <!-- Título del Producto -->
+          <h2 id="qv-title" class="text-xl sm:text-2xl font-bold font-display text-gray-900 leading-snug mb-3">
+            Nombre del Producto
+          </h2>
+
+          <!-- Calificación / Mercado Libre Estilo -->
+          <div class="flex items-center gap-2 mb-4">
+            <div class="flex text-amber-400 text-sm">
+              ★★★★★
+            </div>
+            <span id="qv-rating" class="text-xs font-bold text-gray-700">4.9</span>
+            <span class="text-xs text-gray-400">(Garantía directa con fabricante)</span>
+          </div>
+
+          <!-- Precio -->
+          <div class="bg-emerald-50/60 border border-emerald-100 rounded-2xl p-4 mb-4">
+            <div class="text-[11px] text-gray-500 uppercase font-semibold">Precio de Venta</div>
+            <div class="flex items-baseline gap-2">
+              <span id="qv-price" class="text-2xl sm:text-3xl font-extrabold text-jimaco-primary font-display">$ 0 COP</span>
+              <span id="qv-original-price" class="text-sm text-gray-400 line-through hidden">$ 0</span>
+            </div>
+            <p class="text-[11px] text-emerald-800 font-medium mt-0.5">IVA 19% incluido • Factura electrónica con NIT disponible</p>
+          </div>
+
+          <!-- Descripción -->
+          <p id="qv-description" class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
+            Descripción completa del producto industrial.
+          </p>
+
+          <!-- Especificaciones Técnicas Resumidas -->
+          <div class="mb-5">
+            <h4 class="text-xs font-bold font-display uppercase tracking-wider text-gray-800 mb-2">Ficha Técnica:</h4>
+            <div id="qv-specs" class="space-y-1.5 text-xs text-gray-600 bg-gray-50 rounded-xl p-3 border border-gray-100 max-h-36 overflow-y-auto">
+              <!-- Inyectado dinámicamente -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Acciones de Compra -->
+        <div class="pt-4 border-t border-gray-100 space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="flex items-center border border-gray-200 rounded-xl overflow-hidden bg-gray-50">
+              <button id="qv-qty-minus" class="px-3.5 py-2.5 text-gray-700 hover:bg-gray-200 font-bold cursor-pointer">-</button>
+              <input id="qv-qty-input" type="number" value="1" min="1" class="w-12 text-center text-sm font-bold text-gray-800 bg-transparent focus:outline-none" />
+              <button id="qv-qty-plus" class="px-3.5 py-2.5 text-gray-700 hover:bg-gray-200 font-bold cursor-pointer">+</button>
+            </div>
+
+            <button
+              id="qv-add-cart-btn"
+              type="button"
+              class="flex-1 bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+              </svg>
+              <span>Agregar al Carrito</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    let currentProduct = null;
+
+    function formatCOP(amount) {
+      return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        maximumFractionDigits: 0
+      }).format(amount);
+    }
+
+    window.openQuickView = function(product) {
+      currentProduct = product;
+      const modal = document.getElementById('quick-view-modal');
+      if (!modal) return;
+
+      document.getElementById('qv-title').textContent = product.name;
+      document.getElementById('qv-brand').textContent = product.brand;
+      document.getElementById('qv-sku').textContent = product.sku;
+      document.getElementById('qv-price').textContent = formatCOP(product.price);
+      document.getElementById('qv-description').textContent = product.description;
+      document.getElementById('qv-image').src = product.image;
+      document.getElementById('qv-image').alt = product.name;
+      document.getElementById('qv-stock').textContent = `${product.stock} ${product.unit}s disponibles`;
+      document.getElementById('qv-qty-input').value = 1;
+
+      // Badge
+      const badgeEl = document.getElementById('qv-badge');
+      if (product.badge) {
+        badgeEl.textContent = product.badge;
+        badgeEl.classList.remove('hidden');
+      } else {
+        badgeEl.classList.add('hidden');
+      }
+
+      // Precio original
+      const origPriceEl = document.getElementById('qv-original-price');
+      if (product.originalPrice && product.originalPrice > product.price) {
+        origPriceEl.textContent = formatCOP(product.originalPrice);
+        origPriceEl.classList.remove('hidden');
+      } else {
+        origPriceEl.classList.add('hidden');
+      }
+
+      // Specs
+      const specsContainer = document.getElementById('qv-specs');
+      if (specsContainer) {
+        if (product.specs && Object.keys(product.specs).length > 0) {
+          specsContainer.innerHTML = Object.entries(product.specs).map(([k, v]) => `
+            <div class="flex justify-between py-1 border-b border-gray-100 last:border-b-0">
+              <span class="text-gray-500 font-medium">${k}:</span>
+              <span class="text-gray-800 font-bold">${v}</span>
+            </div>
+          `).join('');
+        } else {
+          specsContainer.innerHTML = '<p class="text-gray-400">Especificaciones detalladas en bodega.</p>';
+        }
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    };
+
+    function closeQuickView() {
+      const modal = document.getElementById('quick-view-modal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+      currentProduct = null;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const closeBtn = document.getElementById('close-quick-view-btn');
+      const modal = document.getElementById('quick-view-modal');
+      const minusBtn = document.getElementById('qv-qty-minus');
+      const plusBtn = document.getElementById('qv-qty-plus');
+      const qtyInput = document.getElementById('qv-qty-input');
+      const addCartBtn = document.getElementById('qv-add-cart-btn');
+
+      if (closeBtn) closeBtn.addEventListener('click', closeQuickView);
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeQuickView();
+        });
+      }
+
+      if (minusBtn && qtyInput) {
+        minusBtn.addEventListener('click', () => {
+          let val = parseInt(qtyInput.value) || 1;
+          if (val > 1) qtyInput.value = val - 1;
+        });
+      }
+
+      if (plusBtn && qtyInput) {
+        plusBtn.addEventListener('click', () => {
+          let val = parseInt(qtyInput.value) || 1;
+          qtyInput.value = val + 1;
+        });
+      }
+
+      if (addCartBtn && qtyInput) {
+        addCartBtn.addEventListener('click', () => {
+          if (currentProduct && window.JimacoCart) {
+            const qty = parseInt(qtyInput.value) || 1;
+            window.JimacoCart.addItem(currentProduct, qty);
+            closeQuickView();
+          }
+        });
+      }
+    });
+  })();
+</script>
+

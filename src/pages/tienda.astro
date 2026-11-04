@@ -1,0 +1,688 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import QuickViewModal from '../components/QuickViewModal.astro';
+import { PRODUCTS, CATEGORIES, BRANDS } from '../data/products';
+
+// Contar productos por categoría
+const countsByCategory = CATEGORIES.reduce((acc, cat) => {
+  if (cat.id === 'todos') {
+    acc[cat.id] = PRODUCTS.length;
+  } else {
+    acc[cat.id] = PRODUCTS.filter(p => p.category === cat.id).length;
+  }
+  return acc;
+}, {} as Record<string, number>);
+---
+
+<Layout
+  title="Tienda Virtual & Catálogo Industrial — JIMACO"
+  description="Marketplace de suministros industriales, energía solar, obras y protección personal en Colombia. Compra en línea con PSE, tarjeta o cotiza por WhatsApp."
+>
+  <!-- Barra de Beneficios Superior (Estilo Mercado Libre) -->
+  <div class="bg-jimaco-dark text-white text-xs border-b border-white/10 py-2.5 px-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-[11px] sm:text-xs">
+      <div class="flex items-center gap-4 flex-wrap">
+        <span class="flex items-center gap-1.5 text-amber-400 font-semibold">
+          <svg class="w-4 h-4 text-jimaco-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+          Despacho inmediato desde bodega Bogotá
+        </span>
+        <span class="hidden md:inline-block text-gray-500">•</span>
+        <span class="hidden md:flex items-center gap-1 text-gray-300">
+          📍 Sede Samper Mendoza (Cl. 23 #25-06)
+        </span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-gray-300">Pagos seguros con</span>
+        <span class="bg-white/15 px-2 py-0.5 rounded font-bold text-white text-[10px]">PSE</span>
+        <span class="bg-white/15 px-2 py-0.5 rounded font-bold text-white text-[10px]">Nequi</span>
+        <span class="bg-white/15 px-2 py-0.5 rounded font-bold text-white text-[10px]">Bancolombia</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabecera de la Tienda & Buscador Central (Estilo Mercado Libre) -->
+  <section class="bg-gradient-to-b from-gray-100 to-white py-6 sm:py-8 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <!-- Migas de Pan -->
+      <nav class="flex text-xs text-gray-500 mb-3" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1.5">
+          <li><a href="/" class="hover:text-jimaco-primary">Inicio</a></li>
+          <li><span>/</span></li>
+          <li><a href="/suministros" class="hover:text-jimaco-primary">Suministros</a></li>
+          <li><span>/</span></li>
+          <li class="text-jimaco-primary font-bold">Tienda Virtual Industrial</li>
+        </ol>
+      </nav>
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+        <div>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display uppercase tracking-wide text-jimaco-dark">
+            Tienda Virtual & Catálogo B2B
+          </h1>
+          <p class="text-xs sm:text-sm text-gray-600 mt-1 max-w-2xl">
+            Suministros certificados para ingeniería solar, construcción y seguridad industrial con precios en tiempo real y facturación electrónica.
+          </p>
+        </div>
+
+        <!-- Botón Ver Carrito Flotante / Destacado -->
+        <button
+          type="button"
+          class="trigger-open-cart self-start md:self-auto bg-white hover:bg-emerald-50 text-jimaco-dark hover:text-jimaco-primary border-2 border-jimaco-primary/30 hover:border-jimaco-primary rounded-2xl px-5 py-3 shadow-sm hover:shadow-md transition-all flex items-center gap-3 cursor-pointer group"
+        >
+          <div class="relative">
+            <svg class="w-6 h-6 text-jimaco-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            <span class="cart-count-badge absolute -top-2 -right-2 bg-jimaco-orange text-white text-[10px] font-extrabold w-5 h-5 rounded-full items-center justify-center hidden">
+              0
+            </span>
+          </div>
+          <div class="text-left font-display">
+            <div class="text-[10px] uppercase font-bold text-gray-500">Tu Pedido</div>
+            <div class="text-sm font-extrabold text-jimaco-primary">Abrir Carrito</div>
+          </div>
+        </button>
+      </div>
+
+      <!-- Barra de Búsqueda Grande estilo Mercado Libre -->
+      <div class="bg-white rounded-2xl shadow-md border border-gray-200/80 p-2 sm:p-3">
+        <div class="flex flex-col sm:flex-row gap-2">
+          <!-- Selector Rápido de Categoría -->
+          <div class="sm:w-56 shrink-0">
+            <select
+              id="search-category-select"
+              class="w-full h-12 bg-gray-50 border border-gray-200 rounded-xl px-3 text-xs sm:text-sm font-bold text-gray-700 focus:outline-none focus:border-jimaco-primary transition-colors cursor-pointer"
+            >
+              {CATEGORIES.map(cat => (
+                <option value={cat.id}>{cat.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Input de Búsqueda de Texto -->
+          <div class="relative flex-1">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Buscar por nombre, marca (ej. Makita, 3M, Pavco) o código SKU..."
+              class="w-full h-12 pl-11 pr-4 bg-gray-50 sm:bg-white border border-gray-200 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-jimaco-primary focus:bg-white transition-all"
+            />
+            <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <button
+              id="search-clear-btn"
+              type="button"
+              class="hidden absolute right-3 top-3 text-gray-400 hover:text-gray-600 text-sm w-6 h-6 rounded-full bg-gray-100 items-center justify-center cursor-pointer"
+              title="Borrar búsqueda"
+            >
+              ✕
+            </button>
+          </div>
+
+          <!-- Botón de Búsqueda -->
+          <button
+            id="search-submit-btn"
+            type="button"
+            class="h-12 bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+          >
+            <span>Buscar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenedor Principal: Filtros Laterales + Catálogo de Productos -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- ============================================== -->
+      <!-- BARRA LATERAL DE FILTROS (Sidebar estilo WooCommerce / M.Libre) -->
+      <!-- ============================================== -->
+      <aside class="lg:col-span-1 space-y-6">
+        <!-- Control Móvil de Filtros -->
+        <div class="lg:hidden flex items-center justify-between bg-white p-3.5 rounded-xl border border-gray-200 shadow-xs">
+          <button
+            id="mobile-filters-toggle"
+            type="button"
+            class="flex items-center gap-2 font-display font-bold text-sm text-jimaco-dark cursor-pointer"
+          >
+            <svg class="w-5 h-5 text-jimaco-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+            </svg>
+            <span>Mostrar / Ocultar Filtros</span>
+          </button>
+          <span class="text-xs text-gray-500 font-bold" id="mobile-filter-count-label">Todos</span>
+        </div>
+
+        <div id="filters-wrapper" class="hidden lg:block space-y-6">
+          
+          <!-- Bloque: Categorías -->
+          <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs">
+            <h3 class="font-display font-extrabold text-sm uppercase tracking-wider text-jimaco-dark mb-3 flex items-center justify-between">
+              <span>Categorías</span>
+              <span class="w-2 h-2 rounded-full bg-jimaco-primary"></span>
+            </h3>
+            <ul class="space-y-1.5 text-xs">
+              {CATEGORIES.map(cat => (
+                <li>
+                  <button
+                    type="button"
+                    class={`category-filter-btn w-full text-left px-3 py-2 rounded-xl transition-all flex items-center justify-between cursor-pointer ${
+                      cat.id === 'todos' 
+                        ? 'bg-emerald-50 text-jimaco-primary font-bold shadow-xs' 
+                        : 'text-gray-700 hover:bg-gray-100 font-medium'
+                    }`}
+                    data-category={cat.id}
+                  >
+                    <span>{cat.name}</span>
+                    <span class="bg-white px-2 py-0.5 rounded-full text-[10px] text-gray-500 border border-gray-200 font-mono">
+                      {countsByCategory[cat.id] || 0}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Bloque: Rango de Precios -->
+          <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs">
+            <h3 class="font-display font-extrabold text-sm uppercase tracking-wider text-jimaco-dark mb-3">
+              Rango de Precio (COP)
+            </h3>
+            <div class="space-y-3">
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Mínimo</label>
+                  <input
+                    type="number"
+                    id="price-min"
+                    placeholder="$ 0"
+                    min="0"
+                    step="10000"
+                    class="w-full bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
+                  />
+                </div>
+                <div>
+                  <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Máximo</label>
+                  <input
+                    type="number"
+                    id="price-max"
+                    placeholder="$ 1.500.000"
+                    min="0"
+                    step="50000"
+                    class="w-full bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
+                  />
+                </div>
+              </div>
+              <button
+                type="button"
+                id="apply-price-filter"
+                class="w-full bg-gray-100 hover:bg-jimaco-primary hover:text-white text-gray-700 font-display font-bold uppercase text-[11px] py-2 rounded-lg transition-colors cursor-pointer"
+              >
+                Aplicar Rango
+              </button>
+            </div>
+          </div>
+
+          <!-- Bloque: Marcas Aliadas -->
+          <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs">
+            <h3 class="font-display font-extrabold text-sm uppercase tracking-wider text-jimaco-dark mb-3">
+              Marcas Fabricantes
+            </h3>
+            <div class="space-y-2 max-h-56 overflow-y-auto pr-1 text-xs">
+              {BRANDS.map(brand => (
+                <label class="flex items-center gap-2.5 text-gray-700 hover:text-jimaco-primary cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    value={brand.toLowerCase()}
+                    class="brand-checkbox rounded text-jimaco-primary focus:ring-jimaco-primary focus:ring-offset-0 w-4 h-4 border-gray-300"
+                  />
+                  <span>{brand}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <!-- Bloque: Disponibilidad -->
+          <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs">
+            <h3 class="font-display font-extrabold text-sm uppercase tracking-wider text-jimaco-dark mb-3">
+              Disponibilidad
+            </h3>
+            <label class="flex items-center gap-2.5 text-xs text-gray-700 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                id="filter-in-stock"
+                checked
+                class="rounded text-jimaco-primary focus:ring-jimaco-primary w-4 h-4 border-gray-300"
+              />
+              <span class="font-semibold text-emerald-800">Solo productos con stock inmediato</span>
+            </label>
+          </div>
+
+          <!-- Botón Limpiar Filtros -->
+          <button
+            type="button"
+            id="reset-filters-btn"
+            class="w-full bg-white hover:bg-red-50 text-gray-500 hover:text-red-600 border border-gray-200 hover:border-red-200 font-display font-bold uppercase text-xs py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            <span>Restablecer Filtros</span>
+          </button>
+
+          <!-- Banner Asesoría Técnica WhatsApp -->
+          <div class="bg-gradient-to-br from-emerald-800 to-jimaco-dark text-white rounded-2xl p-5 shadow-lg relative overflow-hidden">
+            <div class="relative z-10">
+              <span class="bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">
+                Atención B2B
+              </span>
+              <h4 class="font-display font-bold text-base mt-2 text-white">¿Requieres cotización por volumen?</h4>
+              <p class="text-xs text-emerald-100/80 mt-1 leading-relaxed">
+                Atendemos pliegos de condiciones y pedidos mayoristas para proyectos solares y constructoras.
+              </p>
+              <a
+                href="https://wa.me/573123503397?text=Hola%20JIMACO,%20necesito%20asesor%C3%ADa%20para%20una%20compra%20industrial%20por%20volumen"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-4 inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-display font-bold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md transition-all cursor-pointer"
+              >
+                <span>Hablar con un Asesor</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- ============================================== -->
+      <!-- ÁREA PRINCIPAL: LISTADO DE PRODUCTOS (Grid & List) -->
+      <!-- ============================================== -->
+      <main class="lg:col-span-3 space-y-6">
+        <!-- Barra de Control Superior (Resultados, Orden y Vistas) -->
+        <div class="bg-white rounded-2xl border border-gray-200/80 p-4 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+          <!-- Total de Resultados -->
+          <div class="text-xs sm:text-sm text-gray-600 self-start sm:self-auto">
+            Mostrando <strong id="products-counter" class="text-jimaco-primary font-extrabold">{PRODUCTS.length}</strong> productos disponibles
+          </div>
+
+          <!-- Selector de Ordenamiento estilo Mercado Libre / WooCommerce -->
+          <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+            <label for="sort-select" class="text-xs text-gray-500 font-semibold whitespace-nowrap">Ordenar por:</label>
+            <select
+              id="sort-select"
+              class="bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-700 focus:outline-none focus:border-jimaco-primary cursor-pointer"
+            >
+              <option value="relevante">Más relevantes</option>
+              <option value="precio-menor">Menor precio</option>
+              <option value="precio-mayor">Mayor precio</option>
+              <option value="nombre-az">Nombre (A - Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Badges de Filtros Activos (Tags eliminables) -->
+        <div id="active-filter-tags" class="flex flex-wrap gap-2 empty:hidden">
+          <!-- Se inyectan dinámicamente -->
+        </div>
+
+        <!-- Grilla de Productos -->
+        <div
+          id="products-grid"
+          class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"
+        >
+          {PRODUCTS.map(product => (
+            <ProductCard product={product} />
+          ))}
+        </div>
+
+        <!-- Mensaje de Estado Vacío (Cuando ningún producto coincide) -->
+        <div id="no-products-found" class="hidden bg-white rounded-3xl border border-gray-200 p-12 text-center my-8">
+          <div class="w-20 h-20 mx-auto rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mb-4">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold font-display text-gray-900 mb-2">No se encontraron productos</h3>
+          <p class="text-sm text-gray-500 max-w-md mx-auto mb-6">
+            No encontramos suministros que coincidan exactamente con tus filtros. Intenta buscar con otros términos o restablece los filtros.
+          </p>
+          <button
+            type="button"
+            id="btn-empty-reset"
+            class="bg-jimaco-primary hover:bg-jimaco-primaryDark text-white font-display font-bold uppercase text-xs px-6 py-3 rounded-xl shadow-md transition-all cursor-pointer"
+          >
+            Ver Todos los Productos
+          </button>
+        </div>
+
+        <!-- Banner de Garantía y Métodos de Entrega al final del Catálogo -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6">
+          <div class="bg-white rounded-2xl p-4 border border-gray-200 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-jimaco-primary flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-display font-bold text-xs uppercase text-gray-900">Garantía Directa</h4>
+              <p class="text-[11px] text-gray-500">Certificados de calidad RETIE, NTC y normas técnicas vigentes.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-gray-200 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 text-jimaco-orange flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-display font-bold text-xs uppercase text-gray-900">Punto Físico en Bogotá</h4>
+              <p class="text-[11px] text-gray-500">Recoge sin costo adicional en el sector de Samper Mendoza.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-gray-200 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-display font-bold text-xs uppercase text-gray-900">Facturación DIAN</h4>
+              <p class="text-[11px] text-gray-500">Factura electrónica inmediata con RUT para deducción de costos.</p>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Modal de Vista Rápida -->
+  <QuickViewModal />
+</Layout>
+
+<!-- Script de Filtrado y Comportamiento Reactivo (Estilo WooCommerce / Mercado Libre) -->
+<script is:inline>
+  (function() {
+    let currentCategory = 'todos';
+    let currentSearch = '';
+    let minPrice = null;
+    let maxPrice = null;
+    let selectedBrands = [];
+    let onlyInStock = true;
+    let sortBy = 'relevante';
+
+    function initFilterEngine() {
+      const searchInput = document.getElementById('search-input');
+      const searchCategorySelect = document.getElementById('search-category-select');
+      const clearSearchBtn = document.getElementById('search-clear-btn');
+      const sortSelect = document.getElementById('sort-select');
+      const categoryBtns = document.querySelectorAll('.category-filter-btn');
+      const brandCheckboxes = document.querySelectorAll('.brand-checkbox');
+      const stockCheckbox = document.getElementById('filter-in-stock');
+      const minPriceInput = document.getElementById('price-min');
+      const maxPriceInput = document.getElementById('price-max');
+      const applyPriceBtn = document.getElementById('apply-price-filter');
+      const resetFiltersBtn = document.getElementById('reset-filters-btn');
+      const emptyResetBtn = document.getElementById('btn-empty-reset');
+      const mobileFiltersToggle = document.getElementById('mobile-filters-toggle');
+      const filtersWrapper = document.getElementById('filters-wrapper');
+
+      // Búsqueda en tiempo real
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          currentSearch = e.target.value.trim().toLowerCase();
+          if (clearSearchBtn) {
+            if (currentSearch.length > 0) {
+              clearSearchBtn.classList.remove('hidden');
+              clearSearchBtn.classList.add('flex');
+            } else {
+              clearSearchBtn.classList.add('hidden');
+              clearSearchBtn.classList.remove('flex');
+            }
+          }
+          applyFilters();
+        });
+      }
+
+      if (clearSearchBtn && searchInput) {
+        clearSearchBtn.addEventListener('click', () => {
+          searchInput.value = '';
+          currentSearch = '';
+          clearSearchBtn.classList.add('hidden');
+          clearSearchBtn.classList.remove('flex');
+          applyFilters();
+        });
+      }
+
+      // Selector de categoría en el header
+      if (searchCategorySelect) {
+        searchCategorySelect.addEventListener('change', (e) => {
+          setCategory(e.target.value);
+        });
+      }
+
+      // Botones de categoría en el Sidebar
+      categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cat = btn.getAttribute('data-category');
+          setCategory(cat);
+        });
+      });
+
+      function setCategory(cat) {
+        currentCategory = cat;
+        if (searchCategorySelect) searchCategorySelect.value = cat;
+
+        categoryBtns.forEach(b => {
+          if (b.getAttribute('data-category') === cat) {
+            b.className = 'category-filter-btn w-full text-left px-3 py-2 rounded-xl transition-all flex items-center justify-between bg-emerald-50 text-jimaco-primary font-bold shadow-xs cursor-pointer';
+          } else {
+            b.className = 'category-filter-btn w-full text-left px-3 py-2 rounded-xl transition-all flex items-center justify-between text-gray-700 hover:bg-gray-100 font-medium cursor-pointer';
+          }
+        });
+
+        applyFilters();
+      }
+
+      // Marcas
+      brandCheckboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          selectedBrands = Array.from(brandCheckboxes)
+            .filter(c => c.checked)
+            .map(c => c.value);
+          applyFilters();
+        });
+      });
+
+      // Stock
+      if (stockCheckbox) {
+        stockCheckbox.addEventListener('change', (e) => {
+          onlyInStock = e.target.checked;
+          applyFilters();
+        });
+      }
+
+      // Rango de precio
+      if (applyPriceBtn) {
+        applyPriceBtn.addEventListener('click', () => {
+          minPrice = minPriceInput && minPriceInput.value ? parseFloat(minPriceInput.value) : null;
+          maxPrice = maxPriceInput && maxPriceInput.value ? parseFloat(maxPriceInput.value) : null;
+          applyFilters();
+        });
+      }
+
+      // Ordenamiento
+      if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+          sortBy = e.target.value;
+          sortCards();
+        });
+      }
+
+      // Restablecer filtros
+      function resetAll() {
+        currentCategory = 'todos';
+        currentSearch = '';
+        minPrice = null;
+        maxPrice = null;
+        selectedBrands = [];
+        onlyInStock = false;
+        sortBy = 'relevante';
+
+        if (searchInput) searchInput.value = '';
+        if (searchCategorySelect) searchCategorySelect.value = 'todos';
+        if (minPriceInput) minPriceInput.value = '';
+        if (maxPriceInput) maxPriceInput.value = '';
+        if (stockCheckbox) stockCheckbox.checked = false;
+        if (sortSelect) sortSelect.value = 'relevante';
+        brandCheckboxes.forEach(c => c.checked = false);
+
+        setCategory('todos');
+      }
+
+      if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', resetAll);
+      if (emptyResetBtn) emptyResetBtn.addEventListener('click', resetAll);
+
+      // Toggle móvil de filtros
+      if (mobileFiltersToggle && filtersWrapper) {
+        mobileFiltersToggle.addEventListener('click', () => {
+          filtersWrapper.classList.toggle('hidden');
+        });
+      }
+
+      // Listeners en botones de tarjetas (Agregar al Carrito y Vista Rápida)
+      setupCardButtons();
+    }
+
+    function setupCardButtons() {
+      // Botones Agregar al Carrito
+      document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const raw = btn.getAttribute('data-product');
+          if (raw && window.JimacoCart) {
+            try {
+              const product = JSON.parse(raw);
+              window.JimacoCart.addItem(product, 1);
+            } catch (err) {
+              console.error('Error parseando producto', err);
+            }
+          }
+        });
+      });
+
+      // Botones Vista Rápida
+      document.querySelectorAll('.quick-view-trigger-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const raw = btn.getAttribute('data-product');
+          if (raw && window.openQuickView) {
+            try {
+              const product = JSON.parse(raw);
+              window.openQuickView(product);
+            } catch (err) {
+              console.error('Error abriendo vista rápida', err);
+            }
+          }
+        });
+      });
+    }
+
+    function applyFilters() {
+      const cards = document.querySelectorAll('.product-card');
+      const counterEl = document.getElementById('products-counter');
+      const noFoundEl = document.getElementById('no-products-found');
+      const gridEl = document.getElementById('products-grid');
+
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name') || '';
+        const brand = card.getAttribute('data-brand') || '';
+        const cat = card.getAttribute('data-category') || '';
+        const price = parseFloat(card.getAttribute('data-price') || '0');
+        const stock = parseInt(card.getAttribute('data-stock') || '0');
+
+        let match = true;
+
+        // Categoría
+        if (currentCategory !== 'todos' && cat !== currentCategory) {
+          match = false;
+        }
+
+        // Búsqueda de texto (nombre, marca)
+        if (match && currentSearch) {
+          const textMatch = name.includes(currentSearch) || brand.includes(currentSearch);
+          if (!textMatch) match = false;
+        }
+
+        // Marcas seleccionadas
+        if (match && selectedBrands.length > 0) {
+          if (!selectedBrands.includes(brand)) match = false;
+        }
+
+        // Rango de precio
+        if (match && minPrice !== null && price < minPrice) match = false;
+        if (match && maxPrice !== null && price > maxPrice) match = false;
+
+        // Stock
+        if (match && onlyInStock && stock <= 0) match = false;
+
+        if (match) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (counterEl) counterEl.textContent = visibleCount;
+
+      if (visibleCount === 0) {
+        if (noFoundEl) noFoundEl.classList.remove('hidden');
+        if (gridEl) gridEl.classList.add('hidden');
+      } else {
+        if (noFoundEl) noFoundEl.classList.add('hidden');
+        if (gridEl) gridEl.classList.remove('hidden');
+      }
+
+      sortCards();
+    }
+
+    function sortCards() {
+      const grid = document.getElementById('products-grid');
+      if (!grid) return;
+      const cards = Array.from(grid.querySelectorAll('.product-card'));
+
+      cards.sort((a, b) => {
+        const priceA = parseFloat(a.getAttribute('data-price') || '0');
+        const priceB = parseFloat(b.getAttribute('data-price') || '0');
+        const nameA = a.getAttribute('data-name') || '';
+        const nameB = b.getAttribute('data-name') || '';
+
+        if (sortBy === 'precio-menor') return priceA - priceB;
+        if (sortBy === 'precio-mayor') return priceB - priceA;
+        if (sortBy === 'nombre-az') return nameA.localeCompare(nameB);
+        return 0; // Relevante (orden original)
+      });
+
+      cards.forEach(card => grid.appendChild(card));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initFilterEngine();
+    });
+  })();
+</script>
+

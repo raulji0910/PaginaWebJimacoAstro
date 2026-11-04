@@ -1,0 +1,500 @@
+---
+// CartDrawer.astro - Slide-Over Carrito Interactivo estilo WooCommerce / Mercado Libre
+---
+
+<div id="cart-drawer-container" class="relative z-[9999] hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+  <!-- Fondo oscurecido con desenfoque suave (Backdrop) -->
+  <div id="cart-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-300 opacity-0"></div>
+
+  <div class="fixed inset-0 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-6 sm:pl-10">
+        <!-- Panel lateral deslizable -->
+        <div id="cart-panel" class="pointer-events-auto w-screen max-w-md sm:max-w-lg h-full max-h-screen transform translate-x-full transition-transform duration-300 ease-in-out bg-white shadow-2xl flex flex-col">
+          
+          <!-- Encabezado del Carrito (shrink-0 para altura fija) -->
+          <div class="px-5 py-4 bg-jimaco-dark text-white flex items-center justify-between border-b border-white/10 shrink-0">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-jimaco-orange flex items-center justify-center text-white shadow-md shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-base sm:text-lg font-bold font-display tracking-wide uppercase text-white" id="slide-over-title">
+                  Carrito de Compras
+                </h2>
+                <p class="text-xs text-gray-300 font-sans">
+                  <span id="cart-item-count">0</span> producto(s) agregados
+                </p>
+              </div>
+            </div>
+
+            <!-- Botón Cerrar -->
+            <button
+              id="close-cart-btn"
+              type="button"
+              class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white flex items-center justify-center transition-colors focus:outline-none cursor-pointer"
+              aria-label="Cerrar Carrito"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Banner Informativo Mercado Libre / Confianza (shrink-0) -->
+          <div class="bg-amber-50 border-b border-amber-200/80 px-4 py-2 flex items-center gap-2 text-xs text-amber-900 font-medium shrink-0">
+            <svg class="w-4 h-4 text-jimaco-orange shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+            <span class="text-[11px] leading-tight">Retiro gratis en Samper Mendoza (Bogotá) o envío nacional asegurado.</span>
+          </div>
+
+          <!-- Lista de Productos en el Carrito (Scrollable con espacio garantizado flex-1 min-h-0) -->
+          <div class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-3" id="cart-items-container">
+            <!-- Renderizado dinámico vía JavaScript -->
+            <div id="cart-empty-state" class="py-16 text-center">
+              <div class="w-20 h-20 mx-auto rounded-full bg-gray-100 flex items-center justify-center text-gray-400 mb-4">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-gray-800 text-lg mb-1">Tu carrito está vacío</h3>
+              <p class="text-sm text-gray-500 max-w-xs mx-auto mb-6">Explora nuestro catálogo industrial y agrega los suministros que tu proyecto necesita.</p>
+              <a href="/tienda" id="btn-explore-store" class="inline-block bg-jimaco-primary hover:bg-jimaco-primaryDark text-white font-display font-bold uppercase text-xs px-6 py-3 rounded-lg shadow-md transition-all">
+                Ver Catálogo de Productos
+              </a>
+            </div>
+
+            <div id="cart-items-list" class="space-y-3 hidden">
+              <!-- Se inyectan ítems aquí -->
+            </div>
+          </div>
+
+          <!-- Pie del Carrito: Totales & Acciones (Sticky al fondo, estilizado y compacto) -->
+          <div id="cart-footer" class="border-t border-gray-200 bg-gray-50/95 p-4 sm:p-5 space-y-3 shrink-0 hidden shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+            <!-- Desglose de Valores -->
+            <div class="space-y-1.5 text-xs text-gray-600">
+              <div class="flex justify-between items-center text-gray-500">
+                <span>Subtotal base (sin IVA):</span>
+                <span id="cart-subtotal" class="font-medium text-gray-800">$ 0 COP</span>
+              </div>
+              <div class="flex justify-between items-center text-gray-500">
+                <span>IVA estimado (19% incluido):</span>
+                <span id="cart-tax" class="font-medium text-gray-800">$ 0 COP</span>
+              </div>
+              <div class="flex justify-between items-center text-gray-500">
+                <span class="flex items-center gap-1">
+                  <span>Envío:</span>
+                  <span class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-semibold text-[10px]">A convenir / Samper Mendoza</span>
+                </span>
+                <span class="text-gray-700 font-medium">Por calcular</span>
+              </div>
+              <div class="pt-2 border-t border-gray-200 flex justify-between items-baseline">
+                <div>
+                  <span class="text-sm sm:text-base font-bold text-jimaco-dark font-display block">Total a Pagar:</span>
+                  <span class="text-[10px] text-gray-400">Precios en Pesos Colombianos</span>
+                </div>
+                <div class="text-right">
+                  <span id="cart-total" class="text-lg sm:text-xl font-extrabold text-jimaco-primary font-display">$ 0 COP</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones de Acción (El doble flujo: Pago en línea y Cotización formal) -->
+            <div class="space-y-2 pt-0.5">
+              <!-- Botón 1: Pagar en Línea Ahora -->
+              <button
+                id="btn-checkout-online"
+                type="button"
+                class="w-full bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs sm:text-sm py-3 px-4 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                </svg>
+                <span>Pagar en Línea con PSE / Tarjeta</span>
+              </button>
+
+              <!-- Botón 2: Cotizar por WhatsApp (B2B) -->
+              <button
+                id="btn-quote-whatsapp"
+                type="button"
+                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold uppercase tracking-wider text-xs py-2.5 px-4 rounded-xl shadow-xs hover:shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.586 1.761.882 2.791.882h.004c3.179 0 5.767-2.587 5.767-5.766.001-3.187-2.575-5.768-5.77-5.768zm3.376 8.163c-.144.405-.837.774-1.17.824-.312.045-.634.06-1.579-.331-.767-.318-1.572-.942-2.284-1.654-.712-.712-1.336-1.517-1.654-2.284-.391-.945-.376-1.267-.331-1.579.05-.333.419-1.026.824-1.17.135-.048.28-.063.409-.063.136 0 .273.003.391.01.12.007.28-.045.438.334.164.394.56 1.365.61 1.465.05.1.083.218.016.35-.067.133-.1.217-.199.333-.1.117-.21.261-.3.35-.1.1-.205.209-.088.409.117.2.52 1.026 1.114 1.556.767.683 1.414.894 1.614.994.2.1.317.083.434-.05.117-.133.5-.583.633-.783.133-.2.267-.167.45-.1.183.067 1.167.55 1.367.65.2.1.333.15.383.233.05.083.05.483-.094.888z"></path>
+                </svg>
+                <span>Solicitar Cotización por WhatsApp</span>
+              </button>
+
+              <!-- Enlace Vaciar Carrito & Medios de pago en una sola línea -->
+              <div class="flex items-center justify-between pt-1">
+                <button
+                  id="btn-clear-cart"
+                  type="button"
+                  class="text-[11px] text-gray-400 hover:text-red-600 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                  Vaciar carrito
+                </button>
+                <div class="flex items-center gap-1.5 opacity-70 text-[9px] font-bold text-gray-600">
+                  <span class="bg-gray-200/90 px-1.5 py-0.5 rounded">PSE</span>
+                  <span class="bg-gray-200/90 px-1.5 py-0.5 rounded">Bancolombia</span>
+                  <span class="bg-gray-200/90 px-1.5 py-0.5 rounded">Nequi</span>
+                  <span class="bg-gray-200/90 px-1.5 py-0.5 rounded">Tarjetas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Informativo Checkout Sandbox / Wompi -->
+<div id="checkout-modal" class="fixed inset-0 z-[10000] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+  <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative animate-fadeIn border border-gray-100">
+    <button id="close-checkout-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 cursor-pointer">
+      ✕
+    </button>
+    
+    <div class="w-14 h-14 rounded-2xl bg-amber-100 text-jimaco-orange flex items-center justify-center mb-4">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+      </svg>
+    </div>
+
+    <h3 class="text-xl font-bold font-display text-gray-900 mb-2">Paso Siguiente: Pasarela de Pago Wompi</h3>
+    <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+      Estás en la interfaz del prototipo de Marketplace. Los productos seleccionados suman <strong id="modal-total-amount" class="text-jimaco-primary font-bold"></strong>.
+    </p>
+
+    <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs text-gray-700 space-y-2 mb-6">
+      <p class="font-bold text-gray-800 flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Conexión de Pasarela lista para activar:
+      </p>
+      <p>1. <strong>Wompi Widget / API:</strong> Permitirá al comprador ingresar su documento, seleccionar PSE, Nequi o tarjeta de crédito sin salir de JIMACO.</p>
+      <p>2. <strong>Facturación y Despacho:</strong> Genera orden en bodega Samper Mendoza para alistamiento del pedido.</p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3">
+      <button id="btn-modal-test-success" class="flex-1 bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-bold uppercase text-xs py-3 px-4 rounded-xl shadow-md transition-all text-center cursor-pointer">
+        Simular Pago Exitoso
+      </button>
+      <button id="btn-modal-quote-wa" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold uppercase text-xs py-3 px-4 rounded-xl shadow-md transition-all text-center cursor-pointer">
+        Cotizar por WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Lógica del Carrito en Cliente (LocalStorage & Eventos Reactivos) -->
+<script is:inline>
+  (function() {
+    const STORAGE_KEY = 'jimaco_cart_items_v1';
+
+    function formatCOP(amount) {
+      return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        maximumFractionDigits: 0
+      }).format(amount);
+    }
+
+    function getCart() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+      updateUI();
+      window.dispatchEvent(new CustomEvent('jimaco:cart-updated', { detail: cart }));
+    }
+
+    function updateCartBadge() {
+      const cart = getCart();
+      const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      
+      const countDisplays = document.querySelectorAll('.cart-count-badge');
+      countDisplays.forEach(el => {
+        el.textContent = totalCount;
+        if (totalCount > 0) {
+          el.classList.remove('hidden');
+          el.classList.add('inline-flex');
+        } else {
+          el.classList.add('hidden');
+          el.classList.remove('inline-flex');
+        }
+      });
+
+      const countHeader = document.getElementById('cart-item-count');
+      if (countHeader) countHeader.textContent = totalCount;
+    }
+
+    function renderCartItems() {
+      const cart = getCart();
+      const emptyState = document.getElementById('cart-empty-state');
+      const itemsList = document.getElementById('cart-items-list');
+      const footer = document.getElementById('cart-footer');
+      const subtotalEl = document.getElementById('cart-subtotal');
+      const taxEl = document.getElementById('cart-tax');
+      const totalEl = document.getElementById('cart-total');
+
+      if (!emptyState || !itemsList || !footer) return;
+
+      if (cart.length === 0) {
+        emptyState.classList.remove('hidden');
+        itemsList.classList.add('hidden');
+        footer.classList.add('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      itemsList.classList.remove('hidden');
+      footer.classList.remove('hidden');
+
+      let totalSum = 0;
+
+      itemsList.innerHTML = cart.map(item => {
+        const itemTotal = item.price * item.quantity;
+        totalSum += itemTotal;
+
+        return `
+          <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-200 shadow-xs hover:border-gray-300 transition-all" data-id="${item.id}">
+            <div class="w-[72px] h-[72px] min-w-[72px] max-w-[72px] min-h-[72px] max-h-[72px] rounded-lg bg-gray-50 border border-gray-200 overflow-hidden shrink-0 flex items-center justify-center p-1">
+              <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain" />
+            </div>
+            <div class="flex-1 min-w-0 flex flex-col justify-between self-stretch">
+              <div>
+                <div class="flex items-start justify-between gap-1">
+                  <span class="text-[10px] uppercase font-bold text-jimaco-primary tracking-wider truncate">${item.brand || 'JIMACO'}</span>
+                  <button class="cart-remove-btn text-gray-400 hover:text-red-600 transition-colors p-1 -mr-1 -mt-1 cursor-pointer shrink-0" data-id="${item.id}" title="Eliminar del carrito">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                  </button>
+                </div>
+                <h4 class="text-xs font-bold text-gray-900 leading-snug line-clamp-2 mt-0.5" title="${item.name}">${item.name}</h4>
+                <p class="text-[10px] text-gray-400 font-mono mt-0.5">SKU: ${item.sku || 'N/A'}</p>
+              </div>
+
+              <div class="flex items-center justify-between mt-2 pt-1.5 border-t border-gray-100">
+                <!-- Selector Cantidad -->
+                <div class="inline-flex items-center border border-gray-200 rounded-lg bg-gray-50 overflow-hidden shadow-2xs">
+                  <button class="cart-qty-btn px-2.5 py-1 text-gray-600 hover:bg-gray-200 hover:text-gray-900 font-bold text-xs cursor-pointer transition-colors" data-id="${item.id}" data-action="decrease" title="Restar">-</button>
+                  <span class="px-2.5 py-1 text-xs font-bold text-gray-900 min-w-7 text-center bg-white border-x border-gray-200">${item.quantity}</span>
+                  <button class="cart-qty-btn px-2.5 py-1 text-gray-600 hover:bg-gray-200 hover:text-gray-900 font-bold text-xs cursor-pointer transition-colors" data-id="${item.id}" data-action="increase" title="Sumar">+</button>
+                </div>
+
+                <div class="text-right">
+                  <div class="text-xs font-extrabold text-jimaco-primary font-display">${formatCOP(itemTotal)}</div>
+                  <div class="text-[10px] text-gray-400">${formatCOP(item.price)} / ${item.unit || 'und'}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Calcular valores fiscales colombianos (IVA 19% incluido)
+      const subtotalBase = Math.round(totalSum / 1.19);
+      const taxEstimated = totalSum - subtotalBase;
+      if (subtotalEl) subtotalEl.textContent = formatCOP(subtotalBase);
+      if (taxEl) taxEl.textContent = formatCOP(taxEstimated);
+      if (totalEl) totalEl.textContent = formatCOP(totalSum);
+
+      // Event listeners para eliminar y cambiar cantidad
+      itemsList.querySelectorAll('.cart-remove-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          window.JimacoCart.removeItem(id);
+        });
+      });
+
+      itemsList.querySelectorAll('.cart-qty-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          const action = btn.getAttribute('data-action');
+          const cart = getCart();
+          const item = cart.find(i => i.id === id);
+          if (item) {
+            if (action === 'increase') {
+              window.JimacoCart.updateQty(id, item.quantity + 1);
+            } else if (action === 'decrease') {
+              if (item.quantity > 1) {
+                window.JimacoCart.updateQty(id, item.quantity - 1);
+              } else {
+                window.JimacoCart.removeItem(id);
+              }
+            }
+          }
+        });
+      });
+    }
+
+    function updateUI() {
+      updateCartBadge();
+      renderCartItems();
+    }
+
+    // API Global JimacoCart
+    window.JimacoCart = {
+      getItems: getCart,
+      addItem: function(product, quantity = 1) {
+        const cart = getCart();
+        const existing = cart.find(item => item.id === product.id);
+        if (existing) {
+          existing.quantity += quantity;
+        } else {
+          cart.push({
+            id: product.id,
+            sku: product.sku,
+            name: product.name,
+            brand: product.brand,
+            price: product.price,
+            image: product.image,
+            unit: product.unit,
+            quantity: quantity
+          });
+        }
+        saveCart(cart);
+        window.JimacoCart.openCart();
+      },
+      removeItem: function(productId) {
+        let cart = getCart();
+        cart = cart.filter(item => item.id !== productId);
+        saveCart(cart);
+      },
+      updateQty: function(productId, qty) {
+        const cart = getCart();
+        const item = cart.find(i => i.id === productId);
+        if (item) {
+          item.quantity = Math.max(1, qty);
+          saveCart(cart);
+        }
+      },
+      clearCart: function() {
+        saveCart([]);
+      },
+      openCart: function() {
+        const container = document.getElementById('cart-drawer-container');
+        const backdrop = document.getElementById('cart-backdrop');
+        const panel = document.getElementById('cart-panel');
+        if (!container || !backdrop || !panel) return;
+
+        container.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          backdrop.classList.remove('opacity-0');
+          panel.classList.remove('translate-x-full');
+        }, 10);
+      },
+      closeCart: function() {
+        const container = document.getElementById('cart-drawer-container');
+        const backdrop = document.getElementById('cart-backdrop');
+        const panel = document.getElementById('cart-panel');
+        if (!container || !backdrop || !panel) return;
+
+        backdrop.classList.add('opacity-0');
+        panel.classList.add('translate-x-full');
+        setTimeout(() => {
+          container.classList.add('hidden');
+          document.body.style.overflow = '';
+        }, 300);
+      }
+    };
+
+    // Listeners del DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+
+      // Cerrar Drawer
+      const closeBtn = document.getElementById('close-cart-btn');
+      const backdrop = document.getElementById('cart-backdrop');
+      if (closeBtn) closeBtn.addEventListener('click', window.JimacoCart.closeCart);
+      if (backdrop) backdrop.addEventListener('click', window.JimacoCart.closeCart);
+
+      // Botón Vaciar Carrito
+      const clearBtn = document.getElementById('btn-clear-cart');
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          if (confirm('¿Deseas vaciar todos los productos del carrito?')) {
+            window.JimacoCart.clearCart();
+          }
+        });
+      }
+
+      // Botones que abren el carrito en cualquier página
+      document.querySelectorAll('.trigger-open-cart').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.JimacoCart.openCart();
+        });
+      });
+
+      // Checkout Online Modal
+      const checkoutBtn = document.getElementById('btn-checkout-online');
+      const checkoutModal = document.getElementById('checkout-modal');
+      const closeCheckoutModal = document.getElementById('close-checkout-modal');
+      const modalTotalAmount = document.getElementById('modal-total-amount');
+
+      if (checkoutBtn && checkoutModal) {
+        checkoutBtn.addEventListener('click', () => {
+          const cart = getCart();
+          const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+          if (modalTotalAmount) modalTotalAmount.textContent = formatCOP(total);
+          checkoutModal.classList.remove('hidden');
+          checkoutModal.classList.add('flex');
+        });
+      }
+
+      if (closeCheckoutModal && checkoutModal) {
+        closeCheckoutModal.addEventListener('click', () => {
+          checkoutModal.classList.add('hidden');
+          checkoutModal.classList.remove('flex');
+        });
+      }
+
+      // Cotizar por WhatsApp
+      function sendWhatsAppQuote() {
+        const cart = getCart();
+        if (cart.length === 0) return;
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        let msg = `*SOLICITUD DE COTIZACIÓN - JIMACO TIENDA VIRTUAL*%0A%0A`;
+        msg += `Hola JIMACO, deseo cotizar los siguientes suministros:%0A`;
+        cart.forEach((item, index) => {
+          msg += `%0A${index + 1}. *${item.name}*%0A   - SKU: ${item.sku}%0A   - Cantidad: ${item.quantity} ${item.unit || 'Und'}%0A   - Subtotal: ${formatCOP(item.price * item.quantity)}`;
+        });
+        msg += `%0A%0A*TOTAL ESTIMADO: ${formatCOP(total)}*%0A%0A¿Me confirman disponibilidad y tiempo de entrega? Muchas gracias.`;
+        window.open(`https://wa.me/573123503397?text=${msg}`, '_blank');
+      }
+
+      const quoteBtn = document.getElementById('btn-quote-whatsapp');
+      if (quoteBtn) quoteBtn.addEventListener('click', sendWhatsAppQuote);
+
+      const modalQuoteBtn = document.getElementById('btn-modal-quote-wa');
+      if (modalQuoteBtn) modalQuoteBtn.addEventListener('click', sendWhatsAppQuote);
+
+      const modalTestSuccessBtn = document.getElementById('btn-modal-test-success');
+      if (modalTestSuccessBtn) {
+        modalTestSuccessBtn.addEventListener('click', () => {
+          alert('¡Simulación de Transacción Exitosa!\n\nEn la siguiente fase, aquí se conectará el formulario de Wompi / PSE con el comprobante bancario oficial.');
+          checkoutModal.classList.add('hidden');
+          checkoutModal.classList.remove('flex');
+          window.JimacoCart.clearCart();
+          window.JimacoCart.closeCart();
+        });
+      }
+    });
+  })();
+</script>

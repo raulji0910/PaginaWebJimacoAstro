@@ -2,15 +2,18 @@
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import CartDrawer from '../components/CartDrawer.astro';
 
 interface Props {
   title: string;
   description?: string;
+  isAdmin?: boolean;
 }
 
 const { 
   title, 
-  description = "Ferretería Industrial JIMACO — Engranando futuro juntos. Suministros certificados para energía solar, construcción y protección personal en Colombia." 
+  description = "Ferretería Industrial JIMACO — Engranando futuro juntos. Suministros certificados para energía solar, construcción y protección personal en Colombia.",
+  isAdmin = false
 } = Astro.props;
 ---
 
@@ -27,12 +30,13 @@ const {
     <title>{title} — JIMACO</title>
   </head>
   <body class="bg-[#FDFDFD] text-jimaco-dark font-sans antialiased selection:bg-jimaco-accent selection:text-white flex flex-col min-h-screen">
-    <Navbar />
+    {!isAdmin && <Navbar />}
     <main class="flex-grow">
       <slot />
     </main>
-    <Footer />
-    <WhatsAppButton />
+    {!isAdmin && <Footer />}
+    {!isAdmin && <WhatsAppButton />}
+    {!isAdmin && <CartDrawer />}
   
     <!-- Global Media Connection Cleanup (Prevents LiteSpeed TCP Socket Lockups) -->
     <script is:inline>

@@ -1,0 +1,795 @@
+---
+// src/pages/admin/index.astro - Panel de Administración Backoffice JIMACO
+import Layout from '../../layouts/Layout.astro';
+import { PRODUCTS, CATEGORIES, BRANDS } from '../../data/products';
+
+function formatCOP(amount: number) {
+  return new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0
+  }).format(amount);
+}
+---
+
+<Layout title="Panel de Administración — JIMACO" isAdmin={true}>
+  <!-- BARRA SUPERIOR DEL PANEL ADMINISTRATIVO -->
+  <header class="bg-jimaco-dark text-white border-b border-white/10 sticky top-0 z-40 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <!-- Logo y Nombre del Módulo -->
+      <div class="flex items-center gap-3">
+        <a href="/tienda" class="flex items-center gap-2" title="Volver a la tienda">
+          <img src="/images/logo-horizontal.png" alt="JIMACO" class="h-8 w-auto object-contain brightness-0 invert" />
+        </a>
+        <div class="h-6 w-px bg-white/20 hidden sm:block"></div>
+        <div class="flex items-center gap-2">
+          <span class="bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">
+            ADMIN
+          </span>
+          <span class="text-sm font-bold font-display uppercase tracking-wider text-gray-200 hidden sm:inline-block">
+            Panel de Control & Inventario
+          </span>
+        </div>
+      </div>
+
+      <!-- Acciones Rápidas: Ver Tienda Pública y Usuario -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a
+          href="/tienda"
+          class="text-xs bg-white/10 hover:bg-white/20 text-white font-display font-bold uppercase px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 border border-white/10"
+          title="Abrir la tienda virtual pública"
+        >
+          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+          <span>Ver Tienda en Vivo</span>
+        </a>
+
+        <!-- Perfil Administrador -->
+        <div class="flex items-center gap-2 pl-2 border-l border-white/10">
+          <div class="w-8 h-8 rounded-full bg-jimaco-primary text-white flex items-center justify-center font-bold text-xs shadow-xs">
+            AD
+          </div>
+          <div class="text-left hidden md:block">
+            <div class="text-xs font-bold leading-tight">Admin Bodega</div>
+            <div class="text-[10px] text-gray-400 leading-tight">JIMACO S.A.S.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- CUERPO PRINCIPAL DEL DASHBOARD -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 w-full space-y-6">
+
+    <!-- TARJETAS DE MÉTRICAS RÁPIDAS -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-200 shadow-xs flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-jimaco-primary flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Total Productos</div>
+          <div id="metric-total-products" class="text-2xl font-extrabold font-display text-gray-900">{PRODUCTS.length}</div>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-200 shadow-xs flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-amber-50 text-jimaco-orange flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Categorías</div>
+          <div id="metric-total-categories" class="text-2xl font-extrabold font-display text-gray-900">{CATEGORIES.length - 1}</div>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-200 shadow-xs flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Inventario Bodega</div>
+          <div class="text-xl sm:text-2xl font-extrabold font-display text-gray-900">Activo</div>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-200 shadow-xs flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Estado Pasarela</div>
+          <div class="text-sm font-extrabold font-display text-emerald-600 uppercase">Wompi / Listo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PESTAÑAS DE NAVEGACIÓN DEL PANEL (Productos vs Categorías) -->
+    <div class="flex items-center justify-between border-b border-gray-200 pb-3 flex-wrap gap-4">
+      <div class="flex items-center gap-2">
+        <button
+          id="tab-btn-products"
+          type="button"
+          class="px-4 py-2.5 rounded-xl text-xs font-bold font-display uppercase tracking-wider transition-all bg-jimaco-primary text-white shadow-xs cursor-pointer"
+        >
+          📦 Catálogo de Productos ({PRODUCTS.length})
+        </button>
+        <button
+          id="tab-btn-categories"
+          type="button"
+          class="px-4 py-2.5 rounded-xl text-xs font-bold font-display uppercase tracking-wider transition-all bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 cursor-pointer"
+        >
+          🗂️ Gestión de Categorías ({CATEGORIES.length - 1})
+        </button>
+      </div>
+
+      <!-- Botones de Acción Primaria -->
+      <div class="flex items-center gap-2.5">
+        <button
+          id="btn-open-category-modal"
+          type="button"
+          class="bg-white hover:bg-emerald-50 text-jimaco-primary border border-jimaco-primary/40 font-display font-bold uppercase text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+        >
+          <span>+ Nueva Categoría</span>
+        </button>
+        <button
+          id="btn-open-product-modal"
+          type="button"
+          class="bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase text-xs px-5 py-2.5 rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer transform hover:-translate-y-0.5"
+        >
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
+          </svg>
+          <span>Crear Nuevo Producto</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- SECCIÓN 1: TABLA DE PRODUCTOS (Visible por defecto) -->
+    <!-- ======================================================== -->
+    <div id="section-products" class="space-y-4">
+      
+      <!-- Barra de Búsqueda y Filtros de la Tabla -->
+      <div class="bg-white p-4 rounded-2xl border border-gray-200 flex flex-col sm:flex-row gap-3 items-center justify-between">
+        <div class="relative w-full sm:w-80">
+          <input
+            type="text"
+            id="admin-product-search"
+            placeholder="Buscar por nombre, marca o SKU..."
+            class="w-full pl-9 pr-4 py-2 text-xs bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-jimaco-primary"
+          />
+          <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <select
+            id="admin-filter-category"
+            class="text-xs bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 font-semibold text-gray-700 focus:outline-none focus:border-jimaco-primary cursor-pointer"
+          >
+            <option value="todos">Todas las categorías</option>
+            {CATEGORIES.filter(c => c.id !== 'todos').map(c => (
+              <option value={c.id}>{c.name}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <!-- Tabla de Datos (Renderizada en servidor para máxima velocidad) -->
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200 text-gray-500 font-display uppercase tracking-wider text-[11px]">
+                <th class="py-3 px-4">Producto</th>
+                <th class="py-3 px-3">SKU</th>
+                <th class="py-3 px-3">Categoría</th>
+                <th class="py-3 px-3 text-right">Precio Venta</th>
+                <th class="py-3 px-3 text-center">Stock</th>
+                <th class="py-3 px-3 text-center">Estado</th>
+                <th class="py-3 px-4 text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="admin-products-table-body" class="divide-y divide-gray-100">
+              {PRODUCTS.map(p => (
+                <tr class="admin-prod-row hover:bg-gray-50/80 transition-colors" data-id={p.id} data-name={p.name.toLowerCase()} data-brand={p.brand.toLowerCase()} data-sku={p.sku.toLowerCase()} data-category={p.category}>
+                  <td class="py-3 px-4">
+                    <div class="flex items-center gap-3">
+                      <img src={p.image} alt={p.name} class="w-10 h-10 object-contain rounded-lg bg-gray-100 p-0.5 border border-gray-200 shrink-0" />
+                      <div>
+                        <div class="font-bold text-gray-900 leading-snug">{p.name}</div>
+                        <div class="text-[10px] text-gray-400 font-semibold uppercase">{p.brand}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-3 px-3 font-mono font-bold text-gray-600">{p.sku}</td>
+                  <td class="py-3 px-3">
+                    <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-md text-[10px] font-medium font-display uppercase">{p.categoryName || p.category}</span>
+                  </td>
+                  <td class="py-3 px-3 text-right font-display font-extrabold text-jimaco-primary text-sm prod-price-cell">
+                    {formatCOP(p.price)}
+                  </td>
+                  <td class="py-3 px-3 text-center font-bold text-gray-800 prod-stock-cell">
+                    {p.stock} <span class="text-[10px] text-gray-400 font-normal">{p.unit || 'Und'}</span>
+                  </td>
+                  <td class="py-3 px-3 text-center">
+                    {p.stock > 15 ? (
+                      <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-emerald-200">En Bodega</span>
+                    ) : p.stock > 0 ? (
+                      <span class="bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-amber-200">Bajo Stock</span>
+                    ) : (
+                      <span class="bg-red-50 text-red-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-red-200">Agotado</span>
+                    )}
+                  </td>
+                  <td class="py-3 px-4 text-center">
+                    <div class="flex items-center justify-center gap-1.5">
+                      <button class="btn-edit-row text-gray-500 hover:text-jimaco-primary p-1.5 rounded-lg hover:bg-gray-100 cursor-pointer" title="Modificar precio o stock">
+                        ✏️
+                      </button>
+                      <button class="btn-delete-row text-gray-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 cursor-pointer" title="Eliminar fila">
+                        🗑️
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- SECCIÓN 2: GESTIÓN DE CATEGORÍAS (Oculto por defecto) -->
+    <!-- ======================================================== -->
+    <div id="section-categories" class="hidden space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="admin-categories-cards-grid">
+        {CATEGORIES.filter(c => c.id !== 'todos').map(c => {
+          const count = PRODUCTS.filter(p => p.category === c.id).length;
+          return (
+            <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs flex items-center justify-between">
+              <div>
+                <h4 class="font-display font-bold text-sm text-gray-900">{c.name}</h4>
+                <p class="text-[10px] text-gray-400 font-mono mt-0.5">slug: {c.id}</p>
+                <span class="inline-block mt-2 bg-emerald-50 text-jimaco-primary text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-100">
+                  {count} productos asociados
+                </span>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-gray-50 text-gray-400 flex items-center justify-center font-bold text-xs">
+                📁
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 1: FORMULARIO "CREAR NUEVO PRODUCTO" -->
+  <!-- ======================================================== -->
+  <div id="modal-new-product" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-gray-100 overflow-hidden my-auto animate-fadeIn">
+      
+      <!-- Header del Modal -->
+      <div class="p-5 sm:p-6 bg-jimaco-dark text-white flex items-center justify-between border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-jimaco-orange text-white flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold font-display uppercase tracking-wider text-white">Nuevo Producto para Tienda</h3>
+            <p class="text-[11px] text-gray-300">Completa la información técnica y comercial para publicar</p>
+          </div>
+        </div>
+        <button id="btn-close-product-modal" type="button" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/10 cursor-pointer">
+          ✕
+        </button>
+      </div>
+
+      <!-- Formulario -->
+      <form id="form-create-product" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-xs">
+        
+        <!-- Bloque: Nombre y Marca -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="sm:col-span-2">
+            <label class="block font-bold text-gray-700 mb-1">Nombre Completo del Producto *</label>
+            <input
+              type="text"
+              id="form-prod-name"
+              required
+              placeholder="Ej. Reflector Solar LED 200W IP66 con Panel"
+              class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
+            />
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Marca Fabricante *</label>
+            <input
+              type="text"
+              id="form-prod-brand"
+              required
+              placeholder="Ej. Makita, 3M, Legrand"
+              class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
+            />
+          </div>
+        </div>
+
+        <!-- Bloque: Categoría y SKU -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Categoría del Catálogo *</label>
+            <select
+              id="form-prod-category"
+              required
+              class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary cursor-pointer font-medium"
+            >
+              {CATEGORIES.filter(c => c.id !== 'todos').map(c => (
+                <option value={c.id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Código SKU / Referencia *</label>
+            <input
+              type="text"
+              id="form-prod-sku"
+              required
+              placeholder="Ej. PJ-ILU-010"
+              class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary font-mono uppercase"
+            />
+          </div>
+        </div>
+
+        <!-- Bloque: Precios, Stock y Unidad -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-gray-50 p-3.5 rounded-2xl border border-gray-200">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Precio de Venta (COP) *</label>
+            <input
+              type="number"
+              id="form-prod-price"
+              required
+              min="100"
+              placeholder="Ej. 185000"
+              class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 font-bold focus:outline-none focus:border-jimaco-primary"
+            />
+            <span class="text-[10px] text-emerald-700 font-semibold mt-0.5 block">IVA 19% incluido</span>
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Stock en Bodega *</label>
+            <input
+              type="number"
+              id="form-prod-stock"
+              required
+              min="0"
+              placeholder="Ej. 50"
+              class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
+            />
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Unidad de Medida *</label>
+            <input
+              type="text"
+              id="form-prod-unit"
+              required
+              placeholder="Unidad, Metro, Caja x 100"
+              value="Unidad"
+              class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
+            />
+          </div>
+        </div>
+
+        <!-- Bloque: Foto del Producto -->
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Ruta o Selección de Foto *</label>
+          <div class="flex gap-2">
+            <input
+              type="text"
+              id="form-prod-image"
+              required
+              value="/images/Taladro.jpeg"
+              placeholder="/images/nombre-foto.jpg"
+              class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary font-mono"
+            />
+            <select
+              id="form-prod-image-preset"
+              class="bg-gray-100 border border-gray-200 rounded-xl px-2 py-2 text-xs text-gray-700 font-medium cursor-pointer"
+            >
+              <option value="/images/Taladro.jpeg">Foto: Taladro</option>
+              <option value="/images/varilla-cobre.jpg">Foto: Varilla Cobre</option>
+              <option value="/images/tuberia-galvanizada.jpg">Foto: Tubería</option>
+              <option value="/images/tubos-sanitario.jpg">Foto: Sanitarios</option>
+              <option value="/images/terminal-tipo-pala.jpg">Foto: Terminal Pala</option>
+              <option value="/images/terminal-tipo-pin.jpg">Foto: Terminal Pin</option>
+              <option value="/images/placa-subterranea.jpg">Foto: Placa Subterránea</option>
+              <option value="/images/pic-proteccion.jpg">Foto: Protección EPP</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Bloque: Descripción -->
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Descripción Comercial</label>
+          <textarea
+            id="form-prod-desc"
+            rows="2"
+            placeholder="Descripción breve del suministro para la tienda y cotizador..."
+            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
+          ></textarea>
+        </div>
+
+        <!-- Bloque: Especificaciones Técnicas (Ficha Técnica) -->
+        <div class="bg-emerald-50/50 p-3.5 rounded-2xl border border-emerald-100 space-y-2">
+          <span class="font-bold text-emerald-900 block text-xs">Especificaciones Técnicas (Ficha Técnica Modal):</span>
+          <div class="grid grid-cols-2 gap-2">
+            <input type="text" id="form-spec-k1" placeholder="Ej. Norma Técnica" value="Norma Técnica" class="bg-white border border-gray-200 rounded-lg p-1.5 text-xs" />
+            <input type="text" id="form-spec-v1" placeholder="Ej. RETIE / CIDET" value="Certificado RETIE Vigente" class="bg-white border border-gray-200 rounded-lg p-1.5 text-xs font-semibold" />
+            <input type="text" id="form-spec-k2" placeholder="Ej. Garantía" value="Garantía" class="bg-white border border-gray-200 rounded-lg p-1.5 text-xs" />
+            <input type="text" id="form-spec-v2" placeholder="Ej. 1 Año JIMACO" value="1 Año Directo de Fábrica" class="bg-white border border-gray-200 rounded-lg p-1.5 text-xs font-semibold" />
+          </div>
+        </div>
+
+        <!-- Botones del Formulario -->
+        <div class="pt-2 flex justify-end gap-2.5">
+          <button
+            id="btn-cancel-product-modal"
+            type="button"
+            class="px-4 py-2.5 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-100 font-bold uppercase text-xs cursor-pointer"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-bold uppercase text-xs px-6 py-2.5 rounded-xl shadow-md transition-all cursor-pointer"
+          >
+            Publicar Producto en la Tienda
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 2: FORMULARIO "CREAR NUEVA CATEGORÍA" -->
+  <!-- ======================================================== -->
+  <div id="modal-new-category" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-gray-100 overflow-hidden animate-fadeIn">
+      
+      <div class="p-5 bg-jimaco-dark text-white flex items-center justify-between border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-jimaco-primary text-white flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold font-display uppercase tracking-wider text-white">Nueva Categoría</h3>
+            <p class="text-[10px] text-gray-300">Crear una nueva sección de suministros</p>
+          </div>
+        </div>
+        <button id="btn-close-category-modal" type="button" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/10 cursor-pointer">
+          ✕
+        </button>
+      </div>
+
+      <form id="form-create-category" class="p-5 space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Nombre de la Categoría *</label>
+          <input
+            type="text"
+            id="form-cat-name"
+            required
+            placeholder="Ej. Equipos de Soldadura y Corte"
+            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
+          />
+        </div>
+
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Identificador URL (Slug) *</label>
+          <input
+            type="text"
+            id="form-cat-id"
+            required
+            placeholder="Ej. equipos-soldadura"
+            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 font-mono focus:outline-none focus:border-jimaco-primary"
+          />
+        </div>
+
+        <div class="pt-2 flex justify-end gap-2">
+          <button
+            id="btn-cancel-category-modal"
+            type="button"
+            class="px-4 py-2 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-100 font-bold uppercase text-xs cursor-pointer"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="bg-jimaco-primary hover:bg-jimaco-primaryDark text-white font-display font-bold uppercase text-xs px-5 py-2 rounded-xl shadow-md transition-all cursor-pointer"
+          >
+            Guardar Categoría
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- SCRIPT DE INTERACCIÓN CLIENTE -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Pestañas
+      const tabProds = document.getElementById('tab-btn-products');
+      const tabCats = document.getElementById('tab-btn-categories');
+      const secProds = document.getElementById('section-products');
+      const secCats = document.getElementById('section-categories');
+
+      if (tabProds && tabCats && secProds && secCats) {
+        tabProds.addEventListener('click', () => {
+          secProds.classList.remove('hidden');
+          secCats.classList.add('hidden');
+          tabProds.className = 'px-4 py-2.5 rounded-xl text-xs font-bold font-display uppercase tracking-wider transition-all bg-jimaco-primary text-white shadow-xs cursor-pointer';
+          tabCats.className = 'px-4 py-2.5 rounded-xl text-xs font-bold font-display uppercase tracking-wider transition-all bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 cursor-pointer';
+        });
+
+        tabCats.addEventListener('click', () => {
+          secProds.classList.add('hidden');
+          secCats.classList.remove('hidden');
+          tabCats.className = 'px-4 py-2.5 rounded-xl text-xs font-bold font-display uppercase tracking-wider transition-all bg-jimaco-primary text-white shadow-xs cursor-pointer';
+          tabProds.className = 'px-4 py-2.5 rounded-xl text-xs font-bold font-display uppercase tracking-wider transition-all bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 cursor-pointer';
+        });
+      }
+
+      // Modales
+      const modalProd = document.getElementById('modal-new-product');
+      const btnOpenProd = document.getElementById('btn-open-product-modal');
+      const btnCloseProd = document.getElementById('btn-close-product-modal');
+      const btnCancelProd = document.getElementById('btn-cancel-product-modal');
+      const formProd = document.getElementById('form-create-product');
+
+      if (btnOpenProd && modalProd) {
+        btnOpenProd.addEventListener('click', () => {
+          modalProd.classList.remove('hidden');
+          modalProd.classList.add('flex');
+        });
+      }
+      if (btnCloseProd && modalProd) {
+        btnCloseProd.addEventListener('click', () => {
+          modalProd.classList.add('hidden');
+          modalProd.classList.remove('flex');
+        });
+      }
+      if (btnCancelProd && modalProd) {
+        btnCancelProd.addEventListener('click', () => {
+          modalProd.classList.add('hidden');
+          modalProd.classList.remove('flex');
+        });
+      }
+
+      // Preset de fotos
+      const imageInput = document.getElementById('form-prod-image');
+      const imagePreset = document.getElementById('form-prod-image-preset');
+      if (imageInput && imagePreset) {
+        imagePreset.addEventListener('change', () => {
+          imageInput.value = imagePreset.value;
+        });
+      }
+
+      // Submit Producto (Inserta visualmente en la tabla en tiempo real)
+      if (formProd) {
+        formProd.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = document.getElementById('form-prod-name').value.trim();
+          const brand = document.getElementById('form-prod-brand').value.trim();
+          const catSelect = document.getElementById('form-prod-category');
+          const catId = catSelect.value;
+          const catName = catSelect.options[catSelect.selectedIndex].text;
+          const sku = document.getElementById('form-prod-sku').value.trim();
+          const price = parseFloat(document.getElementById('form-prod-price').value) || 0;
+          const stock = parseInt(document.getElementById('form-prod-stock').value) || 0;
+          const unit = document.getElementById('form-prod-unit').value.trim() || 'Unidad';
+          const image = document.getElementById('form-prod-image').value.trim() || '/images/Taladro.jpeg';
+
+          const formatCOP = (num) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(num);
+
+          const tbody = document.getElementById('admin-products-table-body');
+          if (tbody) {
+            const tr = document.createElement('tr');
+            tr.className = 'admin-prod-row hover:bg-gray-50/80 transition-colors bg-emerald-50/50 animate-fadeIn';
+            tr.setAttribute('data-name', name.toLowerCase());
+            tr.setAttribute('data-brand', brand.toLowerCase());
+            tr.setAttribute('data-sku', sku.toLowerCase());
+            tr.setAttribute('data-category', catId);
+
+            tr.innerHTML = `
+              <td class="py-3 px-4">
+                <div class="flex items-center gap-3">
+                  <img src="${image}" alt="${name}" class="w-10 h-10 object-contain rounded-lg bg-gray-100 p-0.5 border border-gray-200 shrink-0" />
+                  <div>
+                    <div class="font-bold text-gray-900 leading-snug">${name} <span class="bg-emerald-500 text-white text-[9px] px-1.5 py-0.2 rounded font-extrabold uppercase">Nuevo</span></div>
+                    <div class="text-[10px] text-gray-400 font-semibold uppercase">${brand}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="py-3 px-3 font-mono font-bold text-gray-600">${sku}</td>
+              <td class="py-3 px-3">
+                <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-md text-[10px] font-medium font-display uppercase">${catName}</span>
+              </td>
+              <td class="py-3 px-3 text-right font-display font-extrabold text-jimaco-primary text-sm prod-price-cell">
+                ${formatCOP(price)}
+              </td>
+              <td class="py-3 px-3 text-center font-bold text-gray-800 prod-stock-cell">
+                ${stock} <span class="text-[10px] text-gray-400 font-normal">${unit}</span>
+              </td>
+              <td class="py-3 px-3 text-center">
+                <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-emerald-200">En Bodega</span>
+              </td>
+              <td class="py-3 px-4 text-center">
+                <div class="flex items-center justify-center gap-1.5">
+                  <button class="btn-edit-row text-gray-500 hover:text-jimaco-primary p-1.5 rounded-lg hover:bg-gray-100 cursor-pointer">✏️</button>
+                  <button class="btn-delete-row text-gray-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 cursor-pointer">🗑️</button>
+                </div>
+              </td>
+            `;
+
+            tbody.prepend(tr);
+
+            // Actualizar contador
+            const totalEl = document.getElementById('metric-total-products');
+            if (totalEl) totalEl.textContent = parseInt(totalEl.textContent || '0') + 1;
+
+            modalProd.classList.add('hidden');
+            modalProd.classList.remove('flex');
+            formProd.reset();
+            alert(`¡Producto "${name}" creado exitosamente y agregado al inventario!`);
+          }
+        });
+      }
+
+      // Modal Categoría
+      const modalCat = document.getElementById('modal-new-category');
+      const btnOpenCat = document.getElementById('btn-open-category-modal');
+      const btnCloseCat = document.getElementById('btn-close-category-modal');
+      const btnCancelCat = document.getElementById('btn-cancel-category-modal');
+      const formCat = document.getElementById('form-create-category');
+
+      if (btnOpenCat && modalCat) {
+        btnOpenCat.addEventListener('click', () => {
+          modalCat.classList.remove('hidden');
+          modalCat.classList.add('flex');
+        });
+      }
+      if (btnCloseCat && modalCat) {
+        btnCloseCat.addEventListener('click', () => {
+          modalCat.classList.add('hidden');
+          modalCat.classList.remove('flex');
+        });
+      }
+      if (btnCancelCat && modalCat) {
+        btnCancelCat.addEventListener('click', () => {
+          modalCat.classList.add('hidden');
+          modalCat.classList.remove('flex');
+        });
+      }
+
+      const catNameInput = document.getElementById('form-cat-name');
+      const catIdInput = document.getElementById('form-cat-id');
+      if (catNameInput && catIdInput) {
+        catNameInput.addEventListener('input', () => {
+          catIdInput.value = catNameInput.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        });
+      }
+
+      if (formCat) {
+        formCat.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = catNameInput.value.trim();
+          const id = catIdInput.value.trim();
+
+          const grid = document.getElementById('admin-categories-cards-grid');
+          if (grid) {
+            const card = document.createElement('div');
+            card.className = 'bg-white p-5 rounded-2xl border border-gray-200 shadow-xs flex items-center justify-between bg-emerald-50/40 animate-fadeIn';
+            card.innerHTML = `
+              <div>
+                <h4 class="font-display font-bold text-sm text-gray-900">${name}</h4>
+                <p class="text-[10px] text-gray-400 font-mono mt-0.5">slug: ${id}</p>
+                <span class="inline-block mt-2 bg-emerald-50 text-jimaco-primary text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-100">
+                  0 productos asociados
+                </span>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-gray-50 text-gray-400 flex items-center justify-center font-bold text-xs">
+                📁
+              </div>
+            `;
+            grid.prepend(card);
+
+            // Agregar al select de productos
+            const prodCatSelect = document.getElementById('form-prod-category');
+            if (prodCatSelect) {
+              const opt = document.createElement('option');
+              opt.value = id;
+              opt.text = name;
+              prodCatSelect.appendChild(opt);
+            }
+
+            modalCat.classList.add('hidden');
+            modalCat.classList.remove('flex');
+            formCat.reset();
+            alert(`¡Categoría "${name}" creada exitosamente!`);
+          }
+        });
+      }
+
+      // Búsqueda en la tabla
+      const searchInput = document.getElementById('admin-product-search');
+      const catFilter = document.getElementById('admin-filter-category');
+
+      function filterTable() {
+        const q = (searchInput?.value || '').toLowerCase().trim();
+        const selectedCat = catFilter?.value || 'todos';
+
+        document.querySelectorAll('.admin-prod-row').forEach(row => {
+          const name = row.getAttribute('data-name') || '';
+          const brand = row.getAttribute('data-brand') || '';
+          const sku = row.getAttribute('data-sku') || '';
+          const cat = row.getAttribute('data-category') || '';
+
+          const matchText = !q || name.includes(q) || brand.includes(q) || sku.includes(q);
+          const matchCat = selectedCat === 'todos' || cat === selectedCat;
+
+          if (matchText && matchCat) {
+            row.classList.remove('hidden');
+          } else {
+            row.classList.add('hidden');
+          }
+        });
+      }
+
+      if (searchInput) searchInput.addEventListener('input', filterTable);
+      if (catFilter) catFilter.addEventListener('change', filterTable);
+
+      // Botones editar y eliminar existentes
+      document.addEventListener('click', (e) => {
+        const delBtn = e.target.closest('.btn-delete-row');
+        if (delBtn) {
+          const row = delBtn.closest('tr');
+          if (row && confirm('¿Deseas eliminar este producto de la tabla?')) {
+            row.remove();
+          }
+        }
+
+        const editBtn = e.target.closest('.btn-edit-row');
+        if (editBtn) {
+          const row = editBtn.closest('tr');
+          if (row) {
+            const priceCell = row.querySelector('.prod-price-cell');
+            const stockCell = row.querySelector('.prod-stock-cell');
+            const newPrice = prompt('Ingresa el nuevo precio (COP):');
+            if (newPrice && !isNaN(newPrice)) {
+              priceCell.textContent = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(parseFloat(newPrice));
+            }
+          }
+        }
+      });
+    });
+  </script>
+</Layout>

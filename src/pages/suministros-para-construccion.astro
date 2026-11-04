@@ -299,7 +299,7 @@ const products = [
                 {item.desc}
               </p>
 
-              <div class="pt-2">
+              <div class="pt-2 flex flex-wrap items-center gap-4">
                 <a
                   href={`https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20cotizar:%20${encodeURIComponent(item.title)}`}
                   target="_blank"
@@ -309,6 +309,15 @@ const products = [
                   <span>Solicitar cotización de {item.category}</span>
                   <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
                 </a>
+                {item.num === '001' && (
+                  <a
+                    href="/tuberias-cloruro-de-polivinilo-pvc"
+                    class="inline-flex items-center gap-1.5 text-xs font-bold bg-jimaco-primary/10 hover:bg-jimaco-primary text-jimaco-primary hover:text-white px-3.5 py-1.5 rounded-xl transition-all border border-jimaco-primary/25 shadow-xs"
+                  >
+                    <span>Ver Ficha Técnica Interactiva PVC</span>
+                    <span>⚡</span>
+                  </a>
+                )}
               </div>
             </div>
 
