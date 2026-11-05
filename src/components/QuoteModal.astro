@@ -1,0 +1,184 @@
+<!--
+  Formulario "Solicitar cotización".
+  Reutiliza los canales comerciales ya configurados en la página:
+    - WhatsApp comercial: +57 312 3503397
+    - Correo comercial:   ventas@jimaco.com.co
+  El producto y su referencia se adjuntan automáticamente.
+-->
+<div id="quote-modal" class="hidden fixed inset-0 z-[80] items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="qm-title">
+  <div id="quote-modal-overlay" class="absolute inset-0 bg-jimaco-dark/70 backdrop-blur-sm"></div>
+
+  <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-xl max-h-[94vh] overflow-y-auto">
+    <div class="bg-jimaco-dark text-white px-6 py-4 rounded-t-3xl flex items-start justify-between gap-4">
+      <div>
+        <h2 id="qm-title" class="font-display font-extrabold uppercase tracking-wider text-base">Solicitar cotización</h2>
+        <p class="text-xs text-emerald-100/80 mt-0.5">Un asesor comercial se comunicará contigo.</p>
+      </div>
+      <button id="quote-modal-close" type="button" class="text-white/80 hover:text-white text-lg cursor-pointer" aria-label="Cerrar">✕</button>
+    </div>
+
+    <form id="quote-form" class="p-6 space-y-4 text-sm" novalidate>
+      <!-- Producto (se completa automáticamente) -->
+      <div class="flex items-center gap-3 bg-emerald-50 border border-emerald-100 rounded-2xl p-3">
+        <img id="qm-image" src="" alt="" class="w-16 h-16 object-contain bg-white rounded-xl border border-gray-100 shrink-0" />
+        <div class="min-w-0">
+          <p class="text-[10px] font-extrabold uppercase tracking-wider text-jimaco-primary font-display">Producto</p>
+          <p id="qm-product" class="font-bold text-gray-900 leading-snug"></p>
+          <p id="qm-reference" class="text-xs text-gray-500"></p>
+        </div>
+      </div>
+      <input type="hidden" id="qm-product-id" name="product_id" />
+      <input type="hidden" id="qm-product-name" name="product_name" />
+      <input type="hidden" id="qm-product-ref" name="product_reference" />
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label for="qm-nombre" class="block text-xs font-bold text-gray-700 mb-1">Nombre *</label>
+          <input id="qm-nombre" name="nombre" type="text" required autocomplete="name"
+            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-jimaco-primary focus:bg-white" />
+        </div>
+        <div>
+          <label for="qm-empresa" class="block text-xs font-bold text-gray-700 mb-1">Empresa *</label>
+          <input id="qm-empresa" name="empresa" type="text" required autocomplete="organization"
+            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-jimaco-primary focus:bg-white" />
+        </div>
+        <div>
+          <label for="qm-correo" class="block text-xs font-bold text-gray-700 mb-1">Correo electrónico *</label>
+          <input id="qm-correo" name="correo" type="email" required autocomplete="email"
+            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-jimaco-primary focus:bg-white" />
+        </div>
+        <div>
+          <label for="qm-telefono" class="block text-xs font-bold text-gray-700 mb-1">Teléfono *</label>
+          <input id="qm-telefono" name="telefono" type="tel" required autocomplete="tel"
+            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-jimaco-primary focus:bg-white" />
+        </div>
+      </div>
+
+      <div>
+        <label for="qm-cantidad" class="block text-xs font-bold text-gray-700 mb-1">Cantidad requerida *</label>
+        <input id="qm-cantidad" name="cantidad" type="text" required placeholder="Ej.: 50 unidades"
+          class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-jimaco-primary focus:bg-white" />
+      </div>
+
+      <div>
+        <label for="qm-mensaje" class="block text-xs font-bold text-gray-700 mb-1">Mensaje adicional</label>
+        <textarea id="qm-mensaje" name="mensaje" rows="3" placeholder="Cuéntanos sobre tu proyecto, medidas o especificaciones."
+          class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-jimaco-primary focus:bg-white resize-none"></textarea>
+      </div>
+
+      <p id="qm-error" class="hidden text-xs font-semibold text-red-600"></p>
+
+      <div class="flex flex-col sm:flex-row gap-2 pt-1">
+        <button type="submit" id="qm-whatsapp"
+          class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-display font-extrabold uppercase tracking-wider text-xs py-3.5 px-4 rounded-xl shadow-md transition-all cursor-pointer">
+          Enviar por WhatsApp
+        </button>
+        <button type="button" id="qm-email"
+          class="flex-1 bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs py-3.5 px-4 rounded-xl shadow-md transition-all cursor-pointer">
+          Enviar por correo
+        </button>
+      </div>
+      <p class="text-[11px] text-gray-500 leading-relaxed">
+        Al enviar, se abrirá WhatsApp (+57 312 3503397) o tu aplicación de correo (ventas@jimaco.com.co) con la solicitud ya redactada.
+      </p>
+    </form>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var WHATSAPP = '573123503397';
+    var EMAIL = 'ventas@jimaco.com.co';
+    var modal = document.getElementById('quote-modal');
+    if (!modal) return;
+    var form = document.getElementById('quote-form');
+    var errorEl = document.getElementById('qm-error');
+
+    function getProduct(id) {
+      return (window.__CATALOG_PRODUCTS__ || []).find(function (p) { return p.id === id; });
+    }
+
+    function close() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    window.openQuote = function (id) {
+      var p = getProduct(id);
+      if (!p) return;
+      document.getElementById('qm-product').textContent = p.name;
+      document.getElementById('qm-reference').textContent = p.reference ? 'Referencia: ' + p.reference : 'Referencia: por confirmar con el asesor';
+      document.getElementById('qm-image').src = p.image;
+      document.getElementById('qm-image').alt = p.name;
+      document.getElementById('qm-product-id').value = p.id;
+      document.getElementById('qm-product-name').value = p.name;
+      document.getElementById('qm-product-ref').value = p.reference || 'Por confirmar';
+      errorEl.classList.add('hidden');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () { document.getElementById('qm-nombre').focus(); }, 50);
+    };
+
+    function validate() {
+      var required = ['nombre', 'empresa', 'correo', 'telefono', 'cantidad'];
+      for (var i = 0; i < required.length; i++) {
+        var el = document.getElementById('qm-' + required[i]);
+        if (!el.value.trim()) {
+          el.focus();
+          errorEl.textContent = 'Por favor completa los campos obligatorios (*).';
+          errorEl.classList.remove('hidden');
+          return false;
+        }
+      }
+      var mail = document.getElementById('qm-correo');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail.value.trim())) {
+        mail.focus();
+        errorEl.textContent = 'Ingresa un correo electrónico válido.';
+        errorEl.classList.remove('hidden');
+        return false;
+      }
+      errorEl.classList.add('hidden');
+      return true;
+    }
+
+    function buildLines() {
+      var v = function (id) { return document.getElementById(id).value.trim(); };
+      return [
+        'Solicitud de cotización — JIMACO',
+        '',
+        'Producto: ' + v('qm-product-name'),
+        'Referencia: ' + v('qm-product-ref'),
+        'Cantidad requerida: ' + v('qm-cantidad'),
+        '',
+        'Nombre: ' + v('qm-nombre'),
+        'Empresa: ' + v('qm-empresa'),
+        'Correo: ' + v('qm-correo'),
+        'Teléfono: ' + v('qm-telefono'),
+        v('qm-mensaje') ? '' : null,
+        v('qm-mensaje') ? 'Mensaje: ' + v('qm-mensaje') : null
+      ].filter(function (l) { return l !== null; }).join('\n');
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validate()) return;
+      var msg = 'Hola JIMACO, ' + buildLines().replace('Solicitud de cotización — JIMACO\n\n', 'quiero solicitar una cotización:\n\n');
+      window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+    });
+
+    document.getElementById('qm-email').addEventListener('click', function () {
+      if (!validate()) return;
+      var subject = 'Solicitud de cotización: ' + document.getElementById('qm-product-name').value +
+        ' (Ref. ' + document.getElementById('qm-product-ref').value + ')';
+      window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(buildLines());
+    });
+
+    document.getElementById('quote-modal-close').addEventListener('click', close);
+    document.getElementById('quote-modal-overlay').addEventListener('click', close);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
+  })();
+</script>

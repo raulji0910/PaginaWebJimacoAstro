@@ -1,0 +1,354 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ProductModal from '../components/ProductModal.astro';
+import QuoteModal from '../components/QuoteModal.astro';
+import { PRODUCTS, CATEGORIES, GROUPS } from '../data/products';
+
+// Conteo de productos por categoría
+const counts = CATEGORIES.reduce((acc, cat) => {
+  acc[cat.id] = cat.id === 'todos' ? PRODUCTS.length : PRODUCTS.filter((p) => p.category === cat.id).length;
+  return acc;
+}, {} as Record<string, number>);
+
+// Datos públicos de los productos (sin campos internos de validación)
+const publicProducts = PRODUCTS.map(({ pending, source, ...p }) => p);
+const productsJson = JSON.stringify(publicProducts).replace(/</g, '\\u003c');
+const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
+---
+
+<Layout
+  title="Catálogo de Productos"
+  description="Conoce nuestro portafolio de productos y soluciones para proyectos de energía solar, infraestructura eléctrica, construcción e industria."
+>
+  <!-- Cabecera del catálogo -->
+  <section class="bg-gradient-to-b from-gray-100 to-white py-8 sm:py-12 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <nav class="flex text-xs text-gray-500 mb-3" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1.5">
+          <li><a href="/" class="hover:text-jimaco-primary">Inicio</a></li>
+          <li><span>/</span></li>
+          <li class="text-jimaco-primary font-bold">Catálogo de productos</li>
+        </ol>
+      </nav>
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-6">
+        <div class="max-w-3xl">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display uppercase tracking-wide text-jimaco-dark">
+            Catálogo de productos
+          </h1>
+          <p class="text-sm sm:text-base text-gray-600 mt-3">
+            Conoce nuestro portafolio de productos y soluciones para proyectos de energía solar, infraestructura eléctrica, construcción e industria.
+          </p>
+        </div>
+        <a
+          href="https://wa.me/573123503397?text=Hola%20JIMACO,%20deseo%20solicitar%20una%20cotizaci%C3%B3n"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="self-start md:self-auto bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all"
+        >
+          Hablar con un asesor
+        </a>
+      </div>
+
+      <!-- Buscador -->
+      <div class="bg-white rounded-2xl shadow-md border border-gray-200/80 p-2 sm:p-3">
+        <div class="flex flex-col sm:flex-row gap-2">
+          <div class="sm:w-72 shrink-0">
+            <select
+              id="search-category-select"
+              class="w-full h-12 bg-gray-50 border border-gray-200 rounded-xl px-3 text-xs sm:text-sm font-bold text-gray-700 focus:outline-none focus:border-jimaco-primary transition-colors cursor-pointer"
+            >
+              <option value="todos">Todas las categorías</option>
+              {GROUPS.map((group) => (
+                <optgroup label={group}>
+                  {subcategories.filter((c) => c.group === group).map((cat) => (
+                    <option value={cat.id}>{cat.name}</option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+          </div>
+
+          <div class="relative flex-1">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Buscar producto por nombre, categoría o referencia…"
+              class="w-full h-12 pl-11 pr-10 bg-gray-50 sm:bg-white border border-gray-200 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-jimaco-primary focus:bg-white transition-all"
+            />
+            <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <button
+              id="search-clear-btn"
+              type="button"
+              class="hidden absolute right-3 top-3 text-gray-400 hover:text-gray-600 text-sm w-6 h-6 rounded-full bg-gray-100 items-center justify-center cursor-pointer"
+              title="Borrar búsqueda"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filtros + productos -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-[40px] py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+      <aside class="lg:col-span-1 space-y-6">
+        <div class="lg:hidden flex items-center justify-between bg-white p-3.5 rounded-xl border border-gray-200 shadow-xs">
+          <button
+            id="mobile-filters-toggle"
+            type="button"
+            class="flex items-center gap-2 font-display font-bold text-sm text-jimaco-dark cursor-pointer"
+          >
+            <svg class="w-5 h-5 text-jimaco-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+            </svg>
+            <span>Categorías</span>
+          </button>
+        </div>
+
+        <div id="filters-wrapper" class="hidden lg:block space-y-6">
+          <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs">
+            <h3 class="font-display font-extrabold text-sm uppercase tracking-wider text-jimaco-dark mb-3 flex items-center justify-between">
+              <span>Categorías</span>
+              <span class="w-2 h-2 rounded-full bg-jimaco-primary"></span>
+            </h3>
+
+            <div class="max-h-[65vh] overflow-y-auto pr-1 space-y-4 text-xs">
+              <button
+                type="button"
+                class="category-filter-btn w-full text-left px-3 py-2 rounded-xl transition-all flex items-center justify-between bg-emerald-50 text-jimaco-primary font-bold shadow-xs cursor-pointer"
+                data-category="todos"
+              >
+                <span>Todos los productos</span>
+                <span class="bg-white px-2 py-0.5 rounded-full text-[10px] text-gray-500 border border-gray-200 font-mono">{counts.todos}</span>
+              </button>
+
+              {GROUPS.map((group) => (
+                <div>
+                  <p class="px-3 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-gray-400 font-display">{group}</p>
+                  <ul class="space-y-1">
+                    {subcategories.filter((c) => c.group === group).map((cat) => (
+                      <li>
+                        <button
+                          type="button"
+                          class="category-filter-btn w-full text-left px-3 py-2 rounded-xl transition-all flex items-center justify-between gap-2 text-gray-700 hover:bg-gray-100 font-medium cursor-pointer"
+                          data-category={cat.id}
+                        >
+                          <span>{cat.name}</span>
+                          <span class="bg-white px-2 py-0.5 rounded-full text-[10px] text-gray-500 border border-gray-200 font-mono shrink-0">{counts[cat.id]}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="reset-filters-btn"
+            class="w-full bg-white hover:bg-red-50 text-gray-500 hover:text-red-600 border border-gray-200 hover:border-red-200 font-display font-bold uppercase text-xs py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <span>Restablecer filtros</span>
+          </button>
+
+          <div class="bg-gradient-to-br from-emerald-800 to-jimaco-dark text-white rounded-2xl p-5 shadow-lg">
+            <span class="bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">
+              Asesoría comercial
+            </span>
+            <h4 class="font-display font-bold text-base mt-2 text-white">¿No encuentras lo que necesitas?</h4>
+            <p class="text-xs text-emerald-100/80 mt-1 leading-relaxed">
+              Cuéntanos tu proyecto y un asesor te ayudará a encontrar la solución adecuada.
+            </p>
+            <a
+              href="https://wa.me/573123503397?text=Hola%20JIMACO,%20necesito%20asesor%C3%ADa%20para%20un%20proyecto"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-4 inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-display font-bold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md transition-all"
+            >
+              <span>Hablar con un asesor</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="lg:col-span-3 space-y-6">
+        <div class="bg-white rounded-2xl border border-gray-200/80 p-4 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-xs sm:text-sm text-gray-600 self-start sm:self-auto">
+            Mostrando <strong id="products-counter" class="text-jimaco-primary font-extrabold">{PRODUCTS.length}</strong> productos
+          </div>
+          <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+            <label for="sort-select" class="text-xs text-gray-500 font-semibold whitespace-nowrap">Ordenar por:</label>
+            <select
+              id="sort-select"
+              class="bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-700 focus:outline-none focus:border-jimaco-primary cursor-pointer"
+            >
+              <option value="catalogo">Orden del catálogo</option>
+              <option value="nombre-az">Nombre (A - Z)</option>
+              <option value="nombre-za">Nombre (Z - A)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+          {PRODUCTS.map((product, i) => (
+            <ProductCard product={product} />
+          ))}
+        </div>
+
+        <div id="no-products-found" class="hidden bg-white rounded-3xl border border-gray-200 p-12 text-center my-8">
+          <h3 class="text-xl font-bold font-display text-gray-900 mb-2">No se encontraron productos</h3>
+          <p class="text-sm text-gray-500 max-w-md mx-auto mb-6">
+            No encontramos productos que coincidan con tu búsqueda. Intenta con otros términos o restablece los filtros.
+          </p>
+          <button
+            type="button"
+            id="btn-empty-reset"
+            class="bg-jimaco-primary hover:bg-jimaco-primaryDark text-white font-display font-bold uppercase text-xs px-6 py-3 rounded-xl shadow-md transition-all cursor-pointer"
+          >
+            Ver todos los productos
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ProductModal />
+  <QuoteModal />
+  <script is:inline id="catalog-products-data" type="application/json" set:html={productsJson}></script>
+</Layout>
+
+<script is:inline>
+  (function () {
+    // Datos de los productos para los modales
+    try {
+      window.__CATALOG_PRODUCTS__ = JSON.parse(document.getElementById('catalog-products-data').textContent);
+    } catch (err) {
+      window.__CATALOG_PRODUCTS__ = [];
+    }
+
+    var currentCategory = 'todos';
+    var currentSearch = '';
+    var sortBy = 'catalogo';
+
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.product-card'));
+    var originalOrder = cards.slice();
+    var grid = document.getElementById('products-grid');
+    var counter = document.getElementById('products-counter');
+    var emptyBox = document.getElementById('no-products-found');
+    var searchInput = document.getElementById('search-input');
+    var clearBtn = document.getElementById('search-clear-btn');
+    var categorySelect = document.getElementById('search-category-select');
+    var sortSelect = document.getElementById('sort-select');
+    var categoryBtns = document.querySelectorAll('.category-filter-btn');
+
+    function normalize(s) {
+      return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    }
+
+    function paintCategoryButtons() {
+      categoryBtns.forEach(function (b) {
+        var active = b.getAttribute('data-category') === currentCategory;
+        b.classList.toggle('bg-emerald-50', active);
+        b.classList.toggle('text-jimaco-primary', active);
+        b.classList.toggle('font-bold', active);
+        b.classList.toggle('shadow-xs', active);
+        b.classList.toggle('text-gray-700', !active);
+        b.classList.toggle('font-medium', !active);
+        b.classList.toggle('hover:bg-gray-100', !active);
+      });
+    }
+
+    function applyFilters() {
+      var q = normalize(currentSearch);
+      var visible = 0;
+      cards.forEach(function (card) {
+        var ok = true;
+        if (currentCategory !== 'todos' && card.getAttribute('data-category') !== currentCategory) ok = false;
+        if (ok && q) {
+          var hay = normalize(card.getAttribute('data-text') + ' ' + card.getAttribute('data-reference') + ' ' + card.getAttribute('data-brand'));
+          ok = q.split(/\s+/).every(function (t) { return hay.indexOf(t) !== -1; });
+        }
+        card.classList.toggle('hidden', !ok);
+        if (ok) visible++;
+      });
+      counter.textContent = visible;
+      emptyBox.classList.toggle('hidden', visible !== 0);
+      grid.classList.toggle('hidden', visible === 0);
+      sortCards();
+    }
+
+    function sortCards() {
+      var list = originalOrder.slice();
+      if (sortBy === 'nombre-az' || sortBy === 'nombre-za') {
+        list.sort(function (a, b) {
+          var r = a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'), 'es');
+          return sortBy === 'nombre-az' ? r : -r;
+        });
+      }
+      list.forEach(function (c) { grid.appendChild(c); });
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      categorySelect.value = cat;
+      paintCategoryButtons();
+      applyFilters();
+    }
+
+    searchInput.addEventListener('input', function (e) {
+      currentSearch = e.target.value.trim();
+      clearBtn.classList.toggle('hidden', !currentSearch);
+      clearBtn.classList.toggle('flex', !!currentSearch);
+      applyFilters();
+    });
+    clearBtn.addEventListener('click', function () {
+      searchInput.value = ''; currentSearch = '';
+      clearBtn.classList.add('hidden'); clearBtn.classList.remove('flex');
+      applyFilters();
+    });
+    categorySelect.addEventListener('change', function (e) { setCategory(e.target.value); });
+    categoryBtns.forEach(function (b) {
+      b.addEventListener('click', function () { setCategory(b.getAttribute('data-category')); });
+    });
+    sortSelect.addEventListener('change', function (e) { sortBy = e.target.value; sortCards(); });
+
+    function resetAll() {
+      searchInput.value = ''; currentSearch = '';
+      clearBtn.classList.add('hidden'); clearBtn.classList.remove('flex');
+      sortBy = 'catalogo'; sortSelect.value = 'catalogo';
+      setCategory('todos');
+    }
+    document.getElementById('reset-filters-btn').addEventListener('click', resetAll);
+    document.getElementById('btn-empty-reset').addEventListener('click', resetAll);
+
+    var mobileToggle = document.getElementById('mobile-filters-toggle');
+    var filtersWrapper = document.getElementById('filters-wrapper');
+    if (mobileToggle) mobileToggle.addEventListener('click', function () { filtersWrapper.classList.toggle('hidden'); });
+
+    // Botones de las tarjetas
+    document.getElementById('products-grid').addEventListener('click', function (e) {
+      var info = e.target.closest('.view-info-btn');
+      var quote = e.target.closest('.request-quote-btn');
+      if (info && window.openProductInfo) window.openProductInfo(info.getAttribute('data-id'));
+      else if (quote && window.openQuote) window.openQuote(quote.getAttribute('data-id'));
+    });
+
+    // Enlaces directos: /catalogo#categoria, /catalogo#info=id-producto, /catalogo#cotizar=id-producto
+    var hash = (location.hash || '').replace('#', '');
+    if (hash && document.querySelector('.category-filter-btn[data-category="' + hash + '"]')) setCategory(hash);
+    var m = hash.match(/^(info|cotizar)=(.+)$/);
+    if (m) {
+      if (m[1] === 'info' && window.openProductInfo) window.openProductInfo(m[2]);
+      if (m[1] === 'cotizar' && window.openQuote) window.openQuote(m[2]);
+    }
+  })();
+</script>

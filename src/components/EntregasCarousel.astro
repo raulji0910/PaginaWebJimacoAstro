@@ -1,0 +1,137 @@
+---
+// Carrusel "Entregas Reales": fotos de despachos de tubería PEAD.
+const photos = [
+  { src: '/images/entregas/entrega-contenedor-1.jpg', alt: 'Contenedor con rollos de tubería PEAD negra listos para entrega', caption: 'Rollos de tubería PEAD cargados en contenedor' },
+  { src: '/images/entregas/entrega-rollo-bodega.jpg', alt: 'Rollo de tubería PEAD corrugada negra atado con cuerda', caption: 'Rollo de tubería PEAD corrugada, listo para despacho' },
+  { src: '/images/entregas/entrega-contenedor-2.jpg', alt: 'Camión con contenedor lleno de rollos de tubería PEAD', caption: 'Despacho en contenedor hacia obra' },
+  { src: '/images/entregas/entrega-contenedor-3.jpg', alt: 'Rollos de tubería PEAD apilados dentro del contenedor', caption: 'Rollos organizados y asegurados para el transporte' },
+  { src: '/images/entregas/entrega-rollos-apilados.jpg', alt: 'Rollos de tubería PEAD corrugada apilados al aire libre', caption: 'Rollos de tubería PEAD apilados en patio' }
+];
+---
+
+<section class="py-16 sm:py-24 bg-[#0B1E02] text-white relative overflow-hidden" aria-label="Entregas reales">
+  <div class="absolute inset-0 opacity-15 pointer-events-none mix-blend-screen">
+    <img src="/images/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative z-10">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+      <div>
+        <span class="text-xs font-extrabold uppercase tracking-widest text-jimaco-orange font-display">Evidencia en campo</span>
+        <h2 class="font-display text-3xl sm:text-5xl font-extrabold leading-tight mt-1">
+          Entregas <span class="text-[#88D67C] italic">reales</span>
+        </h2>
+        <p class="text-emerald-100/90 text-sm sm:text-base mt-3 max-w-2xl">
+          Así despachamos nuestra tubería PEAD: rollos asegurados y listos para llegar a tu obra.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2 self-start sm:self-auto">
+        <button
+          type="button"
+          class="entregas-prev w-11 h-11 rounded-full bg-white/10 hover:bg-white text-white hover:text-jimaco-dark border border-white/30 flex items-center justify-center transition-all cursor-pointer"
+          aria-label="Foto anterior"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <button
+          type="button"
+          class="entregas-next w-11 h-11 rounded-full bg-jimaco-orange hover:bg-jimaco-orangeHover text-white flex items-center justify-center transition-all shadow-md cursor-pointer"
+          aria-label="Foto siguiente"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="entregas-root">
+      <div class="entregas-track flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2" tabindex="0" aria-roledescription="carrusel">
+        {photos.map((p, i) => (
+          <figure class="entregas-slide shrink-0 snap-start w-[78%] sm:w-[46%] lg:w-[calc((100%-2.5rem)/3)] group relative rounded-2xl overflow-hidden bg-black/30 border border-white/15 shadow-xl">
+            <div class="aspect-[5/6] overflow-hidden">
+              <img
+                src={p.src}
+                alt={p.alt}
+                loading={i < 2 ? 'eager' : 'lazy'}
+                draggable="false"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0B1E02] via-[#0B1E02]/80 to-transparent p-4 pt-12">
+              <span class="inline-block bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider font-display mb-1.5">
+                Entrega real
+              </span>
+              <figcaption class="text-sm font-display font-bold leading-snug text-white">{p.caption}</figcaption>
+            </div>
+          </figure>
+        ))}
+      </div>
+
+      <div class="entregas-dots flex justify-center gap-2 mt-6" aria-hidden="true">
+        {photos.map(() => <span class="entregas-dot h-2 w-2 rounded-full bg-white/30 transition-all"></span>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .entregas-track { scrollbar-width: none; -ms-overflow-style: none; }
+  .entregas-track::-webkit-scrollbar { display: none; }
+  .entregas-dot.is-active { width: 1.75rem; background: #FF6A1C; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.entregas-root').forEach((root) => {
+    const section = root.closest('section') as HTMLElement;
+    const track = root.querySelector('.entregas-track') as HTMLElement;
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.entregas-slide'));
+    const dots = Array.from(root.querySelectorAll<HTMLElement>('.entregas-dot'));
+    const prev = section.querySelector('.entregas-prev') as HTMLElement;
+    const next = section.querySelector('.entregas-next') as HTMLElement;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer: number | undefined;
+    let paused = false;
+
+    const step = () => (slides[1] ? slides[1].offsetLeft - slides[0].offsetLeft : track.clientWidth);
+    const maxScroll = () => track.scrollWidth - track.clientWidth;
+    const index = () => Math.min(slides.length - 1, Math.round(track.scrollLeft / step()));
+
+    const paint = () => {
+      const i = track.scrollLeft >= maxScroll() - 4 ? slides.length - 1 : index();
+      dots.forEach((d, n) => d.classList.toggle('is-active', n === i));
+    };
+
+    const go = (dir: 1 | -1) => {
+      if (dir === 1 && track.scrollLeft >= maxScroll() - 4) {
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else if (dir === -1 && track.scrollLeft <= 4) {
+        track.scrollTo({ left: maxScroll(), behavior: 'smooth' });
+      } else {
+        track.scrollBy({ left: dir * step(), behavior: 'smooth' });
+      }
+    };
+
+    const stop = () => { if (timer) window.clearInterval(timer); timer = undefined; };
+    const start = () => {
+      if (reduce || paused) return;
+      stop();
+      timer = window.setInterval(() => go(1), 4000);
+    };
+
+    prev.addEventListener('click', () => { go(-1); start(); });
+    next.addEventListener('click', () => { go(1); start(); });
+    track.addEventListener('scroll', paint, { passive: true });
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { go(1); start(); }
+      if (e.key === 'ArrowLeft') { go(-1); start(); }
+    });
+    root.addEventListener('mouseenter', () => { paused = true; stop(); });
+    root.addEventListener('mouseleave', () => { paused = false; start(); });
+    root.addEventListener('touchstart', () => { paused = true; stop(); }, { passive: true });
+    root.addEventListener('touchend', () => { paused = false; window.setTimeout(start, 3000); }, { passive: true });
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+
+    paint();
+    start();
+  });
+</script>

@@ -1,4 +1,6 @@
 ---
+import { PRODUCTS as CATALOG } from '../data/products';
+
 const solarProducts = [
   { img: '/images/placa-proteccion-subterranea.jpg', title: 'Placa Protección Subterránea' },
   { img: '/images/placa-subterranea-resistente.jpg', title: 'Placa Subterránea Resistente' },
@@ -11,14 +13,8 @@ const solarProducts = [
   { img: '/images/cinta-plastica-peligro-alta-tension.jpg', title: 'Cinta Plástica Peligro' }
 ];
 
-const constProducts = [
-  { img: '/images/5-tornillos-1-1.jpg', title: 'Tornillería y Pernos en Acero' },
-  { img: '/images/4-polisombras-2.jpg', title: 'Polisombras y Mallas' },
-  { img: '/images/3-varillas-1.jpg', title: 'Varillas de Acero Estructural' },
-  { img: '/images/2-herramientas-3-1024x1024.jpg', title: 'Herramientas Manuales & Eléctricas' },
-  { img: '/images/1-tuberia-sanitaria-1.jpg', title: 'Tubería Sanitaria & PVC' },
-  { img: '/images/6-adhesivos-1.jpg', title: 'Adhesivos y Sellantes' }
-];
+// Carrusel de construcción: todos los productos del Catálogo de productos
+const constProducts = CATALOG.map((p) => ({ id: p.id, img: p.image, title: p.name }));
 
 const eppProducts = [
   { img: '/images/fondo-proteccion-home.jpg', title: 'Impermeables y Overoles de Protección' },
@@ -34,8 +30,8 @@ const eppProducts = [
 <div class="space-y-12 pb-16 bg-white overflow-hidden">
   
   <!-- CAROUSEL 1: CONSTRUCCIÓN (Screenshot 2: Green Box) -->
-  <div class="w-full relative group">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch bg-gray-50 border-t border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative group">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch bg-gray-50 border border-gray-200 rounded-2xl overflow-hidden">
       
       <!-- Left Carousel Images -->
       <div class="lg:col-span-8 overflow-hidden relative p-4 flex items-center">
@@ -45,13 +41,17 @@ const eppProducts = [
 
         <div class="carousel-track flex gap-4 overflow-x-auto scroll-smooth no-scrollbar py-2 w-full">
           {constProducts.map((p) => (
-            <div class="shrink-0 w-64 sm:w-72 h-80 sm:h-96 rounded-xl overflow-hidden shadow-md relative bg-white border border-gray-100 group/card">
-              <img src={p.img} alt={p.title} class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-              <p class="absolute bottom-4 left-4 right-4 text-white font-display font-bold text-sm leading-snug">
+            <a
+              href={`/catalogo#info=${p.id}`}
+              class="shrink-0 w-56 sm:w-60 h-72 sm:h-80 rounded-xl overflow-hidden shadow-md relative bg-white border border-gray-100 group/card flex flex-col"
+            >
+              <div class="flex-1 flex items-center justify-center p-4 bg-white">
+                <img src={p.img} alt={p.title} loading="lazy" class="max-h-full w-auto object-contain group-hover/card:scale-105 transition-transform duration-500" draggable="false" />
+              </div>
+              <p class="px-4 py-3 border-t border-gray-100 text-[#0B1E02] font-display font-bold text-sm leading-snug line-clamp-2 group-hover/card:text-[#1C6521] transition-colors">
                 {p.title}
               </p>
-            </div>
+            </a>
           ))}
         </div>
 
@@ -69,7 +69,7 @@ const eppProducts = [
 
         <div class="space-y-4 relative z-10">
           <h3 class="font-display text-3xl sm:text-4xl font-extrabold leading-tight">
-            ¿Tienes un proyecto de construcción?
+            Conoce todo nuestro catálogo
           </h3>
           <p class="text-emerald-100 text-sm leading-relaxed">
             <strong class="text-white font-bold">Ofrecemos suministros de calidad para el sector industrial.</strong> Distribuimos insumos y herramientas para construcción con calidad garantizada, disponibilidad inmediata y asesoría técnica personalizada.
@@ -93,8 +93,8 @@ const eppProducts = [
   </div>
 
   <!-- CAROUSEL 2: PROTECCIÓN PERSONAL EPP (Screenshot 3: Yellow Box) -->
-  <div class="w-full relative group">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch bg-[#FFFDF0] border-t border-b border-amber-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative group">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch bg-[#FFFDF0] border border-amber-200 rounded-2xl overflow-hidden">
       
       <!-- Left Feature Card (Golden Yellow #FFCE38) -->
       <div class="lg:col-span-4 bg-[#FFCE38] text-[#0B1E02] p-8 sm:p-12 flex flex-col justify-between space-y-6 relative overflow-hidden">
@@ -152,8 +152,8 @@ const eppProducts = [
   </div>
 
   <!-- CAROUSEL 3: SOLAR (Dark Green Box) -->
-  <div class="w-full relative group">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch bg-emerald-950 border-t border-b border-emerald-900">
+  <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative group">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch bg-emerald-950 border border-emerald-900 rounded-2xl overflow-hidden">
       
       <!-- Left Carousel Images -->
       <div class="lg:col-span-8 overflow-hidden relative p-4 flex items-center">

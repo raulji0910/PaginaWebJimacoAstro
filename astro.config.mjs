@@ -7,5 +7,8 @@ export default defineConfig({
   build: {
     format: 'directory'
   },
+  redirects: {
+    '/ferreteria': '/catalogo'
+  },
   prefetch: false
 });

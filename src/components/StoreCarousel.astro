@@ -1,0 +1,130 @@
+---
+// Carrusel fluido con los mismos productos de la Tienda Virtual.
+import { PRODUCTS } from '../data/store';
+
+const formatCOP = (n: number) =>
+  new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
+---
+
+<section class="pt-4 pb-12 bg-white overflow-hidden" aria-label="Productos de la Tienda Virtual">
+  <div class="max-w-7xl mx-auto px-4 sm:px-[40px] mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+    <div>
+      <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Tienda Virtual</span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold font-display uppercase text-jimaco-dark">
+        Productos disponibles
+      </h2>
+    </div>
+    <a href="/tienda" class="text-xs font-bold text-jimaco-primary hover:text-jimaco-orange transition-colors font-display uppercase tracking-wider">
+      Ver toda la tienda &rarr;
+    </a>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+  <div class="store-marquee relative group/carousel rounded-2xl">
+    <button type="button" class="store-prev absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white text-jimaco-primary shadow-lg border border-gray-200 flex items-center justify-center hover:bg-jimaco-primary hover:text-white transition-all cursor-pointer" aria-label="Productos anteriores">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+    </button>
+    <button type="button" class="store-next absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white text-jimaco-primary shadow-lg border border-gray-200 flex items-center justify-center hover:bg-jimaco-primary hover:text-white transition-all cursor-pointer" aria-label="Productos siguientes">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+    <div class="store-scroller overflow-x-auto">
+    <div class="store-marquee-track flex w-max gap-5 px-2.5">
+      {[0, 1].map((loop) =>
+        PRODUCTS.map((p) => (
+          <a
+            href="/tienda"
+            class="w-60 sm:w-64 shrink-0 bg-white rounded-2xl border border-gray-200/80 hover:border-jimaco-primary/50 shadow-xs hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
+            aria-hidden={loop === 1 ? 'true' : undefined}
+            tabindex={loop === 1 ? -1 : undefined}
+          >
+            <div class="relative bg-white aspect-4/3 flex items-center justify-center p-4">
+              {p.badge && (
+                <span class="absolute top-2.5 left-2.5 bg-jimaco-orange text-white font-display font-bold text-[9px] px-2 py-0.5 rounded-md uppercase tracking-wider">
+                  {p.badge}
+                </span>
+              )}
+              <img src={p.image} alt={p.name} class="max-h-36 w-auto object-contain" loading="lazy" draggable="false" />
+            </div>
+            <div class="p-4 border-t border-gray-100 flex-1 flex flex-col justify-between gap-3">
+              <h3 class="text-sm font-bold text-gray-900 leading-snug line-clamp-2" title={p.name}>{p.name}</h3>
+              <div>
+                <div class="text-lg font-extrabold text-jimaco-dark font-display">{formatCOP(p.price)}</div>
+                <p class="text-[10px] text-emerald-700 font-semibold">IVA incluido</p>
+                <span class="mt-2 inline-block text-[11px] font-display font-bold uppercase tracking-wider text-jimaco-orange">
+                  Ver en la tienda →
+                </span>
+              </div>
+            </div>
+          </a>
+        ))
+      )}
+    </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector('.store-marquee');
+  if (root) {
+    const scroller = root.querySelector('.store-scroller') as HTMLElement;
+    const prev = root.querySelector('.store-prev') as HTMLElement;
+    const next = root.querySelector('.store-next') as HTMLElement;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let pos = 0;
+    let paused = false;
+    let resumeTimer: number | undefined;
+    const SPEED = 0.45; // px por frame (~27 px/s)
+
+    const half = () => scroller.scrollWidth / 2;
+    const wrap = () => {
+      const h = half();
+      if (scroller.scrollLeft >= h) scroller.scrollLeft -= h;
+      else if (scroller.scrollLeft <= 0) scroller.scrollLeft += h;
+    };
+    const pauseFor = (ms: number) => {
+      paused = true;
+      window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(() => { paused = false; pos = scroller.scrollLeft; }, ms);
+    };
+    const step = () => {
+      const card = scroller.querySelector('a') as HTMLElement | null;
+      return card ? (card.offsetWidth + 20) * 2 : 300;
+    };
+
+    scroller.scrollLeft = 1; // permite retroceder desde el inicio
+    pos = 1;
+    prev.addEventListener('click', () => { pauseFor(4000); scroller.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', () => { pauseFor(4000); scroller.scrollBy({ left: step(), behavior: 'smooth' }); });
+    scroller.addEventListener('scroll', wrap, { passive: true });
+    root.addEventListener('mouseenter', () => { paused = true; });
+    root.addEventListener('mouseleave', () => { paused = false; pos = scroller.scrollLeft; });
+    root.addEventListener('touchstart', () => pauseFor(5000), { passive: true });
+    root.addEventListener('wheel', () => pauseFor(3000), { passive: true });
+
+    if (!reduce) {
+      const tick = () => {
+        if (!paused) {
+          pos += SPEED;
+          scroller.scrollLeft = pos;
+          wrap();
+          pos = scroller.scrollLeft;
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+  }
+</script>
+
+<style>
+  .store-marquee {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+  .store-scroller {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .store-scroller::-webkit-scrollbar { display: none; }
+</style>

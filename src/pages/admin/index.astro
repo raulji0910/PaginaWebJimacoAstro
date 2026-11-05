@@ -1,15 +1,10 @@
 ---
 // src/pages/admin/index.astro - Panel de Administración Backoffice JIMACO
 import Layout from '../../layouts/Layout.astro';
-import { PRODUCTS, CATEGORIES, BRANDS } from '../../data/products';
+import { PRODUCTS, CATEGORIES } from '../../data/products';
 
-function formatCOP(amount: number) {
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-    maximumFractionDigits: 0
-  }).format(amount);
-}
+const withReference = PRODUCTS.filter(p => p.reference).length;
+const withPending = PRODUCTS.filter(p => p.pending.length > 0).length;
 ---
 
 <Layout title="Panel de Administración — JIMACO" isAdmin={true}>
@@ -19,7 +14,7 @@ function formatCOP(amount: number) {
       
       <!-- Logo y Nombre del Módulo -->
       <div class="flex items-center gap-3">
-        <a href="/tienda" class="flex items-center gap-2" title="Volver a la tienda">
+        <a href="/catalogo" class="flex items-center gap-2" title="Volver al catálogo">
           <img src="/images/logo-horizontal.png" alt="JIMACO" class="h-8 w-auto object-contain brightness-0 invert" />
         </a>
         <div class="h-6 w-px bg-white/20 hidden sm:block"></div>
@@ -28,22 +23,22 @@ function formatCOP(amount: number) {
             ADMIN
           </span>
           <span class="text-sm font-bold font-display uppercase tracking-wider text-gray-200 hidden sm:inline-block">
-            Panel de Control & Inventario
+            Panel de Control del Catálogo
           </span>
         </div>
       </div>
 
-      <!-- Acciones Rápidas: Ver Tienda Pública y Usuario -->
+      <!-- Acciones Rápidas: Ver Catálogo Público y Usuario -->
       <div class="flex items-center gap-3 sm:gap-4">
         <a
-          href="/tienda"
+          href="/catalogo"
           class="text-xs bg-white/10 hover:bg-white/20 text-white font-display font-bold uppercase px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 border border-white/10"
-          title="Abrir la tienda virtual pública"
+          title="Abrir el catálogo de productos público"
         >
           <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
           </svg>
-          <span>Ver Tienda en Vivo</span>
+          <span>Ver Catálogo en Vivo</span>
         </a>
 
         <!-- Perfil Administrador -->
@@ -97,8 +92,8 @@ function formatCOP(amount: number) {
           </svg>
         </div>
         <div>
-          <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Inventario Bodega</div>
-          <div class="text-xl sm:text-2xl font-extrabold font-display text-gray-900">Activo</div>
+          <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Con Referencia</div>
+          <div class="text-2xl font-extrabold font-display text-gray-900">{withReference} <span class="text-sm text-gray-400 font-semibold">/ {PRODUCTS.length}</span></div>
         </div>
       </div>
 
@@ -109,8 +104,8 @@ function formatCOP(amount: number) {
           </svg>
         </div>
         <div>
-          <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Estado Pasarela</div>
-          <div class="text-sm font-extrabold font-display text-emerald-600 uppercase">Wompi / Listo</div>
+          <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Con Datos Pendientes</div>
+          <div class="text-2xl font-extrabold font-display text-amber-600">{withPending}</div>
         </div>
       </div>
     </div>
@@ -167,7 +162,7 @@ function formatCOP(amount: number) {
           <input
             type="text"
             id="admin-product-search"
-            placeholder="Buscar por nombre, marca o SKU..."
+            placeholder="Buscar por nombre o referencia..."
             class="w-full pl-9 pr-4 py-2 text-xs bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-jimaco-primary"
           />
           <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,48 +190,42 @@ function formatCOP(amount: number) {
             <thead>
               <tr class="bg-gray-50 border-b border-gray-200 text-gray-500 font-display uppercase tracking-wider text-[11px]">
                 <th class="py-3 px-4">Producto</th>
-                <th class="py-3 px-3">SKU</th>
+                <th class="py-3 px-3">Referencia</th>
                 <th class="py-3 px-3">Categoría</th>
-                <th class="py-3 px-3 text-right">Precio Venta</th>
-                <th class="py-3 px-3 text-center">Stock</th>
+                <th class="py-3 px-3 text-center">Datos por validar</th>
                 <th class="py-3 px-3 text-center">Estado</th>
                 <th class="py-3 px-4 text-center">Acciones</th>
               </tr>
             </thead>
             <tbody id="admin-products-table-body" class="divide-y divide-gray-100">
               {PRODUCTS.map(p => (
-                <tr class="admin-prod-row hover:bg-gray-50/80 transition-colors" data-id={p.id} data-name={p.name.toLowerCase()} data-brand={p.brand.toLowerCase()} data-sku={p.sku.toLowerCase()} data-category={p.category}>
+                <tr class="admin-prod-row hover:bg-gray-50/80 transition-colors" data-id={p.id} data-name={p.name.toLowerCase()} data-brand={(p.brand || '').toLowerCase()} data-sku={(p.reference || '').toLowerCase()} data-category={p.category}>
                   <td class="py-3 px-4">
                     <div class="flex items-center gap-3">
                       <img src={p.image} alt={p.name} class="w-10 h-10 object-contain rounded-lg bg-gray-100 p-0.5 border border-gray-200 shrink-0" />
                       <div>
                         <div class="font-bold text-gray-900 leading-snug">{p.name}</div>
-                        <div class="text-[10px] text-gray-400 font-semibold uppercase">{p.brand}</div>
+                        <div class="text-[10px] text-gray-400 font-semibold uppercase">{p.brand || ''}</div>
                       </div>
                     </div>
                   </td>
-                  <td class="py-3 px-3 font-mono font-bold text-gray-600">{p.sku}</td>
+                  <td class="py-3 px-3 font-mono font-bold text-gray-600 prod-ref-cell">{p.reference || <span class="text-gray-400 font-normal">Por confirmar</span>}</td>
                   <td class="py-3 px-3">
                     <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-md text-[10px] font-medium font-display uppercase">{p.categoryName || p.category}</span>
                   </td>
-                  <td class="py-3 px-3 text-right font-display font-extrabold text-jimaco-primary text-sm prod-price-cell">
-                    {formatCOP(p.price)}
-                  </td>
-                  <td class="py-3 px-3 text-center font-bold text-gray-800 prod-stock-cell">
-                    {p.stock} <span class="text-[10px] text-gray-400 font-normal">{p.unit || 'Und'}</span>
+                  <td class="py-3 px-3 text-center">
+                    {p.pending.length > 0 ? (
+                      <span title={p.pending.join(', ')} class="bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-amber-200 cursor-help">{p.pending.length} pendiente{p.pending.length > 1 ? 's' : ''}</span>
+                    ) : (
+                      <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-emerald-200">Completo</span>
+                    )}
                   </td>
                   <td class="py-3 px-3 text-center">
-                    {p.stock > 15 ? (
-                      <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-emerald-200">En Bodega</span>
-                    ) : p.stock > 0 ? (
-                      <span class="bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-amber-200">Bajo Stock</span>
-                    ) : (
-                      <span class="bg-red-50 text-red-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-red-200">Agotado</span>
-                    )}
+                    <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-emerald-200">Publicado</span>
                   </td>
                   <td class="py-3 px-4 text-center">
                     <div class="flex items-center justify-center gap-1.5">
-                      <button class="btn-edit-row text-gray-500 hover:text-jimaco-primary p-1.5 rounded-lg hover:bg-gray-100 cursor-pointer" title="Modificar precio o stock">
+                      <button class="btn-edit-row text-gray-500 hover:text-jimaco-primary p-1.5 rounded-lg hover:bg-gray-100 cursor-pointer" title="Modificar referencia">
                         ✏️
                       </button>
                       <button class="btn-delete-row text-gray-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 cursor-pointer" title="Eliminar fila">
@@ -295,8 +284,8 @@ function formatCOP(amount: number) {
             </svg>
           </div>
           <div>
-            <h3 class="text-base font-bold font-display uppercase tracking-wider text-white">Nuevo Producto para Tienda</h3>
-            <p class="text-[11px] text-gray-300">Completa la información técnica y comercial para publicar</p>
+            <h3 class="text-base font-bold font-display uppercase tracking-wider text-white">Nuevo Producto para el Catálogo</h3>
+            <p class="text-[11px] text-gray-300">Completa la información del producto para publicarlo</p>
           </div>
         </div>
         <button id="btn-close-product-modal" type="button" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/10 cursor-pointer">
@@ -320,11 +309,10 @@ function formatCOP(amount: number) {
             />
           </div>
           <div>
-            <label class="block font-bold text-gray-700 mb-1">Marca Fabricante *</label>
+            <label class="block font-bold text-gray-700 mb-1">Marca (opcional)</label>
             <input
               type="text"
               id="form-prod-brand"
-              required
               placeholder="Ej. Makita, 3M, Legrand"
               class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
             />
@@ -346,51 +334,13 @@ function formatCOP(amount: number) {
             </select>
           </div>
           <div>
-            <label class="block font-bold text-gray-700 mb-1">Código SKU / Referencia *</label>
+            <label class="block font-bold text-gray-700 mb-1">Referencia comercial</label>
             <input
               type="text"
               id="form-prod-sku"
-              required
+              
               placeholder="Ej. PJ-ILU-010"
               class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary font-mono uppercase"
-            />
-          </div>
-        </div>
-
-        <!-- Bloque: Precios, Stock y Unidad -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-gray-50 p-3.5 rounded-2xl border border-gray-200">
-          <div>
-            <label class="block font-bold text-gray-700 mb-1">Precio de Venta (COP) *</label>
-            <input
-              type="number"
-              id="form-prod-price"
-              required
-              min="100"
-              placeholder="Ej. 185000"
-              class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 font-bold focus:outline-none focus:border-jimaco-primary"
-            />
-            <span class="text-[10px] text-emerald-700 font-semibold mt-0.5 block">IVA 19% incluido</span>
-          </div>
-          <div>
-            <label class="block font-bold text-gray-700 mb-1">Stock en Bodega *</label>
-            <input
-              type="number"
-              id="form-prod-stock"
-              required
-              min="0"
-              placeholder="Ej. 50"
-              class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
-            />
-          </div>
-          <div>
-            <label class="block font-bold text-gray-700 mb-1">Unidad de Medida *</label>
-            <input
-              type="text"
-              id="form-prod-unit"
-              required
-              placeholder="Unidad, Metro, Caja x 100"
-              value="Unidad"
-              class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
             />
           </div>
         </div>
@@ -429,7 +379,7 @@ function formatCOP(amount: number) {
           <textarea
             id="form-prod-desc"
             rows="2"
-            placeholder="Descripción breve del suministro para la tienda y cotizador..."
+            placeholder="Descripción breve del producto para el catálogo..."
             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
           ></textarea>
         </div>
@@ -458,7 +408,7 @@ function formatCOP(amount: number) {
             type="submit"
             class="bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-bold uppercase text-xs px-6 py-2.5 rounded-xl shadow-md transition-all cursor-pointer"
           >
-            Publicar Producto en la Tienda
+            Publicar Producto en el Catálogo
           </button>
         </div>
 
@@ -603,12 +553,7 @@ function formatCOP(amount: number) {
           const catId = catSelect.value;
           const catName = catSelect.options[catSelect.selectedIndex].text;
           const sku = document.getElementById('form-prod-sku').value.trim();
-          const price = parseFloat(document.getElementById('form-prod-price').value) || 0;
-          const stock = parseInt(document.getElementById('form-prod-stock').value) || 0;
-          const unit = document.getElementById('form-prod-unit').value.trim() || 'Unidad';
           const image = document.getElementById('form-prod-image').value.trim() || '/images/Taladro.jpeg';
-
-          const formatCOP = (num) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(num);
 
           const tbody = document.getElementById('admin-products-table-body');
           if (tbody) {
@@ -629,18 +574,15 @@ function formatCOP(amount: number) {
                   </div>
                 </div>
               </td>
-              <td class="py-3 px-3 font-mono font-bold text-gray-600">${sku}</td>
+              <td class="py-3 px-3 font-mono font-bold text-gray-600 prod-ref-cell">${sku || 'Por confirmar'}</td>
               <td class="py-3 px-3">
                 <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-md text-[10px] font-medium font-display uppercase">${catName}</span>
               </td>
-              <td class="py-3 px-3 text-right font-display font-extrabold text-jimaco-primary text-sm prod-price-cell">
-                ${formatCOP(price)}
-              </td>
-              <td class="py-3 px-3 text-center font-bold text-gray-800 prod-stock-cell">
-                ${stock} <span class="text-[10px] text-gray-400 font-normal">${unit}</span>
+              <td class="py-3 px-3 text-center">
+                <span class="bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-amber-200">Por validar</span>
               </td>
               <td class="py-3 px-3 text-center">
-                <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-emerald-200">En Bodega</span>
+                <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold border border-emerald-200">Publicado</span>
               </td>
               <td class="py-3 px-4 text-center">
                 <div class="flex items-center justify-center gap-1.5">
@@ -659,7 +601,7 @@ function formatCOP(amount: number) {
             modalProd.classList.add('hidden');
             modalProd.classList.remove('flex');
             formProd.reset();
-            alert(`¡Producto "${name}" creado exitosamente y agregado al inventario!`);
+            alert(`¡Producto "${name}" agregado a la tabla! (Vista previa: este panel aún no guarda cambios en el catálogo publicado.)`);
           }
         });
       }
@@ -781,11 +723,10 @@ function formatCOP(amount: number) {
         if (editBtn) {
           const row = editBtn.closest('tr');
           if (row) {
-            const priceCell = row.querySelector('.prod-price-cell');
-            const stockCell = row.querySelector('.prod-stock-cell');
-            const newPrice = prompt('Ingresa el nuevo precio (COP):');
-            if (newPrice && !isNaN(newPrice)) {
-              priceCell.textContent = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(parseFloat(newPrice));
+            const refCell = row.querySelector('.prod-ref-cell');
+            const newRef = prompt('Ingresa la referencia comercial del producto:');
+            if (newRef && newRef.trim() && refCell) {
+              refCell.textContent = newRef.trim();
             }
           }
         }

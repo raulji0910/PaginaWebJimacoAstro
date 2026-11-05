@@ -1,0 +1,167 @@
+<!-- Modal "Ver información" del catálogo de productos -->
+<div id="product-modal" class="hidden fixed inset-0 z-[70] items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="pm-title">
+  <div id="product-modal-overlay" class="absolute inset-0 bg-jimaco-dark/70 backdrop-blur-sm"></div>
+
+  <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[92vh] overflow-y-auto">
+    <button
+      id="product-modal-close"
+      type="button"
+      class="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-white hover:bg-gray-100 text-gray-600 shadow-md flex items-center justify-center cursor-pointer text-lg"
+      aria-label="Cerrar"
+    >
+      ✕
+    </button>
+
+    <div class="grid md:grid-cols-2">
+      <!-- Imagen -->
+      <div class="bg-white p-6 sm:p-10 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-100">
+        <img id="pm-image" src="" alt="" class="max-h-72 sm:max-h-96 w-auto object-contain" />
+      </div>
+
+      <!-- Información -->
+      <div class="p-6 sm:p-8 space-y-4">
+        <div>
+          <span id="pm-category" class="text-[11px] font-extrabold uppercase tracking-wider text-jimaco-primary font-display"></span>
+          <h2 id="pm-title" class="text-xl sm:text-2xl font-extrabold font-display text-gray-900 leading-tight mt-1"></h2>
+          <p class="text-xs text-gray-500 mt-1.5">
+            <span id="pm-brand" class="hidden font-semibold text-gray-700 mr-3"></span>
+            <span id="pm-reference"></span>
+          </p>
+        </div>
+
+        <p id="pm-description" class="text-sm text-gray-700 leading-relaxed"></p>
+
+        <div id="pm-price-block" class="hidden">
+          <div id="pm-price" class="text-2xl font-extrabold text-jimaco-primary font-display"></div>
+          <p class="text-[11px] text-emerald-700 font-semibold">IVA incluido</p>
+        </div>
+
+        <div id="pm-specs-block" class="hidden">
+          <h3 class="font-display font-extrabold uppercase tracking-wider text-xs text-jimaco-dark mb-2">Características técnicas</h3>
+          <dl id="pm-specs" class="divide-y divide-gray-100 border border-gray-100 rounded-xl overflow-hidden text-xs"></dl>
+        </div>
+
+        <div id="pm-apps-block" class="hidden">
+          <h3 class="font-display font-extrabold uppercase tracking-wider text-xs text-jimaco-dark mb-2">Aplicaciones</h3>
+          <ul id="pm-apps" class="list-disc pl-5 space-y-1 text-sm text-gray-700"></ul>
+        </div>
+
+        <div>
+          <h3 class="font-display font-extrabold uppercase tracking-wider text-xs text-jimaco-dark mb-2">Documentación</h3>
+          <ul id="pm-docs" class="space-y-1.5 text-sm"></ul>
+          <p id="pm-docs-empty" class="text-xs text-gray-500">
+            Ficha técnica y documentos disponibles bajo solicitud con un asesor.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-2 pt-2">
+          <button
+            id="pm-quote"
+            type="button"
+            class="flex-1 bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs py-3.5 px-4 rounded-xl shadow-md transition-all cursor-pointer"
+          >
+            Solicitar cotización
+          </button>
+          <button
+            id="pm-close-secondary"
+            type="button"
+            class="sm:w-36 border-2 border-gray-200 hover:border-gray-300 text-gray-600 font-display font-bold uppercase tracking-wider text-xs py-3.5 px-4 rounded-xl transition-all cursor-pointer"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var modal = document.getElementById('product-modal');
+    if (!modal) return;
+    var current = null;
+
+    function getProduct(id) {
+      return (window.__CATALOG_PRODUCTS__ || []).find(function (p) { return p.id === id; });
+    }
+
+    function close() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      if (!document.getElementById('quote-modal') || document.getElementById('quote-modal').classList.contains('hidden')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    window.openProductInfo = function (id) {
+      var p = getProduct(id);
+      if (!p) return;
+      current = p;
+      document.getElementById('pm-image').src = p.image;
+      document.getElementById('pm-image').alt = p.name;
+      document.getElementById('pm-category').textContent = p.categoryName;
+      document.getElementById('pm-title').textContent = p.name;
+      document.getElementById('pm-description').textContent = p.description;
+
+      var priceBlock = document.getElementById('pm-price-block');
+      if (p.price) {
+        document.getElementById('pm-price').textContent = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(p.price);
+        priceBlock.classList.remove('hidden');
+      } else {
+        priceBlock.classList.add('hidden');
+      }
+
+      var brand = document.getElementById('pm-brand');
+      if (p.brand) { brand.textContent = p.brand; brand.classList.remove('hidden'); } else { brand.classList.add('hidden'); }
+      document.getElementById('pm-reference').textContent = p.reference ? 'Referencia: ' + p.reference : 'Referencia: consulta con un asesor';
+
+      var specs = document.getElementById('pm-specs');
+      specs.innerHTML = '';
+      var keys = Object.keys(p.specs || {});
+      keys.forEach(function (k) {
+        var row = document.createElement('div');
+        row.className = 'flex justify-between gap-4 px-3 py-2 bg-white even:bg-gray-50';
+        var dt = document.createElement('dt'); dt.className = 'text-gray-500'; dt.textContent = k;
+        var dd = document.createElement('dd'); dd.className = 'font-semibold text-gray-800 text-right'; dd.textContent = p.specs[k];
+        row.appendChild(dt); row.appendChild(dd); specs.appendChild(row);
+      });
+      document.getElementById('pm-specs-block').classList.toggle('hidden', keys.length === 0);
+
+      var apps = document.getElementById('pm-apps');
+      apps.innerHTML = '';
+      (p.applications || []).forEach(function (a) {
+        var li = document.createElement('li'); li.textContent = a; apps.appendChild(li);
+      });
+      document.getElementById('pm-apps-block').classList.toggle('hidden', !(p.applications && p.applications.length));
+
+      var docs = document.getElementById('pm-docs');
+      docs.innerHTML = '';
+      (p.documents || []).forEach(function (d) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = d.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.className = 'text-jimaco-primary font-semibold hover:underline';
+        a.textContent = '📄 ' + d.name;
+        li.appendChild(a); docs.appendChild(li);
+      });
+      document.getElementById('pm-docs-empty').classList.toggle('hidden', !!(p.documents && p.documents.length));
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    };
+
+    document.getElementById('product-modal-close').addEventListener('click', close);
+    document.getElementById('pm-close-secondary').addEventListener('click', close);
+    document.getElementById('product-modal-overlay').addEventListener('click', close);
+    document.getElementById('pm-quote').addEventListener('click', function () {
+      if (!current) return;
+      var id = current.id;
+      close();
+      if (window.openQuote) window.openQuote(id);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
+  })();
+</script>

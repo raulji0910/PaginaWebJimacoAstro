@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ProductCard from '../components/ProductCard.astro';
+import ProductCard from '../components/StoreProductCard.astro';
 import QuickViewModal from '../components/QuickViewModal.astro';
-import { PRODUCTS, CATEGORIES, BRANDS } from '../data/products';
+import { PRODUCTS, CATEGORIES } from '../data/store';
 
 // Contar productos por categoría
 const countsByCategory = CATEGORIES.reduce((acc, cat) => {
@@ -45,7 +45,7 @@ const countsByCategory = CATEGORIES.reduce((acc, cat) => {
 
   <!-- Cabecera de la Tienda & Buscador Central (Estilo Mercado Libre) -->
   <section class="bg-gradient-to-b from-gray-100 to-white py-6 sm:py-8 border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
       <!-- Migas de Pan -->
       <nav class="flex text-xs text-gray-500 mb-3" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1.5">
@@ -137,7 +137,7 @@ const countsByCategory = CATEGORIES.reduce((acc, cat) => {
   </section>
 
   <!-- Contenedor Principal: Filtros Laterales + Catálogo de Productos -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-[40px] py-8">
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
       
       <!-- ============================================== -->
@@ -187,65 +187,6 @@ const countsByCategory = CATEGORIES.reduce((acc, cat) => {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <!-- Bloque: Rango de Precios -->
-          <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs">
-            <h3 class="font-display font-extrabold text-sm uppercase tracking-wider text-jimaco-dark mb-3">
-              Rango de Precio (COP)
-            </h3>
-            <div class="space-y-3">
-              <div class="grid grid-cols-2 gap-2 text-xs">
-                <div>
-                  <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Mínimo</label>
-                  <input
-                    type="number"
-                    id="price-min"
-                    placeholder="$ 0"
-                    min="0"
-                    step="10000"
-                    class="w-full bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
-                  />
-                </div>
-                <div>
-                  <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Máximo</label>
-                  <input
-                    type="number"
-                    id="price-max"
-                    placeholder="$ 1.500.000"
-                    min="0"
-                    step="50000"
-                    class="w-full bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary"
-                  />
-                </div>
-              </div>
-              <button
-                type="button"
-                id="apply-price-filter"
-                class="w-full bg-gray-100 hover:bg-jimaco-primary hover:text-white text-gray-700 font-display font-bold uppercase text-[11px] py-2 rounded-lg transition-colors cursor-pointer"
-              >
-                Aplicar Rango
-              </button>
-            </div>
-          </div>
-
-          <!-- Bloque: Marcas Aliadas -->
-          <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs">
-            <h3 class="font-display font-extrabold text-sm uppercase tracking-wider text-jimaco-dark mb-3">
-              Marcas Fabricantes
-            </h3>
-            <div class="space-y-2 max-h-56 overflow-y-auto pr-1 text-xs">
-              {BRANDS.map(brand => (
-                <label class="flex items-center gap-2.5 text-gray-700 hover:text-jimaco-primary cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    value={brand.toLowerCase()}
-                    class="brand-checkbox rounded text-jimaco-primary focus:ring-jimaco-primary focus:ring-offset-0 w-4 h-4 border-gray-300"
-                  />
-                  <span>{brand}</span>
-                </label>
-              ))}
-            </div>
           </div>
 
           <!-- Bloque: Disponibilidad -->
