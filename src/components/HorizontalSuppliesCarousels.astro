@@ -16,15 +16,10 @@ const solarProducts = [
 // Carrusel de construcción: todos los productos del Catálogo de productos
 const constProducts = CATALOG.map((p) => ({ id: p.id, img: p.image, title: p.name }));
 
-const eppProducts = [
-  { img: '/images/fondo-proteccion-home.jpg', title: 'Impermeables y Overoles de Protección' },
-  { img: '/images/5-seguridad-alturas-2.jpg', title: 'Seguridad en Alturas & Arneses' },
-  { img: '/images/4-proteccion-respiratoria-1.jpg', title: 'Protección Respiratoria' },
-  { img: '/images/1-visual-1a-1024x1024.jpg', title: 'Gafas de Seguridad & Protección Visual' },
-  { img: '/images/1-proteccion-oido-2.jpg', title: 'Protectores Auditivos' },
-  { img: '/images/6-seguridad-manos-1.jpg', title: 'Guantes Dieléctricos y de Vaqueta' },
-  { img: '/images/8-proteccion-piernas-1-1024x1024.jpg', title: 'Botas y Protección de Piernas' }
-];
+// Carrusel de protección personal: sección "Dotación industrial y seguridad" del Catálogo
+const eppProducts = CATALOG
+  .filter((p) => p.group === 'Dotación industrial y seguridad')
+  .map((p) => ({ id: p.id, img: p.image, title: p.name }));
 ---
 
 <div class="space-y-12 pb-16 bg-white overflow-hidden">
@@ -39,7 +34,7 @@ const eppProducts = [
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
         </button>
 
-        <div class="carousel-track flex gap-4 overflow-x-auto scroll-smooth no-scrollbar py-2 w-full">
+        <div class="carousel-track track-green flex gap-4 overflow-x-auto scroll-smooth pt-2 pb-4 w-full">
           {constProducts.map((p) => (
             <a
               href={`/catalogo#info=${p.id}`}
@@ -131,15 +126,19 @@ const eppProducts = [
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
         </button>
 
-        <div class="carousel-track flex gap-4 overflow-x-auto scroll-smooth no-scrollbar py-2 w-full">
+        <div class="carousel-track track-amber flex gap-4 overflow-x-auto scroll-smooth pt-2 pb-4 w-full">
           {eppProducts.map((p) => (
-            <div class="shrink-0 w-64 sm:w-72 h-80 sm:h-96 rounded-xl overflow-hidden shadow-md relative bg-white border border-gray-100 group/card">
-              <img src={p.img} alt={p.title} class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-              <p class="absolute bottom-4 left-4 right-4 text-white font-display font-bold text-sm leading-snug">
+            <a
+              href={`/catalogo#info=${p.id}`}
+              class="shrink-0 w-56 sm:w-60 h-72 sm:h-80 rounded-xl overflow-hidden shadow-md relative bg-white border border-gray-100 group/card flex flex-col"
+            >
+              <div class="flex-1 min-h-0 flex items-center justify-center p-4 bg-white">
+                <img src={p.img} alt={p.title} loading="lazy" class="max-h-full w-auto object-contain group-hover/card:scale-105 transition-transform duration-500" draggable="false" />
+              </div>
+              <p class="px-4 py-3 border-t border-gray-100 text-[#0B1E02] font-display font-bold text-sm leading-snug line-clamp-2 group-hover/card:text-[#1C6521] transition-colors">
                 {p.title}
               </p>
-            </div>
+            </a>
           ))}
         </div>
 
@@ -161,7 +160,7 @@ const eppProducts = [
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
         </button>
 
-        <div class="carousel-track flex gap-4 overflow-x-auto scroll-smooth no-scrollbar py-2 w-full">
+        <div class="carousel-track track-neon flex gap-4 overflow-x-auto scroll-smooth pt-2 pb-4 w-full">
           {solarProducts.map((p) => (
             <div class="shrink-0 w-64 sm:w-72 h-80 sm:h-96 rounded-xl overflow-hidden shadow-md relative bg-white border border-gray-100 group/card">
               <img src={p.img} alt={p.title} class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" />
@@ -206,6 +205,37 @@ const eppProducts = [
   </div>
 
 </div>
+
+<style>
+  .carousel-track {
+    --thumb: #1C6521;
+    --rail: rgba(11, 30, 2, 0.08);
+    scroll-snap-type: x proximity;
+  }
+  .track-green { --thumb: #1C6521; --rail: rgba(28, 101, 33, 0.12); }
+  .track-amber { --thumb: #0B1E02; --rail: rgba(11, 30, 2, 0.12); }
+  .track-neon  { --thumb: #7BBE6F; --rail: rgba(255, 255, 255, 0.12); }
+
+  .carousel-track::-webkit-scrollbar { height: 8px; }
+  .carousel-track::-webkit-scrollbar-track {
+    background: var(--rail);
+    border-radius: 999px;
+    margin: 0 12px;
+  }
+  .carousel-track::-webkit-scrollbar-thumb {
+    background: var(--thumb);
+    border-radius: 999px;
+    border: 0;
+    transition: background 0.2s;
+  }
+  .carousel-track::-webkit-scrollbar-thumb:hover { background: #FF6A1C; }
+  .carousel-track::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+  .carousel-track > * { scroll-snap-align: start; }
+  /* Firefox */
+  @supports not selector(::-webkit-scrollbar) {
+    .carousel-track { scrollbar-width: thin; scrollbar-color: var(--thumb) var(--rail); }
+  }
+</style>
 
 <script>
   function setupScrollButtons() {

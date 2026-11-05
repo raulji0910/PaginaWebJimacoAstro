@@ -1,0 +1,327 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EntregasCarousel from '../components/EntregasCarousel.astro';
+
+const WA = (text: string) => `https://wa.me/573123503397?text=${encodeURIComponent(text)}`;
+const MSG = 'Hola JIMACO, quiero cotizar cajas de inspección en polipropileno de alta densidad.';
+const IMG = '/images/catalogo/caja-de-inspeccion-polipropileno.jpg';
+
+const quickFacts = [
+  ['PP', 'Polipropileno de alta densidad'],
+  ['15 ton', 'Carga mecánica que soporta'],
+  ['-40 a +80 °C', 'Rango de temperatura de trabajo'],
+  ['Cuadrada', 'Con entradas circulares en los lados']
+];
+
+const features = [
+  ['Cuerpo resistente', 'Sus paredes reforzadas le dan firmeza al manipularla, colocarla y dejarla en servicio bajo tierra.'],
+  ['Entradas laterales circulares', 'Cada lado tiene aberturas concéntricas: se corta la que coincide con el diámetro de tu tubería y el resto queda cerrado.'],
+  ['Diseño modular', 'Se integra con distintos esquemas de redes subterráneas, y se pueden combinar varias cajas a lo largo de un mismo recorrido.'],
+  ['Fácil de instalar', 'Su forma cuadrada facilita ubicarla, nivelarla y conectar las tuberías de la instalación.'],
+  ['Interior amplio', 'Hay espacio para reunir en un solo punto varias conexiones, empalmes o cambios de dirección.'],
+  ['Acceso desde arriba', 'La abertura superior permite meter la mano o las herramientas para inspeccionar y dar mantenimiento, usándola con su tapa correspondiente.']
+];
+
+const reasons = [
+  ['Refuerzos estructurales', 'Las nervaduras del cuerpo ayudan a que la caja mantenga su forma y no ceda cuando se rellena alrededor.'],
+  ['Material que no se corroe', 'El polipropileno resiste agentes químicos y ácidos, y no se oxida como los materiales metálicos.'],
+  ['Soporta la humedad y el fuego', 'Pensada para un ambiente exigente: terreno húmedo, tierra agresiva y condiciones de riesgo.'],
+  ['Para cargas pesadas', 'Soporta hasta 15 toneladas, lo que permite usarla en zonas con circulación de vehículos, según el diseño del proyecto.']
+];
+
+const productSpecs = [
+  ['Material', 'Polipropileno de alta densidad (PP)'],
+  ['Forma', 'Cuadrada, con refuerzos estructurales'],
+  ['Entradas', 'Aberturas circulares concéntricas en los lados'],
+  ['Acceso', 'Abertura superior (se usa con tapa)'],
+  ['Resistencia mecánica', 'Hasta 15 toneladas'],
+  ['Protección', 'Resistente a agentes químicos y ácidos'],
+  ['Temperatura', '-40 °C a +80 °C'],
+  ['Seguridad', 'Resistente a la humedad y al fuego'],
+  ['Marca', 'JIMACO']
+];
+
+const scenarios = [
+  ['Redes de drenaje', 'Puntos donde se reúnen o se desvían las tuberías de evacuación.'],
+  ['Aguas lluvias', 'Registro y cambio de dirección en los sistemas de escorrentía.'],
+  ['Conducción subterránea', 'Estaciones de paso a lo largo de redes enterradas.'],
+  ['Infraestructura', 'Apoyo en obras civiles que necesitan puntos de conexión controlados.'],
+  ['Redes eléctricas y de telecomunicaciones', 'Cámaras para jalar, empalmar y revisar cableado.'],
+  ['Inspección de tuberías', 'Sitios de revisión y mantenimiento sin tener que excavar de nuevo.']
+];
+
+const steps = [
+  ['Excavar y nivelar', 'Abre el hueco con el tamaño de la caja y prepara una base firme y plana.'],
+  ['Elegir las entradas', 'Identifica en qué lados llegan las tuberías y abre la entrada del diámetro que corresponde.'],
+  ['Colocar la caja', 'Asienta la pieza, revisa que quede a nivel y con su abertura superior hacia arriba.'],
+  ['Conectar las tuberías', 'Acopla los tubos a las entradas abiertas, asegurando un buen ajuste.'],
+  ['Rellenar y tapar', 'Compacta alrededor por capas y coloca la tapa para dejar el acceso protegido.']
+];
+
+const faqs = [
+  ['¿La caja incluye tapa?', 'El acceso superior se usa con la tapa correspondiente. Consulta con nuestro equipo la tapa adecuada para tu instalación.'],
+  ['¿Cómo conecto tuberías de distintos diámetros?', 'Las entradas circulares son concéntricas: eliges el diámetro que necesitas y abres esa entrada.'],
+  ['¿Sirve solo para redes de agua?', 'No. Se usa en drenajes y aguas lluvias, y también como cámara de paso en redes eléctricas y de telecomunicaciones.'],
+  ['¿Soporta tránsito de vehículos?', 'Soporta hasta 15 toneladas. Para zonas con tráfico, el diseño de la instalación y la tapa deben ser acordes con la carga.'],
+  ['¿Dónde la compro?', 'Está disponible en nuestra Tienda Virtual, o puedes pedir cotización por mayor con un asesor.']
+];
+---
+
+<Layout
+  title="Caja de inspección en polipropileno — JIMACO"
+  description="Caja de inspección cuadrada de polipropileno de alta densidad: entradas circulares concéntricas, refuerzos estructurales, soporta 15 toneladas. JIMACO, Bogotá."
+>
+  <!-- 1. HERO -->
+  <section class="relative w-full min-h-[560px] lg:min-h-[640px] overflow-hidden bg-[#0A1A0D] flex items-center">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0B1E02]/90 via-transparent to-black/20"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-[#0B1E02] via-[#0B1E02]/90 to-[#0B1E02]/60"></div>
+      <img src="/images/vertical-waves.png" alt="" class="absolute left-0 bottom-0 h-full w-auto opacity-35 pointer-events-none mix-blend-screen" />
+    </div>
+
+    <!-- Imagen del producto como fondo -->
+    <div class="absolute right-0 top-0 z-[5] hidden lg:block h-full w-[52%] bg-white">
+      <img src={IMG} alt="Caja de inspección en polipropileno de alta densidad" class="w-full h-full object-contain p-10" />
+      <div class="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-[#0B1E02] to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-[40px] w-full flex flex-col justify-between gap-8 min-h-[560px] lg:min-h-[640px] py-14 sm:py-16">
+      <div class="max-w-3xl lg:max-w-[54%] space-y-4 my-auto">
+        <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08] drop-shadow-xl">
+          Caja de <span class="text-[#88D67C]">inspección</span>
+        </h1>
+
+        <div class="flex items-center gap-3 pt-2">
+          <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-jimaco-orange font-display">SUMINISTROS</span>
+          <span class="w-10 h-[2px] bg-jimaco-orange inline-block"></span>
+        </div>
+
+        <p class="text-emerald-100/90 text-base sm:text-xl font-medium tracking-wide pt-1 max-w-2xl">
+          El punto de conexión y revisión que tus redes subterráneas necesitan.
+        </p>
+
+        <p class="text-white/80 text-sm sm:text-base leading-relaxed max-w-2xl">
+          Caja cuadrada de <strong class="text-white">polipropileno de alta densidad</strong>, con paredes reforzadas y <strong class="text-white">entradas circulares</strong> para adaptar las conexiones al diámetro de cada tubería.
+        </p>
+
+        <ul class="flex flex-wrap gap-2 pt-1">
+          {['Soporta 15 toneladas', 'Entradas para varios diámetros', 'Resistente a químicos', 'Acceso para mantenimiento'].map((chip) => (
+            <li class="text-[11px] sm:text-xs font-display font-bold uppercase tracking-wider text-white/90 bg-white/10 border border-white/20 backdrop-blur-sm rounded-full px-3.5 py-1.5">{chip}</li>
+          ))}
+        </ul>
+
+        <div class="flex flex-wrap gap-3 pt-3">
+          <a href={WA(MSG)} target="_blank" rel="noopener noreferrer" class="bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all">Cotizar ahora</a>
+          <a href="/tienda" class="border-2 border-white/50 hover:bg-white hover:text-jimaco-dark text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl transition-all">Comprar en la tienda</a>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-4">
+        <span class="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-white/80 border border-white/20 bg-black/30 backdrop-blur-md px-4 py-2 rounded-full">
+          POLIPROPILENO · INFRAESTRUCTURA SUBTERRÁNEA
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. FRANJA VERDE -->
+  <div class="w-full py-5 sm:py-6 bg-[#063A16] border-t border-b border-black/20 overflow-hidden relative select-none">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px] flex flex-wrap items-center justify-center sm:justify-between gap-3 text-2xl sm:text-3xl font-display tracking-tight">
+      <div class="flex items-center gap-3">
+        <span class="text-white/85 font-medium">Conecta, revisa</span>
+        <span class="text-[#88D67C] font-extrabold italic">y da mantenimiento.</span>
+      </div>
+      <a href={WA(MSG)} target="_blank" rel="noopener noreferrer" class="text-xs font-display font-extrabold uppercase tracking-wider bg-jimaco-orange hover:bg-jimaco-orangeHover text-white px-6 py-3 rounded-xl shadow-md transition-all">Cotizar por WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- 3. QUÉ ES -->
+  <section class="py-14 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
+        <div class="lg:col-span-3 space-y-4">
+          <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Conoce el producto</span>
+          <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark">Una cámara para unir y revisar tuberías</h2>
+          <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+            Cuando una red pasa por debajo del suelo, necesita puntos donde se puedan reunir los tubos, cambiar su dirección y entrar a revisarlos. Esa es la función de la caja de inspección: una cámara cuadrada, hecha en plástico de alta resistencia, que facilita conectar, repartir y supervisar las tuberías enterradas.
+          </p>
+          <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+            Su cuerpo es robusto y está reforzado en las paredes. Por los lados tiene aberturas circulares de diferentes diámetros, dispuestas una dentro de otra, de modo que puedes habilitar solo la que necesitas según el tubo que llegue. Los refuerzos estructurales ayudan a que mantenga su forma y simplifican el montaje dentro de sistemas de infraestructura.
+          </p>
+          <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+            Está fabricada por JIMACO en <strong>polipropileno de alta densidad (PP)</strong>, un material liviano, resistente a ácidos y agentes químicos, que soporta cargas de hasta <strong>15 toneladas</strong>. Sirve tanto en redes de drenaje y aguas lluvias como en instalaciones eléctricas y de telecomunicaciones.
+          </p>
+        </div>
+        <div class="lg:col-span-2 grid grid-cols-2 gap-3">
+          {quickFacts.map(([title, text]) => (
+            <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-5">
+              <div class="font-display font-extrabold text-xl text-jimaco-primary leading-tight mb-1">{title}</div>
+              <p class="text-xs text-gray-600 leading-snug">{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. CARACTERÍSTICAS -->
+  <section class="py-16 sm:py-20 bg-gray-50 border-y border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Características principales</span>
+      <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-8">Pensada para facilitar tu instalación</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {features.map(([title, text], i) => (
+          <div class="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-xs hover:shadow-lg hover:border-jimaco-primary/40 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-jimaco-primary flex items-center justify-center font-display font-extrabold mb-4">{i + 1}</div>
+            <h3 class="font-display font-bold text-base text-jimaco-primary mb-1">{title}</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. POR QUÉ ELEGIRLA -->
+  <section class="py-16 sm:py-24 bg-[#0B1E02] text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-screen">
+      <img src="/images/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative z-10 space-y-10 sm:space-y-12">
+      <div class="max-w-4xl space-y-4">
+        <h2 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight">
+          Resistencia <span class="text-[#88D67C] italic">bajo tierra</span>
+        </h2>
+        <p class="text-emerald-100/90 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl">
+          Una vez enterrada, la caja debe aguantar años de humedad, presión del terreno y exposición a sustancias del suelo. Por eso su construcción prioriza la solidez y la durabilidad.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {reasons.map(([title, text]) => (
+          <div class="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 hover:border-[#88D67C]/50 transition-all">
+            <div class="w-2.5 h-2.5 rounded-full bg-[#FF6A1C] mb-4"></div>
+            <h3 class="font-display font-extrabold text-lg text-white mb-2">{title}</h3>
+            <p class="text-sm text-emerald-100/80 leading-relaxed">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FICHA TÉCNICA -->
+  <section id="ficha" class="scroll-mt-24 py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <div class="mb-8">
+        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Ficha técnica</span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark">Especificaciones del producto</h2>
+      </div>
+      <article class="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch bg-gray-50 border border-gray-200 rounded-3xl overflow-hidden">
+        <div class="bg-white p-8 sm:p-12 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-gray-200">
+          <img src={IMG} alt="Caja de inspección JIMACO" class="max-h-[400px] w-auto object-contain" loading="lazy" />
+        </div>
+        <div class="p-6 sm:p-10">
+          <h3 class="font-display font-extrabold text-xs uppercase tracking-wider text-jimaco-primary mb-3">Datos del producto</h3>
+          <dl class="divide-y divide-gray-200 border-y border-gray-200 text-sm mb-6">
+            {productSpecs.map(([k, v]) => (
+              <div class="flex justify-between gap-4 py-2.5">
+                <dt class="text-gray-500">{k}</dt>
+                <dd class="font-bold text-jimaco-dark text-right">{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="flex flex-wrap gap-3">
+            <a href={WA(MSG)} target="_blank" rel="noopener noreferrer" class="bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all">Solicitar cotización</a>
+            <a href="/tienda" class="border-2 border-jimaco-primary/30 hover:border-jimaco-primary text-jimaco-primary font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl transition-all">Ver en la tienda</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 6b. ENTREGAS REALES -->
+  <EntregasCarousel
+    eyebrow="Evidencia en campo"
+    heading="Entregas"
+    headingAccent="reales"
+    intro="Así preparamos y despachamos nuestros suministros: producto ordenado, asegurado y listo para llegar a tu obra."
+    badge="Entrega real"
+    photos={[
+      { src: '/images/entregas/cajas-bodega.jpg', alt: 'Cajas de inspección de polipropileno apiladas en bodega', caption: 'Cajas de inspección listas para despacho' },
+      { src: '/images/entregas/tramos-descarga-camion.jpg', alt: 'Operarios descargando tubería PEAD HDPE de un camión', caption: 'Descarga de tubería PEAD HDPE desde el camión' },
+      { src: '/images/entregas/placas-instalacion-zanja.jpg', alt: 'Operarios colocando placas de protección en una zanja', caption: 'Placas de protección instaladas en obra' },
+      { src: '/images/entregas/entrega-contenedor-2.jpg', alt: 'Camión con contenedor lleno de rollos de tubería PEAD', caption: 'Despacho en contenedor hacia obra' },
+      { src: '/images/entregas/tramos-pila-patio.jpg', alt: 'Pila de tramos de tubería PEAD HDPE en patio', caption: 'Tubería PEAD HDPE lista para entrega' }
+    ]}
+  />
+
+  <!-- 7. APLICACIONES -->
+  <section class="py-16 sm:py-20 bg-gray-50 border-y border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Aplicaciones</span>
+      <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-8">¿Dónde se usa?</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {scenarios.map(([title, text]) => (
+          <div class="bg-white rounded-2xl border border-gray-200 p-6">
+            <h3 class="font-display font-bold text-base text-jimaco-primary mb-1">{title}</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. INSTALACIÓN Y PREGUNTAS -->
+  <section class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px] space-y-14">
+      <div>
+        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Instalación</span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-2">Así se instala, paso a paso</h2>
+        <p class="text-sm text-gray-600 mb-8 max-w-3xl">Guía general de referencia. Sigue siempre el diseño de tu proyecto y la normativa vigente.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {steps.map(([title, text], i) => (
+            <li class="bg-gray-50 rounded-2xl border border-gray-200/80 p-5">
+              <div class="w-9 h-9 rounded-full bg-jimaco-orange text-white font-display font-extrabold flex items-center justify-center mb-3">{i + 1}</div>
+              <h3 class="font-display font-bold text-sm text-jimaco-primary mb-1">{title}</h3>
+              <p class="text-xs text-gray-600 leading-relaxed">{text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div>
+        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Resolvemos tus dudas</span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-6">Preguntas frecuentes</h2>
+        <div class="space-y-3 max-w-4xl">
+          {faqs.map(([q, a]) => (
+            <details class="group bg-gray-50 rounded-2xl border border-gray-200/80 p-5 open:shadow-md">
+              <summary class="cursor-pointer list-none flex items-center justify-between gap-4 font-display font-bold text-base text-jimaco-dark">
+                {q}
+                <span class="text-jimaco-orange text-xl transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-sm text-gray-600 leading-relaxed mt-3">{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. CTA FINAL -->
+  <section class="py-16 sm:py-20 bg-gray-50 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <div class="bg-[#0B1E02] rounded-3xl text-white px-6 sm:px-12 py-12 sm:py-16 grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        <div class="lg:col-span-2 space-y-3">
+          <h2 class="font-display text-3xl sm:text-5xl font-extrabold leading-tight">
+            ¿Necesitas <span class="text-[#88D67C] italic">cajas de inspección</span> para tu obra?
+          </h2>
+          <p class="text-emerald-100/90 text-sm sm:text-base max-w-2xl">
+            Cuéntanos cuántas necesitas y los diámetros de tus tuberías. Te asesoramos y despachamos a todo Colombia.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3">
+          <a href={WA('Hola JIMACO, necesito asesoría para cajas de inspección.')} target="_blank" rel="noopener noreferrer" class="text-center bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all">Hablar con un asesor</a>
+          <a href="mailto:ventas@jimaco.com.co?subject=Cotización cajas de inspección" class="text-center border-2 border-white/40 hover:bg-white hover:text-jimaco-dark text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl transition-all">ventas@jimaco.com.co</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

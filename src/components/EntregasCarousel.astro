@@ -1,12 +1,29 @@
 ---
 // Carrusel "Entregas Reales": fotos de despachos de tubería PEAD.
-const photos = [
+interface Photo { src: string; alt: string; caption: string; }
+interface Props {
+  photos?: Photo[];
+  eyebrow?: string;
+  heading?: string;
+  headingAccent?: string;
+  intro?: string;
+  badge?: string;
+}
+const defaultPhotos: Photo[] = [
   { src: '/images/entregas/entrega-contenedor-1.jpg', alt: 'Contenedor con rollos de tubería PEAD negra listos para entrega', caption: 'Rollos de tubería PEAD cargados en contenedor' },
   { src: '/images/entregas/entrega-rollo-bodega.jpg', alt: 'Rollo de tubería PEAD corrugada negra atado con cuerda', caption: 'Rollo de tubería PEAD corrugada, listo para despacho' },
   { src: '/images/entregas/entrega-contenedor-2.jpg', alt: 'Camión con contenedor lleno de rollos de tubería PEAD', caption: 'Despacho en contenedor hacia obra' },
   { src: '/images/entregas/entrega-contenedor-3.jpg', alt: 'Rollos de tubería PEAD apilados dentro del contenedor', caption: 'Rollos organizados y asegurados para el transporte' },
   { src: '/images/entregas/entrega-rollos-apilados.jpg', alt: 'Rollos de tubería PEAD corrugada apilados al aire libre', caption: 'Rollos de tubería PEAD apilados en patio' }
 ];
+const {
+  photos = defaultPhotos,
+  eyebrow = 'Evidencia en campo',
+  heading = 'Entregas',
+  headingAccent = 'reales',
+  intro = 'Así despachamos nuestra tubería PEAD: rollos asegurados y listos para llegar a tu obra.',
+  badge = 'Entrega real'
+} = Astro.props;
 ---
 
 <section class="py-16 sm:py-24 bg-[#0B1E02] text-white relative overflow-hidden" aria-label="Entregas reales">
@@ -17,12 +34,12 @@ const photos = [
   <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative z-10">
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
       <div>
-        <span class="text-xs font-extrabold uppercase tracking-widest text-jimaco-orange font-display">Evidencia en campo</span>
+        <span class="text-xs font-extrabold uppercase tracking-widest text-jimaco-orange font-display">{eyebrow}</span>
         <h2 class="font-display text-3xl sm:text-5xl font-extrabold leading-tight mt-1">
-          Entregas <span class="text-[#88D67C] italic">reales</span>
+          {heading} <span class="text-[#88D67C] italic">{headingAccent}</span>
         </h2>
         <p class="text-emerald-100/90 text-sm sm:text-base mt-3 max-w-2xl">
-          Así despachamos nuestra tubería PEAD: rollos asegurados y listos para llegar a tu obra.
+          {intro}
         </p>
       </div>
 
@@ -59,7 +76,7 @@ const photos = [
             </div>
             <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0B1E02] via-[#0B1E02]/80 to-transparent p-4 pt-12">
               <span class="inline-block bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider font-display mb-1.5">
-                Entrega real
+                {badge}
               </span>
               <figcaption class="text-sm font-display font-bold leading-snug text-white">{p.caption}</figcaption>
             </div>

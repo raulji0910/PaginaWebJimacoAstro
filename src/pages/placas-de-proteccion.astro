@@ -1,0 +1,366 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EntregasCarousel from '../components/EntregasCarousel.astro';
+
+const WA = (text: string) => `https://wa.me/573123503397?text=${encodeURIComponent(text)}`;
+const MSG = 'Hola JIMACO, quiero cotizar placas de protección para cables enterrados.';
+
+const quickFacts = [
+  ['PE-HD', 'Polietileno de alta densidad'],
+  ['1000 × 250 mm', 'Largo × ancho de cada placa'],
+  ['Macho-hembra', 'Encaje entre placas contiguas'],
+  ['Amarillo', 'Color de advertencia, personalizable']
+];
+
+const pillars = [
+  ['Aviso antes del daño', 'Si una máquina o una herramienta llega hasta la placa, el golpe suena y vibra: es la señal para detenerse antes de tocar el cable.'],
+  ['Cubre toda la línea', 'Las piezas se acoplan una tras otra y forman una franja continua sobre el recorrido de la canalización.'],
+  ['Mensaje claro', 'Lleva impreso en negro el aviso de riesgo eléctrico para que cualquiera que excave entienda lo que hay debajo.'],
+  ['A tu medida', 'Se puede ajustar el texto, el logotipo, el ancho, el espesor y el color según lo que pida el proyecto.']
+];
+
+const marks = [
+  'Marca del fabricante',
+  'Símbolo de riesgo eléctrico',
+  'Leyenda «ATENCIÓN: CABLES ELÉCTRICOS»',
+  'Norma que aplica',
+  'Material de fabricación',
+  'Año de producción'
+];
+
+const productSpecs = [
+  ['Material', 'PE-HD (polietileno de alta densidad)'],
+  ['Largo', '1000 mm'],
+  ['Ancho', '250 mm'],
+  ['Unión', 'Sistema macho-hembra'],
+  ['Color', 'Amarillo (otros colores bajo pedido)'],
+  ['Impresión', 'Texto negro de advertencia'],
+  ['Libre de', 'Metales pesados (plomo)'],
+  ['Gases ácidos', 'Conforme a UNE EN 50267-2-2'],
+  ['Exposición solar', 'Estable a los rayos UV']
+];
+
+const scenarios = [
+  ['Líneas eléctricas enterradas', 'Se coloca sobre el relleno, por encima de los ductos o cables, para resguardarlos de futuras excavaciones.'],
+  ['Parques solares y eólicos', 'Marca el trazado de los circuitos que recorren grandes extensiones de terreno.'],
+  ['Obras urbanas y vías', 'Aviso útil donde varias redes comparten zanja o donde se abre el suelo con frecuencia.']
+];
+
+const steps = [
+  ['Tender la canalización', 'Instala los ductos o cables en la zanja y cúbrelos con una capa de arena o material fino.'],
+  ['Rellenar a nivel', 'Agrega relleno compactado hasta alcanzar la altura de señalización definida en el diseño.'],
+  ['Ubicar las placas', 'Apóyalas sobre el relleno, centradas sobre la línea y con la leyenda hacia arriba.'],
+  ['Unir las piezas', 'Encaja el macho de una placa en la hembra de la siguiente hasta cubrir todo el recorrido.'],
+  ['Terminar el cierre', 'Completa el relleno final y restituye la superficie según las especificaciones de la obra.']
+];
+
+const faqs = [
+  ['¿Qué pasa si una excavadora llega a la placa?', 'La vibración y el ruido del impacto alertan al operario de que hay una canalización debajo, para que pare y revise antes de continuar.'],
+  ['¿Qué información trae impresa?', 'Marca, símbolo de riesgo eléctrico, la frase «ATENCIÓN: CABLES ELÉCTRICOS», la norma aplicable, el material y el año de fabricación.'],
+  ['¿Se pueden pedir con mi logotipo?', 'Sí. El texto, el logotipo, el ancho, el espesor y el color se pueden adaptar. Escríbenos con los datos de tu proyecto.'],
+  ['¿Cómo se conectan entre sí?', 'Cada placa tiene un extremo macho y otro hembra que encajan, de modo que la señalización queda continua.'],
+  ['¿Dañan el medio ambiente?', 'No contienen plomo ni otros metales pesados y su material es estable frente a la radiación ultravioleta.']
+];
+---
+
+<Layout
+  title="Placas de protección para cables enterrados — JIMACO"
+  description="Placas de protección y señalización de PE-HD para canalizaciones eléctricas subterráneas: unión macho-hembra, 1000 × 250 mm, libres de plomo. JIMACO, Bogotá."
+>
+  <!-- 1. HERO -->
+  <section class="relative w-full min-h-[560px] lg:min-h-[640px] overflow-hidden bg-[#0A1A0D] flex items-center">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0B1E02]/90 via-transparent to-black/20"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-[#0B1E02] via-[#0B1E02]/90 to-[#0B1E02]/60"></div>
+      <img src="/images/vertical-waves.png" alt="" class="absolute left-0 bottom-0 h-full w-auto opacity-35 pointer-events-none mix-blend-screen" />
+    </div>
+
+    <!-- Imagen del producto como fondo -->
+    <div class="absolute right-0 top-0 z-[5] hidden lg:block h-full w-[55%]">
+      <img src="/images/placas/placa-hero.jpg" alt="Placa de protección amarilla JIMACO para cables enterrados" class="w-full h-full object-cover object-center" />
+      <div class="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[#0B1E02] to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-[40px] w-full flex flex-col justify-between gap-8 min-h-[560px] lg:min-h-[640px] py-14 sm:py-16">
+      <div class="max-w-3xl lg:max-w-[54%] space-y-4 my-auto">
+        <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08] drop-shadow-xl">
+          Placas de <span class="text-[#88D67C]">protección</span>
+        </h1>
+
+        <div class="flex items-center gap-3 pt-2">
+          <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-jimaco-orange font-display">SUMINISTROS</span>
+          <span class="w-10 h-[2px] bg-jimaco-orange inline-block"></span>
+        </div>
+
+        <p class="text-emerald-100/90 text-base sm:text-xl font-medium tracking-wide pt-1 max-w-2xl">
+          Una barrera amarilla que avisa que debajo hay electricidad.
+        </p>
+
+        <p class="text-white/80 text-sm sm:text-base leading-relaxed max-w-2xl">
+          Placas de <strong class="text-white">PE-HD</strong> que se instalan sobre las líneas eléctricas enterradas para <strong class="text-white">resguardarlas y marcarlas</strong>, de modo que nadie las golpee por sorpresa durante una excavación.
+        </p>
+
+        <ul class="flex flex-wrap gap-2 pt-1">
+          {['Protegen y señalizan', 'Unión macho-hembra', 'Sin plomo', 'Estables al sol'].map((chip) => (
+            <li class="text-[11px] sm:text-xs font-display font-bold uppercase tracking-wider text-white/90 bg-white/10 border border-white/20 backdrop-blur-sm rounded-full px-3.5 py-1.5">{chip}</li>
+          ))}
+        </ul>
+
+        <div class="flex flex-wrap gap-3 pt-3">
+          <a href={WA(MSG)} target="_blank" rel="noopener noreferrer" class="bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all">Cotizar ahora</a>
+          <a href="#ficha" class="border-2 border-white/50 hover:bg-white hover:text-jimaco-dark text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl transition-all">Ver ficha técnica</a>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-4">
+        <span class="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-white/80 border border-white/20 bg-black/30 backdrop-blur-md px-4 py-2 rounded-full">
+          SEÑALIZACIÓN · PROTECCIÓN MECÁNICA
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. FRANJA VERDE -->
+  <div class="w-full py-5 sm:py-6 bg-[#063A16] border-t border-b border-black/20 overflow-hidden relative select-none">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px] flex flex-wrap items-center justify-center sm:justify-between gap-3 text-2xl sm:text-3xl font-display tracking-tight">
+      <div class="flex items-center gap-3">
+        <span class="text-white/85 font-medium">Excava con cuidado,</span>
+        <span class="text-[#88D67C] font-extrabold italic">la placa avisa.</span>
+      </div>
+      <a href={WA(MSG)} target="_blank" rel="noopener noreferrer" class="text-xs font-display font-extrabold uppercase tracking-wider bg-jimaco-orange hover:bg-jimaco-orangeHover text-white px-6 py-3 rounded-xl shadow-md transition-all">Cotizar por WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- 3. QUÉ ES -->
+  <section class="py-14 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
+        <div class="lg:col-span-3 space-y-4">
+          <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Conoce el producto</span>
+          <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark">¿Cómo cuidas un cable que no se ve?</h2>
+          <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+            Cuando una red eléctrica queda bajo tierra, el mayor riesgo llega con la próxima obra: alguien abre el suelo sin saber qué hay debajo. La placa de protección resuelve ese problema. Se tiende sobre la canalización, a cierta distancia por encima, y hace de escudo y de letrero al mismo tiempo.
+          </p>
+          <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+            Si la cuchara de una retroexcavadora o un pico la alcanza, la pieza vibra y produce un ruido distinto al de la tierra. Ese aviso le indica al operario que debe frenar, y además le deja claro hacia dónde sigue la línea y qué tipo de servicio transporta.
+          </p>
+          <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+            Cada pieza trae una espiga y una ranura en sus extremos para encajar con la vecina, así que el recorrido completo queda cubierto sin huecos. En JIMACO te asesoramos para calcular cuántas placas necesita tu trazado.
+          </p>
+        </div>
+        <div class="lg:col-span-2 grid grid-cols-2 gap-3">
+          {quickFacts.map(([title, text]) => (
+            <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-5">
+              <div class="font-display font-extrabold text-xl text-jimaco-primary leading-tight mb-1">{title}</div>
+              <p class="text-xs text-gray-600 leading-snug">{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. GALERÍA: FOTO, RENDER, ZANJA Y MEDIDAS -->
+  <section class="py-14 sm:py-20 bg-gray-50 border-y border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">De un vistazo</span>
+      <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-3">La placa desde cuatro ángulos</h2>
+      <p class="text-sm sm:text-base text-gray-600 max-w-3xl leading-relaxed mb-8">
+        Mira el producto real, su modelo en 3D, el lugar que ocupa dentro de la zanja y las dimensiones de cada pieza.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {[
+          ['/images/placas/placa-frontal.png', 'Placa de protección amarilla con la leyenda ATENCIÓN CABLES ELÉCTRICOS', 'Producto real', 'Con el aviso de riesgo eléctrico impreso en negro.'],
+          ['/images/placas/placa-3d.jpg', 'Modelo en 3D de la placa de protección con sus nervaduras', 'Modelo 3D', 'Las nervaduras longitudinales refuerzan la pieza.'],
+          ['/images/placas/placa-zanja.jpg', 'Placa de protección colocada sobre ductos enterrados en una zanja', 'En la zanja', 'Se ubica por encima de los ductos, antes del relleno final.'],
+          ['/images/placas/placa-medidas.jpg', 'Plano de la placa con medidas de 1000 por 250 milímetros', 'Dimensiones', 'Cada pieza mide 1000 mm de largo por 250 mm de ancho.']
+        ].map(([src, alt, label, text]) => {
+          const diag = src.endsWith('placa-frontal.png');
+          return (
+          <figure class="bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden flex flex-col">
+            <div class:list={['bg-white p-3 sm:p-4', diag && 'min-h-[300px] flex-1 flex items-center justify-center overflow-hidden']}>
+              <img src={src} alt={alt} class:list={['rounded-2xl', diag ? 'w-[88%] h-auto -rotate-[22deg] mix-blend-multiply' : 'w-full h-auto']} loading="lazy" />
+            </div>
+            <figcaption class="px-5 pb-5 pt-1">
+              <span class="inline-block bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider font-display mb-1.5">{label}</span>
+              <p class="text-sm text-gray-600 leading-snug">{text}</p>
+            </figcaption>
+          </figure>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. POR QUÉ ELEGIRLAS -->
+  <section class="py-16 sm:py-24 bg-[#0B1E02] text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-screen">
+      <img src="/images/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative z-10 space-y-10 sm:space-y-12">
+      <div class="max-w-4xl space-y-4">
+        <h2 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight">
+          Un golpe de aviso que <span class="text-[#88D67C] italic">evita accidentes</span>
+        </h2>
+        <p class="text-emerald-100/90 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl">
+          Una excavación mal planeada puede dejar sin energía a un barrio o poner en peligro a quien maneja la máquina. Esta placa reduce ese riesgo con un material liviano y fácil de colocar.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {pillars.map(([title, text]) => (
+          <div class="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 hover:border-[#88D67C]/50 transition-all">
+            <div class="w-2.5 h-2.5 rounded-full bg-[#FF6A1C] mb-4"></div>
+            <h3 class="font-display font-extrabold text-lg text-white mb-2">{title}</h3>
+            <p class="text-sm text-emerald-100/80 leading-relaxed">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. LO QUE LLEVA IMPRESO -->
+  <section class="py-14 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px] grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+      <div class="space-y-4">
+        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Identificación</span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark">Lo que lleva impreso</h2>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+          La superficie se marca con tinta negra sobre el fondo amarillo, para que el mensaje se lea de inmediato aun con poca luz o con la pieza llena de tierra. La marcación incluye:
+        </p>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {marks.map((m) => (
+            <li class="flex items-start gap-3 text-sm text-gray-700">
+              <span class="mt-0.5 w-5 h-5 rounded-full bg-jimaco-primary text-white text-[11px] font-bold flex items-center justify-center shrink-0">✓</span>
+              <span>{m}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="rounded-3xl bg-[#0B1E02] text-white p-7 sm:p-10 space-y-3">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-jimaco-orange font-display">Personalización</span>
+        <h3 class="font-display text-2xl sm:text-3xl font-extrabold leading-tight">Hazla tuya</h3>
+        <p class="text-sm text-emerald-100/80 leading-relaxed">
+          Si tu proyecto lo requiere, fabricamos la placa con tu propio texto y logotipo, y con el ancho, el espesor y el color que necesites. Cuéntanos qué buscas y te cotizamos.
+        </p>
+        <a href={WA('Hola JIMACO, quiero cotizar placas de protección personalizadas (texto, logo, medidas o color).')} target="_blank" rel="noopener noreferrer" class="inline-block mt-2 bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all">Pedir personalizada</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FICHA TÉCNICA -->
+  <section id="ficha" class="scroll-mt-24 py-16 sm:py-20 bg-gray-50 border-y border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <div class="mb-8">
+        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Ficha técnica</span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark">Especificaciones del producto</h2>
+      </div>
+      <article class="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch bg-white border border-gray-200 rounded-3xl overflow-hidden">
+        <div class="bg-white p-8 sm:p-12 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-gray-200">
+          <img src="/images/fichas/placa-de-proteccion.jpg" alt="Placa de protección JIMACO" class="max-h-[420px] w-auto object-contain" loading="lazy" />
+        </div>
+        <div class="p-6 sm:p-10">
+          <h3 class="font-display font-extrabold text-xs uppercase tracking-wider text-jimaco-primary mb-3">Datos del producto</h3>
+          <dl class="divide-y divide-gray-200 border-y border-gray-200 text-sm mb-6">
+            {productSpecs.map(([k, v]) => (
+              <div class="flex justify-between gap-4 py-2.5">
+                <dt class="text-gray-500">{k}</dt>
+                <dd class="font-bold text-jimaco-dark text-right">{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="flex flex-wrap gap-3">
+            <a href={WA(MSG)} target="_blank" rel="noopener noreferrer" class="bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all">Solicitar cotización</a>
+            <a href="/catalogo" class="border-2 border-jimaco-primary/30 hover:border-jimaco-primary text-jimaco-primary font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl transition-all">Ver catálogo</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 7b. ENTREGAS REALES -->
+  <EntregasCarousel
+    eyebrow="Evidencia en campo"
+    heading="Entregas"
+    headingAccent="reales"
+    intro="Así quedan nuestras placas de protección una vez instaladas sobre las líneas eléctricas enterradas."
+    badge="Entrega real"
+    photos={[
+      { src: '/images/entregas/placas-instalacion-zanja.jpg', alt: 'Operarios colocando placas de protección amarillas en una zanja', caption: 'Instalación de placas sobre la canalización' },
+      { src: '/images/entregas/placas-tendido-parque-solar.jpg', alt: 'Placas de protección amarillas tendidas en una zanja de un parque solar', caption: 'Placas tendidas en un parque solar' },
+      { src: '/images/entregas/placas-zanja-detalle.jpg', alt: 'Placas de protección unidas dentro de una zanja', caption: 'Placas acopladas a lo largo de la zanja' }
+    ]}
+  />
+
+  <!-- 8. APLICACIONES -->
+  <section class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Aplicaciones</span>
+      <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-8">¿Dónde se usa?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {scenarios.map(([title, text]) => (
+          <div class="bg-gray-50 rounded-2xl border border-gray-200 p-6">
+            <h3 class="font-display font-bold text-base text-jimaco-primary mb-1">{title}</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. INSTALACIÓN Y PREGUNTAS -->
+  <section class="py-16 sm:py-20 bg-gray-50 border-y border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px] space-y-14">
+      <div>
+        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Instalación</span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-2">Así se coloca, paso a paso</h2>
+        <p class="text-sm text-gray-600 mb-8 max-w-3xl">Guía general de referencia. Sigue siempre la norma de instalaciones eléctricas vigente y el diseño de tu proyecto.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {steps.map(([title, text], i) => (
+            <li class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs">
+              <div class="w-9 h-9 rounded-full bg-jimaco-orange text-white font-display font-extrabold flex items-center justify-center mb-3">{i + 1}</div>
+              <h3 class="font-display font-bold text-sm text-jimaco-primary mb-1">{title}</h3>
+              <p class="text-xs text-gray-600 leading-relaxed">{text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div>
+        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Resolvemos tus dudas</span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-6">Preguntas frecuentes</h2>
+        <div class="space-y-3 max-w-4xl">
+          {faqs.map(([q, a]) => (
+            <details class="group bg-white rounded-2xl border border-gray-200/80 p-5 open:shadow-md">
+              <summary class="cursor-pointer list-none flex items-center justify-between gap-4 font-display font-bold text-base text-jimaco-dark">
+                {q}
+                <span class="text-jimaco-orange text-xl transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-sm text-gray-600 leading-relaxed mt-3">{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. CTA FINAL -->
+  <section class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <div class="bg-[#0B1E02] rounded-3xl text-white px-6 sm:px-12 py-12 sm:py-16 grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        <div class="lg:col-span-2 space-y-3">
+          <h2 class="font-display text-3xl sm:text-5xl font-extrabold leading-tight">
+            ¿Vas a enterrar una <span class="text-[#88D67C] italic">línea eléctrica</span>?
+          </h2>
+          <p class="text-emerald-100/90 text-sm sm:text-base max-w-2xl">
+            Dinos la longitud del trazado y te ayudamos a calcular las placas necesarias. Despachamos a todo Colombia.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3">
+          <a href={WA('Hola JIMACO, necesito asesoría para placas de protección de cables enterrados.')} target="_blank" rel="noopener noreferrer" class="text-center bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all">Hablar con un asesor</a>
+          <a href="mailto:ventas@jimaco.com.co?subject=Cotización placas de protección" class="text-center border-2 border-white/40 hover:bg-white hover:text-jimaco-dark text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl transition-all">ventas@jimaco.com.co</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

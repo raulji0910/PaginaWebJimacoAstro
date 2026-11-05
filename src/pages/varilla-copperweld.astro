@@ -1,0 +1,309 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const WA = (text: string) => `https://wa.me/573123503397?text=${encodeURIComponent(text)}`;
+const MSG = 'Hola JIMACO, quiero cotizar varillas Copperweld para puesta a tierra.';
+const IMG = '/images/catalogo/varillas-copperweld.jpg';
+
+const quickFacts = [
+  ['Acero + cobre', 'Núcleo de acero con recubrimiento de cobre'],
+  ['Molecular', 'Unión adherida entre cobre y acero'],
+  ['Vertical', 'Se instala hincada en el terreno'],
+  ['Puesta a tierra', 'Disipa fallas y descargas atmosféricas']
+];
+
+const features = [
+  ['Núcleo de acero de alta resistencia', 'Aporta firmeza y resistencia mecánica para soportar el hincado dentro del terreno.'],
+  ['Recubrimiento de cobre', 'Protege contra la corrosión y permite una conducción eléctrica eficiente.'],
+  ['Adherencia molecular', 'El cobre queda unido al acero a nivel molecular, lo que ayuda a que no se desprenda durante una instalación correcta.'],
+  ['Alta conductividad eléctrica', 'Facilita que las corrientes lleguen sin obstáculos al sistema de puesta a tierra.'],
+  ['Resistencia a la corrosión', 'Está pensada para trabajar en contacto directo con el suelo durante largo tiempo.'],
+  ['Fácil de instalar', 'Su forma cilíndrica permite introducirla en vertical con las herramientas apropiadas.']
+];
+
+const reasons = [
+  ['Lo mejor de dos metales', 'Combina la resistencia mecánica del acero con las propiedades eléctricas y anticorrosivas del cobre.'],
+  ['Camino seguro a tierra', 'Ofrece un punto de conexión confiable por donde la corriente de falla se disipa en el suelo.'],
+  ['Protege personas y equipos', 'Una buena puesta a tierra reduce el riesgo de descargas y de daños en la instalación eléctrica.'],
+  ['Para cualquier proyecto', 'Se usa en viviendas, comercios, industrias y subestaciones eléctricas.']
+];
+
+const productSpecs = [
+  ['Tipo', 'Electrodo de puesta a tierra'],
+  ['Núcleo', 'Acero de alta resistencia'],
+  ['Recubrimiento', 'Cobre adherido molecularmente'],
+  ['Conductividad', 'Alta'],
+  ['Corrosión', 'Resistente, apta para contacto directo con el suelo'],
+  ['Forma', 'Cilíndrica'],
+  ['Instalación', 'Vertical, con herramientas apropiadas'],
+  ['Marca', 'JIMACO']
+];
+
+const scenarios = [
+  ['Sistemas de puesta a tierra', 'Electrodo principal que conecta la instalación con el terreno.'],
+  ['Instalaciones residenciales', 'Seguridad eléctrica en viviendas y conjuntos.'],
+  ['Comercio e industria', 'Protección de equipos y personas en locales, bodegas y plantas.'],
+  ['Protección contra descargas atmosféricas', 'Descarga al suelo de la corriente de un rayo.'],
+  ['Subestaciones eléctricas', 'Electrodos de tierra para subestaciones.'],
+  ['Protección y seguridad eléctrica', 'Cualquier sistema que requiera una referencia a tierra confiable.']
+];
+
+const steps = [
+  ['Elegir el punto', 'Ubica el sitio de la puesta a tierra según el diseño y las distancias requeridas.'],
+  ['Preparar el terreno', 'Despeja la zona y marca el punto de hincado.'],
+  ['Hincar la varilla', 'Introdúcela en vertical con la herramienta apropiada, golpeando de forma controlada.'],
+  ['Conectar el conductor', 'Une el cable de tierra con un conector adecuado, bien apretado.'],
+  ['Verificar', 'Mide la resistencia de puesta a tierra y compárala con lo exigido por el diseño.']
+];
+
+const faqs = [
+  ['¿Qué es una varilla Copperweld?', 'Es un electrodo de puesta a tierra con núcleo de acero cubierto por una capa de cobre unida molecularmente.'],
+  ['¿Para qué sirve?', 'Para conducir y disipar en el terreno las corrientes de falla y las descargas atmosféricas.'],
+  ['¿Se puede usar en una vivienda?', 'Sí. Se usa en instalaciones residenciales, comerciales e industriales, y en subestaciones.'],
+  ['¿Cómo se instala?', 'En vertical, hincándola en el suelo con herramientas apropiadas, y conectando luego el cable de tierra.'],
+  ['¿Dónde la compro?', 'Está disponible en nuestra Tienda Virtual, o puedes pedir cotización por mayor con un asesor.']
+];
+---
+
+<Layout
+  title="Varilla Copperweld para puesta a tierra — JIMACO"
+  description="Varilla Copperweld: electrodo de puesta a tierra con núcleo de acero recubierto de cobre, alta conductividad y resistencia a la corrosión. JIMACO, Bogotá."
+>
+  <!-- 1. HERO -->
+  <section class="relative w-full min-h-[560px] lg:min-h-[640px] overflow-hidden bg-[#0A1A0D] flex items-center">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0B1E02]/90 via-transparent to-black/20"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-[#0B1E02] via-[#0B1E02]/90 to-[#0B1E02]/60"></div>
+      <img src="/images/vertical-waves.png" alt="" class="absolute left-0 bottom-0 h-full w-auto opacity-35 pointer-events-none mix-blend-screen" />
+    </div>
+
+    <!-- Imagen del producto como fondo -->
+    <div class="absolute right-0 top-0 z-[5] hidden lg:block h-full w-[52%] bg-white">
+      <img src={IMG} alt="Varillas Copperweld para puesta a tierra" class="w-full h-full object-contain p-10" />
+      <div class="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-[#0B1E02] to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-[40px] w-full flex flex-col justify-between gap-8 min-h-[560px] lg:min-h-[640px] py-14 sm:py-16">
+      <div class="max-w-3xl lg:max-w-[54%] space-y-4 my-auto">
+        <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08] drop-shadow-xl">
+          Varilla <span class="text-[#88D67C]">Copperweld</span>
+        </h1>
+
+        <div class="flex items-center gap-3 pt-2">
+          <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-jimaco-orange font-display">SUMINISTROS</span>
+          <span class="w-10 h-[2px] bg-jimaco-orange inline-block"></span>
+        </div>
+
+        <p class="text-emerald-100/90 text-base sm:text-xl font-medium tracking-wide pt-1 max-w-2xl">
+          El electrodo que lleva la corriente peligrosa directo a la tierra.
+        </p>
+
+        <p class="text-white/80 text-sm sm:text-base leading-relaxed max-w-2xl">
+          Varilla de puesta a tierra con <strong class="text-white">núcleo de acero</strong> y <strong class="text-white">recubrimiento de cobre</strong> adherido molecularmente: resistente al golpe, eficiente al conducir y duradera bajo el suelo.
+        </p>
+
+        <ul class="flex flex-wrap gap-2 pt-1">
+          {['Alta conductividad', 'Resistente a la corrosión', 'Cobre adherido al acero', 'Instalación vertical'].map((chip) => (
+            <li class="text-[11px] sm:text-xs font-display font-bold uppercase tracking-wider text-white/90 bg-white/10 border border-white/20 backdrop-blur-sm rounded-full px-3.5 py-1.5">{chip}</li>
+          ))}
+        </ul>
+
+        <div class="flex flex-wrap gap-3 pt-3">
+          <a href={WA(MSG)} target="_blank" rel="noopener noreferrer" class="bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all">Cotizar ahora</a>
+          <a href="/tienda" class="border-2 border-white/50 hover:bg-white hover:text-jimaco-dark text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl transition-all">Comprar en la tienda</a>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-4">
+        <span class="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-white/80 border border-white/20 bg-black/30 backdrop-blur-md px-4 py-2 rounded-full">
+          PUESTA A TIERRA · SEGURIDAD ELÉCTRICA
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. FRANJA VERDE -->
+  <div class="w-full py-5 sm:py-6 bg-[#063A16] border-t border-b border-black/20 overflow-hidden relative select-none">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px] flex flex-wrap items-center justify-center sm:justify-between gap-3 text-2xl sm:text-3xl font-display tracking-tight">
+      <div class="flex items-center gap-3">
+        <span class="text-white/85 font-medium">Una buena tierra,</span>
+        <span class="text-[#88D67C] font-extrabold italic">una instalación segura.</span>
+      </div>
+      <a href={WA(MSG)} target="_blank" rel="noopener noreferrer" class="text-xs font-display font-extrabold uppercase tracking-wider bg-jimaco-orange hover:bg-jimaco-orangeHover text-white px-6 py-3 rounded-xl shadow-md transition-all">Cotizar por WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- 3. QUÉ ES -->
+  <section class="py-14 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
+        <div class="lg:col-span-3 space-y-4">
+          <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Conoce el producto</span>
+          <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark">Un electrodo hecho para el suelo</h2>
+          <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+            La varilla Copperweld es un electrodo de puesta a tierra: una barra con corazón de acero de alta resistencia, cubierta por una capa de cobre que queda unida a él a nivel molecular. Su trabajo es conducir hacia el terreno, y disipar allí, las corrientes de falla y las descargas atmosféricas.
+          </p>
+          <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+            Al combinar dos metales, reúne lo mejor de cada uno: el acero le da la rigidez para entrar al suelo sin doblarse, y el cobre aporta conductividad y protección contra la corrosión. Así se convierte en un punto de conexión confiable para los sistemas de puesta a tierra.
+          </p>
+          <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
+            Es una solución adecuada para instalaciones eléctricas residenciales, comerciales e industriales, así como para sistemas de protección contra rayos y subestaciones. Suministrada por JIMACO, con asesoría para elegir la cantidad que necesita tu proyecto.
+          </p>
+        </div>
+        <div class="lg:col-span-2 grid grid-cols-2 gap-3">
+          {quickFacts.map(([title, text]) => (
+            <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-5">
+              <div class="font-display font-extrabold text-xl text-jimaco-primary leading-tight mb-1">{title}</div>
+              <p class="text-xs text-gray-600 leading-snug">{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. CARACTERÍSTICAS -->
+  <section class="py-16 sm:py-20 bg-gray-50 border-y border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Características principales</span>
+      <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-8">Lo que la hace confiable</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {features.map(([title, text], i) => (
+          <div class="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-xs hover:shadow-lg hover:border-jimaco-primary/40 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-jimaco-primary flex items-center justify-center font-display font-extrabold mb-4">{i + 1}</div>
+            <h3 class="font-display font-bold text-base text-jimaco-primary mb-1">{title}</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. POR QUÉ ELEGIRLA -->
+  <section class="py-16 sm:py-24 bg-[#0B1E02] text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-screen">
+      <img src="/images/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative z-10 space-y-10 sm:space-y-12">
+      <div class="max-w-4xl space-y-4">
+        <h2 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight">
+          Acero que resiste, <span class="text-[#88D67C] italic">cobre que conduce</span>
+        </h2>
+        <p class="text-emerald-100/90 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl">
+          Una puesta a tierra efectiva es la última defensa de una instalación eléctrica. Esta varilla está construida para cumplir ese papel durante mucho tiempo.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {reasons.map(([title, text]) => (
+          <div class="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 hover:border-[#88D67C]/50 transition-all">
+            <div class="w-2.5 h-2.5 rounded-full bg-[#FF6A1C] mb-4"></div>
+            <h3 class="font-display font-extrabold text-lg text-white mb-2">{title}</h3>
+            <p class="text-sm text-emerald-100/80 leading-relaxed">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FICHA TÉCNICA -->
+  <section id="ficha" class="scroll-mt-24 py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <div class="mb-8">
+        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Ficha técnica</span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark">Especificaciones del producto</h2>
+      </div>
+      <article class="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch bg-gray-50 border border-gray-200 rounded-3xl overflow-hidden">
+        <div class="bg-white p-8 sm:p-12 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-gray-200">
+          <img src={IMG} alt="Varillas Copperweld JIMACO" class="max-h-[400px] w-auto object-contain" loading="lazy" />
+        </div>
+        <div class="p-6 sm:p-10">
+          <h3 class="font-display font-extrabold text-xs uppercase tracking-wider text-jimaco-primary mb-3">Datos del producto</h3>
+          <dl class="divide-y divide-gray-200 border-y border-gray-200 text-sm mb-6">
+            {productSpecs.map(([k, v]) => (
+              <div class="flex justify-between gap-4 py-2.5">
+                <dt class="text-gray-500">{k}</dt>
+                <dd class="font-bold text-jimaco-dark text-right">{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="flex flex-wrap gap-3">
+            <a href={WA(MSG)} target="_blank" rel="noopener noreferrer" class="bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all">Solicitar cotización</a>
+            <a href="/tienda" class="border-2 border-jimaco-primary/30 hover:border-jimaco-primary text-jimaco-primary font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl transition-all">Ver en la tienda</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 7. APLICACIONES -->
+  <section class="py-16 sm:py-20 bg-gray-50 border-y border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Aplicaciones</span>
+      <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-8">¿Dónde se usa?</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {scenarios.map(([title, text]) => (
+          <div class="bg-white rounded-2xl border border-gray-200 p-6">
+            <h3 class="font-display font-bold text-base text-jimaco-primary mb-1">{title}</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. INSTALACIÓN Y PREGUNTAS -->
+  <section class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px] space-y-14">
+      <div>
+        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Instalación</span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-2">Así se instala, paso a paso</h2>
+        <p class="text-sm text-gray-600 mb-8 max-w-3xl">Guía general de referencia. Sigue siempre el diseño de tu proyecto y la normativa eléctrica vigente.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {steps.map(([title, text], i) => (
+            <li class="bg-gray-50 rounded-2xl border border-gray-200/80 p-5">
+              <div class="w-9 h-9 rounded-full bg-jimaco-orange text-white font-display font-extrabold flex items-center justify-center mb-3">{i + 1}</div>
+              <h3 class="font-display font-bold text-sm text-jimaco-primary mb-1">{title}</h3>
+              <p class="text-xs text-gray-600 leading-relaxed">{text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div>
+        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Resolvemos tus dudas</span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold uppercase text-jimaco-dark mb-6">Preguntas frecuentes</h2>
+        <div class="space-y-3 max-w-4xl">
+          {faqs.map(([q, a]) => (
+            <details class="group bg-gray-50 rounded-2xl border border-gray-200/80 p-5 open:shadow-md">
+              <summary class="cursor-pointer list-none flex items-center justify-between gap-4 font-display font-bold text-base text-jimaco-dark">
+                {q}
+                <span class="text-jimaco-orange text-xl transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-sm text-gray-600 leading-relaxed mt-3">{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. CTA FINAL -->
+  <section class="py-16 sm:py-20 bg-gray-50 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+      <div class="bg-[#0B1E02] rounded-3xl text-white px-6 sm:px-12 py-12 sm:py-16 grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        <div class="lg:col-span-2 space-y-3">
+          <h2 class="font-display text-3xl sm:text-5xl font-extrabold leading-tight">
+            ¿Necesitas una <span class="text-[#88D67C] italic">puesta a tierra</span> confiable?
+          </h2>
+          <p class="text-emerald-100/90 text-sm sm:text-base max-w-2xl">
+            Cuéntanos tu proyecto y te ayudamos a definir cuántas varillas y qué conectores necesitas. Despachamos a todo Colombia.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3">
+          <a href={WA('Hola JIMACO, necesito asesoría para puesta a tierra con varillas Copperweld.')} target="_blank" rel="noopener noreferrer" class="text-center bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl shadow-md transition-all">Hablar con un asesor</a>
+          <a href="mailto:ventas@jimaco.com.co?subject=Cotización varillas Copperweld" class="text-center border-2 border-white/40 hover:bg-white hover:text-jimaco-dark text-white font-display font-extrabold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl transition-all">ventas@jimaco.com.co</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

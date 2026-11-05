@@ -5,25 +5,25 @@ const boxes = [
   {
     title: 'Placas de protección',
     image: '/images/fichas/placa-de-proteccion.jpg',
-    link: '/suministros-de-energia-solar',
+    link: '/placas-de-proteccion',
     desc: 'Protege y señaliza canalizaciones eléctricas subterráneas.',
     specs: [
-      ['Material', 'PE-HD reciclado'],
-      ['Resistencia mecánica', 'Hasta 15 toneladas'],
-      ['Temperatura', '-40 °C a +80 °C'],
-      ['Seguridad', 'Resistente a la humedad y al fuego']
+      ['Material', 'PE-HD (polietileno de alta densidad)'],
+      ['Medidas', '1000 × 250 mm'],
+      ['Unión', 'Macho-hembra'],
+      ['Seguridad', 'Libre de plomo y estable a UV']
     ]
   },
   {
     title: 'Tubería PEAD (HDPE)',
     image: '/images/fichas/tuberia-pead-hdpe-roja.jpg',
-    link: '/suministros-de-energia-solar',
+    link: '/tuberia-pead-hdpe-tramos',
     desc: 'Protección y canalización de cables eléctricos y de telecomunicaciones.',
     specs: [
       ['Material', 'PEAD (polietileno de alta densidad)'],
       ['Construcción', 'Doble pared'],
       ['Resistencia a la tensión', '≥ 10 MPa'],
-      ['Presentación', 'Tramo (color rojo)']
+      ['Presentación', 'Tramos de ½" a 8"']
     ]
   },
   {
@@ -37,17 +37,48 @@ const boxes = [
       ['Protección UV', 'Estabilizada para exposición exterior'],
       ['Resistencia a la tensión', '≥ 10 MPa']
     ]
+  },
+  {
+    title: 'Caja de inspección',
+    image: '/images/catalogo/caja-de-inspeccion-polipropileno.jpg',
+    link: '/caja-de-inspeccion',
+    desc: 'Protege y da acceso a instalaciones eléctricas y de telecomunicaciones.',
+    specs: [
+      ['Material', 'Polipropileno de alta densidad (PP)'],
+      ['Resistencia mecánica', 'Hasta 15 toneladas'],
+      ['Temperatura', '-40 °C a +80 °C'],
+      ['Seguridad', 'Resistente a humedad y fuego']
+    ]
+  },
+  {
+    title: 'Varilla Copperweld',
+    image: '/images/catalogo/varillas-copperweld.jpg',
+    link: '/varilla-copperweld',
+    desc: 'Electrodo de puesta a tierra para disipar fallas y descargas atmosféricas.',
+    specs: [
+      ['Núcleo', 'Acero de alta resistencia'],
+      ['Recubrimiento', 'Cobre adherido molecularmente'],
+      ['Corrosión', 'Resistente en contacto con el suelo'],
+      ['Instalación', 'Vertical, por hincado']
+    ]
   }
 ];
 ---
 
 <section class="py-12 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 -mt-[30px] relative z-30">
+    <div class="boxes-root relative z-30 -mt-[30px]">
+      <button type="button" class="boxes-prev hidden absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-white text-jimaco-primary shadow-lg border border-gray-200 items-center justify-center hover:bg-jimaco-primary hover:text-white transition-all cursor-pointer" aria-label="Fichas anteriores">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+      </button>
+      <button type="button" class="boxes-next hidden absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-jimaco-orange text-white shadow-lg items-center justify-center hover:bg-jimaco-orangeHover transition-all cursor-pointer" aria-label="Fichas siguientes">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+      <div class="boxes-track flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-4 pb-8 -mt-4 -mb-8">
       {boxes.map((b) => (
         <a
           href={b.link}
-          class="group relative min-h-[26rem] rounded-2xl overflow-hidden shadow-2xl border border-white/20 flex flex-col p-6 sm:p-7 bg-gradient-to-br from-[#0B1E02] via-[#0F3A14] to-[#1C6521] transform hover:-translate-y-2 transition-all duration-500"
+          class="group relative shrink-0 snap-start w-full md:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.84rem)] xl:w-[calc(25%-0.9375rem)] min-h-[26rem] rounded-2xl overflow-hidden shadow-2xl border border-white/20 flex flex-col p-6 bg-gradient-to-br from-[#0B1E02] via-[#0F3A14] to-[#1C6521] transform hover:-translate-y-2 transition-all duration-500"
         >
           <!-- Imagen del producto -->
           <div class="flex justify-end">
@@ -87,6 +118,57 @@ const boxes = [
           </div>
         </a>
       ))}
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .boxes-track { scrollbar-width: none; -ms-overflow-style: none; }
+  .boxes-track::-webkit-scrollbar { display: none; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.boxes-root').forEach((root) => {
+    const track = root.querySelector('.boxes-track') as HTMLElement;
+    const prev = root.querySelector('.boxes-prev') as HTMLElement;
+    const next = root.querySelector('.boxes-next') as HTMLElement;
+    const cards = Array.from(track.children) as HTMLElement[];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer: number | undefined;
+    let paused = false;
+
+    const maxScroll = () => track.scrollWidth - track.clientWidth;
+    const scrollable = () => maxScroll() > 4;
+    const step = () => (cards[1] ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth);
+
+    const refresh = () => {
+      const on = scrollable();
+      [prev, next].forEach((b) => { b.classList.toggle('hidden', !on); b.classList.toggle('flex', on); });
+    };
+    const go = (dir: 1 | -1) => {
+      if (!scrollable()) return;
+      if (dir === 1 && track.scrollLeft >= maxScroll() - 4) track.scrollTo({ left: 0, behavior: 'smooth' });
+      else if (dir === -1 && track.scrollLeft <= 4) track.scrollTo({ left: maxScroll(), behavior: 'smooth' });
+      else track.scrollBy({ left: dir * step(), behavior: 'smooth' });
+    };
+    const stop = () => { if (timer) window.clearInterval(timer); timer = undefined; };
+    const start = () => {
+      stop();
+      if (reduce || paused || !scrollable()) return;
+      timer = window.setInterval(() => go(1), 4500);
+    };
+
+    prev.addEventListener('click', () => { go(-1); start(); });
+    next.addEventListener('click', () => { go(1); start(); });
+    root.addEventListener('mouseenter', () => { paused = true; stop(); });
+    root.addEventListener('mouseleave', () => { paused = false; start(); });
+    root.addEventListener('touchstart', () => { paused = true; stop(); }, { passive: true });
+    root.addEventListener('touchend', () => { paused = false; window.setTimeout(start, 3000); }, { passive: true });
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    window.addEventListener('resize', () => { refresh(); start(); });
+
+    refresh();
+    start();
+  });
+</script>
