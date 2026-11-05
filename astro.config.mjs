@@ -8,7 +8,8 @@ export default defineConfig({
     format: 'directory'
   },
   redirects: {
-    '/ferreteria': '/catalogo'
+    '/ferreteria': '/catalogo',
+    '/suministros': '/catalogo'
   },
   prefetch: false
 });

@@ -4,6 +4,7 @@ import ProductCard from '../components/ProductCard.astro';
 import ProductModal from '../components/ProductModal.astro';
 import QuoteModal from '../components/QuoteModal.astro';
 import { PRODUCTS, CATEGORIES, GROUPS } from '../data/products';
+import { groupSlug } from '../data/groups';
 
 // Conteo de productos por categoría
 const counts = CATEGORIES.reduce((acc, cat) => {
@@ -15,10 +16,13 @@ const counts = CATEGORIES.reduce((acc, cat) => {
 const publicProducts = PRODUCTS.map(({ pending, source, ...p }) => p);
 const productsJson = JSON.stringify(publicProducts).replace(/</g, '\\u003c');
 const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
+// categoría -> sección (para filtrar por sección desde el menú Suministros)
+const categoryGroup = Object.fromEntries(subcategories.map((c) => [c.id, groupSlug(c.group)]));
+const groupCounts = Object.fromEntries(GROUPS.map((g) => [groupSlug(g), PRODUCTS.filter((p) => categoryGroup[p.category] === groupSlug(g)).length]));
 ---
 
 <Layout
-  title="Catálogo de Productos"
+  title="Suministros — Catálogo de Productos"
   description="Conoce nuestro portafolio de productos y soluciones para proyectos de energía solar, infraestructura eléctrica, construcción e industria."
 >
   <!-- Cabecera del catálogo -->
@@ -28,14 +32,14 @@ const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
         <ol class="inline-flex items-center space-x-1.5">
           <li><a href="/" class="hover:text-jimaco-primary">Inicio</a></li>
           <li><span>/</span></li>
-          <li class="text-jimaco-primary font-bold">Catálogo de productos</li>
+          <li class="text-jimaco-primary font-bold">Suministros</li>
         </ol>
       </nav>
 
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-6">
         <div class="max-w-3xl">
           <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display uppercase tracking-wide text-jimaco-dark">
-            Catálogo de productos
+            Suministros
           </h1>
           <p class="text-sm sm:text-base text-gray-600 mt-3">
             Conoce nuestro portafolio de productos y soluciones para proyectos de energía solar, infraestructura eléctrica, construcción e industria.
@@ -131,7 +135,10 @@ const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
 
               {GROUPS.map((group) => (
                 <div>
-                  <p class="px-3 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-gray-400 font-display">{group}</p>
+                  <button type="button" class="group-filter-btn w-full text-left px-3 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-gray-400 hover:text-jimaco-primary font-display cursor-pointer transition-colors flex items-center justify-between gap-2" data-group={groupSlug(group)}>
+                    <span>{group}</span>
+                    <span class="font-mono text-[10px] text-gray-400">{groupCounts[groupSlug(group)]}</span>
+                  </button>
                   <ul class="space-y-1">
                     {subcategories.filter((c) => c.group === group).map((cat) => (
                       <li>
@@ -198,7 +205,7 @@ const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
           </div>
         </div>
 
-        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div id="products-grid" data-cat-groups={JSON.stringify(categoryGroup)} class="scroll-mt-32 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
           {PRODUCTS.map((product, i) => (
             <ProductCard product={product} />
           ))}
@@ -236,6 +243,7 @@ const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
     }
 
     var currentCategory = 'todos';
+    var currentGroup = null;
     var currentSearch = '';
     var sortBy = 'catalogo';
 
@@ -249,6 +257,9 @@ const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
     var categorySelect = document.getElementById('search-category-select');
     var sortSelect = document.getElementById('sort-select');
     var categoryBtns = document.querySelectorAll('.category-filter-btn');
+    var groupBtns = document.querySelectorAll('.group-filter-btn');
+    var catGroups = {};
+    try { catGroups = JSON.parse(grid.getAttribute('data-cat-groups')); } catch (err) {}
 
     function normalize(s) {
       return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
@@ -273,6 +284,7 @@ const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
       cards.forEach(function (card) {
         var ok = true;
         if (currentCategory !== 'todos' && card.getAttribute('data-category') !== currentCategory) ok = false;
+        if (currentGroup && catGroups[card.getAttribute('data-category')] !== currentGroup) ok = false;
         if (ok && q) {
           var hay = normalize(card.getAttribute('data-text') + ' ' + card.getAttribute('data-reference') + ' ' + card.getAttribute('data-brand'));
           ok = q.split(/\s+/).every(function (t) { return hay.indexOf(t) !== -1; });
@@ -297,7 +309,26 @@ const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
       list.forEach(function (c) { grid.appendChild(c); });
     }
 
+    function paintGroupButtons() {
+      groupBtns.forEach(function (b) {
+        var active = b.getAttribute('data-group') === currentGroup;
+        b.classList.toggle('text-jimaco-primary', active);
+        b.classList.toggle('text-gray-400', !active);
+      });
+    }
+
+    function setGroup(slug) {
+      currentGroup = slug;
+      currentCategory = 'todos';
+      categorySelect.value = 'todos';
+      paintCategoryButtons();
+      paintGroupButtons();
+      applyFilters();
+    }
+
     function setCategory(cat) {
+      currentGroup = null;
+      paintGroupButtons();
       currentCategory = cat;
       categorySelect.value = cat;
       paintCategoryButtons();
@@ -316,6 +347,9 @@ const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
       applyFilters();
     });
     categorySelect.addEventListener('change', function (e) { setCategory(e.target.value); });
+    groupBtns.forEach(function (b) {
+      b.addEventListener('click', function () { setGroup(b.getAttribute('data-group')); });
+    });
     categoryBtns.forEach(function (b) {
       b.addEventListener('click', function () { setCategory(b.getAttribute('data-category')); });
     });
@@ -343,8 +377,21 @@ const subcategories = CATEGORIES.filter((c) => c.id !== 'todos');
     });
 
     // Enlaces directos: /catalogo#categoria, /catalogo#info=id-producto, /catalogo#cotizar=id-producto
+    function applyHash() {
+      var h = (location.hash || '').replace('#', '');
+      var g = h.match(/^grupo=(.+)$/);
+      if (g && document.querySelector('.group-filter-btn[data-group="' + g[1] + '"]')) {
+        setGroup(g[1]);
+        var top = document.getElementById('products-grid');
+        if (top) top.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else if (h === '') {
+        setCategory('todos');
+      }
+    }
+    window.addEventListener('hashchange', applyHash);
     var hash = (location.hash || '').replace('#', '');
-    if (hash && document.querySelector('.category-filter-btn[data-category="' + hash + '"]')) setCategory(hash);
+    if (hash.indexOf('grupo=') === 0) applyHash();
+    else if (hash && document.querySelector('.category-filter-btn[data-category="' + hash + '"]')) setCategory(hash);
     var m = hash.match(/^(info|cotizar)=(.+)$/);
     if (m) {
       if (m[1] === 'info' && window.openProductInfo) window.openProductInfo(m[2]);

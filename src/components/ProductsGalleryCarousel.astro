@@ -1,81 +1,118 @@
 ---
+// Carrusel con todos los productos subidos: catálogo de Suministros + Tienda Virtual.
+import { PRODUCTS as CATALOG } from '../data/products';
+import { PRODUCTS as STORE } from '../data/store';
+
 const items = [
-  { img: '/images/bg-proteccion-2.jpg', alt: 'Protección Auditiva y EPP' },
-  { img: '/images/varilla-de-cobre.jpg', alt: 'Varillas de Cobre Puesta a Tierra' },
-  { img: '/images/placa-subterranea-resistente.jpg', alt: 'Placa de Protección Subterránea' },
-  { img: '/images/1-cascos-3.jpg', alt: 'Cascos de Seguridad y Barbuquejo' },
-  { img: '/images/6-seguridad-manos-1.jpg', alt: 'Guantes de Vaqueta y Protección Manual' },
-  { img: '/images/7-seguridad-corporal-2.jpg', alt: 'Seguridad y Protección Corporal' },
-  { img: '/images/Bota_llanera_venus_suela.webp', alt: 'Calzado de Seguridad Industrial' },
-  { img: '/images/9-primeros-aiuxilios-3.jpg', alt: 'Botiquín y Primeros Auxilios' },
-  { img: '/images/detail-shot-pipes.jpg', alt: 'Tubería y Conducción Especializada' },
-  { img: '/images/tubos-para-sanitario.jpg', alt: 'Tubería Sanitaria e Insumos' }
+  ...CATALOG.map((p) => ({ img: p.image, alt: p.name, href: `/catalogo#info=${p.id}` })),
+  ...STORE.map((p) => ({ img: p.image, alt: p.name, href: '/tienda' }))
 ];
 ---
 
-<section class="py-12 sm:py-16 bg-white overflow-hidden border-t border-gray-100 relative">
-  <div class="relative w-full">
-    
-    <!-- Continuous Smooth Infinite Scrolling Track with 5+ items per view -->
-    <div class="products-gallery-track flex w-max gap-4 sm:gap-6 items-center select-none">
-      
-      <!-- Sequence Set 1 -->
-      {items.map((item) => (
-        <div class="w-48 sm:w-56 md:w-64 lg:w-72 aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-gray-100 bg-gray-50 shrink-0 group transition-all duration-300 transform hover:-translate-y-1">
-          <img
-            src={item.img}
-            alt={item.alt}
-            class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
-            loading="lazy"
-          />
-        </div>
-      ))}
-
-      <!-- Duplicate Sequence Set for Seamless Loop -->
-      {items.map((item) => (
-        <div class="w-48 sm:w-56 md:w-64 lg:w-72 aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-gray-100 bg-gray-50 shrink-0 group transition-all duration-300 transform hover:-translate-y-1">
-          <img
-            src={item.img}
-            alt={item.alt}
-            class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
-            loading="lazy"
-          />
-        </div>
-      ))}
-
+<section class="py-12 sm:py-16 bg-white overflow-hidden border-t border-gray-100" aria-label="Todos nuestros productos">
+  <div class="max-w-7xl mx-auto px-4 sm:px-[40px] mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+    <div>
+      <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Nuestro portafolio</span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold font-display uppercase text-jimaco-dark">
+        Todos nuestros productos
+      </h2>
     </div>
+    <a href="/catalogo" class="text-xs font-bold text-jimaco-primary hover:text-jimaco-orange transition-colors font-display uppercase tracking-wider">
+      Ver el catálogo completo &rarr;
+    </a>
+  </div>
 
-    <!-- Navigation Arrows Overlay (Aesthetic Indicator) -->
-    <div class="absolute inset-y-0 left-4 sm:left-8 flex items-center pointer-events-none">
-      <div class="w-10 h-10 rounded-full bg-white/90 shadow-lg border border-gray-200 text-jimaco-orange flex items-center justify-center font-bold text-lg pointer-events-auto cursor-pointer hover:bg-white transition-all">
-        ←
+  <div class="gallery-root relative">
+    <button type="button" class="gallery-prev absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white text-jimaco-primary shadow-lg border border-gray-200 flex items-center justify-center hover:bg-jimaco-primary hover:text-white transition-all cursor-pointer" aria-label="Productos anteriores">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+    </button>
+    <button type="button" class="gallery-next absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-jimaco-orange text-white shadow-lg flex items-center justify-center hover:bg-jimaco-orangeHover transition-all cursor-pointer" aria-label="Productos siguientes">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+
+    <div class="gallery-scroller overflow-x-auto">
+      <div class="flex w-max gap-4 sm:gap-6 px-3 py-3">
+        {[0, 1].map((loop) =>
+          items.map((item, i) => (
+            <a
+              href={item.href}
+              class="gallery-card w-44 sm:w-52 lg:w-60 shrink-0 rounded-2xl bg-white border border-gray-200/80 shadow-md hover:shadow-xl hover:border-jimaco-primary/40 transition-all duration-300 overflow-hidden flex flex-col"
+              aria-hidden={loop === 1 ? 'true' : undefined}
+              tabindex={loop === 1 ? -1 : undefined}
+            >
+              <div class="aspect-square bg-white p-4 flex items-center justify-center">
+                <img
+                  src={item.img}
+                  alt={loop === 0 ? item.alt : ''}
+                  class="max-w-full max-h-full object-contain"
+                  loading="lazy"
+                  decoding="async"
+                  draggable="false"
+                />
+              </div>
+              <p class="px-3 py-2.5 border-t border-gray-100 text-xs font-display font-bold text-jimaco-dark leading-snug line-clamp-2" title={item.alt}>
+                {item.alt}
+              </p>
+            </a>
+          ))
+        )}
       </div>
     </div>
-    <div class="absolute inset-y-0 right-4 sm:right-8 flex items-center pointer-events-none">
-      <div class="w-10 h-10 rounded-full bg-white/90 shadow-lg border border-gray-200 text-jimaco-orange flex items-center justify-center font-bold text-lg pointer-events-auto cursor-pointer hover:bg-white transition-all">
-        →
-      </div>
-    </div>
-
   </div>
 </section>
 
 <style>
-  @keyframes productsScroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  .products-gallery-track {
-    animation: productsScroll 32s linear infinite;
-    will-change: transform;
-  }
-
-  .products-gallery-track:hover {
-    animation-play-state: paused;
-  }
+  .gallery-scroller { scrollbar-width: none; -ms-overflow-style: none; }
+  .gallery-scroller::-webkit-scrollbar { display: none; }
 </style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.gallery-root').forEach((root) => {
+    const scroller = root.querySelector('.gallery-scroller') as HTMLElement;
+    const prev = root.querySelector('.gallery-prev') as HTMLElement;
+    const next = root.querySelector('.gallery-next') as HTMLElement;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let pos = 1;
+    let paused = false;
+    let resumeTimer: number | undefined;
+    const SPEED = 0.6; // px por frame
+
+    const half = () => scroller.scrollWidth / 2;
+    const wrap = () => {
+      const h = half();
+      if (scroller.scrollLeft >= h) scroller.scrollLeft -= h;
+      else if (scroller.scrollLeft <= 0) scroller.scrollLeft += h;
+    };
+    const pauseFor = (ms: number) => {
+      paused = true;
+      window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(() => { paused = false; pos = scroller.scrollLeft; }, ms);
+    };
+    const step = () => {
+      const card = scroller.querySelector('.gallery-card') as HTMLElement | null;
+      return card ? (card.offsetWidth + 24) * 3 : 600;
+    };
+
+    scroller.scrollLeft = 1;
+    prev.addEventListener('click', () => { pauseFor(4000); scroller.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', () => { pauseFor(4000); scroller.scrollBy({ left: step(), behavior: 'smooth' }); });
+    scroller.addEventListener('scroll', wrap, { passive: true });
+    root.addEventListener('mouseenter', () => { paused = true; });
+    root.addEventListener('mouseleave', () => { paused = false; pos = scroller.scrollLeft; });
+    root.addEventListener('touchstart', () => pauseFor(5000), { passive: true });
+    root.addEventListener('wheel', () => pauseFor(3000), { passive: true });
+
+    if (!reduce) {
+      const tick = () => {
+        if (!paused && !document.hidden) {
+          pos += SPEED;
+          scroller.scrollLeft = pos;
+          wrap();
+          pos = scroller.scrollLeft;
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+  });
+</script>

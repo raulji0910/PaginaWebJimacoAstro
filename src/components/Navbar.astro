@@ -1,9 +1,8 @@
 ---
+import { GROUPS } from '../data/products';
+import { groupSlug } from '../data/groups';
+
 const navLinks = [
-  {
-    name: 'Catálogo de productos',
-    href: '/catalogo'
-  },
   {
     name: 'Sobre Jimaco',
     href: '/sobre-jimaco',
@@ -14,12 +13,8 @@ const navLinks = [
   },
   {
     name: 'Suministros',
-    href: '/suministros',
-    dropdown: [
-      { name: 'Energías Renovables', href: '/suministros-de-energia-solar' },
-      { name: 'Obras y Construcción', href: '/suministros-para-construccion' },
-      { name: 'Protección Personal', href: '/suministros-para-proteccion-personal' }
-    ]
+    href: '/catalogo',
+    dropdown: GROUPS.map((g) => ({ name: g, href: `/catalogo#grupo=${groupSlug(g)}` }))
   },
   {
     name: 'Ponte en Contacto',
@@ -116,20 +111,33 @@ const navLinks = [
     </div>
   </div>
 
-  <!-- Mobile / Side Drawer Menu -->
-  <div id="mobile-menu" class="hidden bg-white border-b border-gray-200 px-6 pt-4 pb-8 space-y-3 shadow-xl">
+  <!-- Menú lateral: entra desde la derecha y ocupa solo una franja -->
+  <div id="menu-overlay" class="fixed inset-0 z-[70] bg-black/40 opacity-0 pointer-events-none transition-opacity duration-300" aria-hidden="true"></div>
+  <aside
+    id="mobile-menu"
+    class="fixed top-0 right-0 z-[80] h-full w-[300px] max-w-[85vw] bg-white shadow-2xl translate-x-full transition-transform duration-300 ease-out flex flex-col"
+    aria-label="Menú de navegación"
+    aria-hidden="true"
+    inert
+  >
+    <div class="flex items-center justify-between px-6 h-20 border-b border-gray-100 shrink-0">
+      <span class="font-display font-extrabold text-lg text-jimaco-dark uppercase tracking-wider">Menú</span>
+      <button id="menu-close-btn" type="button" class="w-10 h-10 rounded-lg bg-gray-100 hover:bg-jimaco-orange hover:text-white text-gray-700 flex items-center justify-center transition-colors" aria-label="Cerrar menú">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </div>
+    <div class="flex-1 overflow-y-auto px-6 pt-4 pb-8 space-y-3">
     <a href="/tienda" class="flex items-center justify-between py-2 font-display font-bold text-jimaco-primary hover:text-jimaco-primaryDark text-lg border-b border-gray-100 pb-3">
       <span>Tienda Virtual</span>
       <span class="bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full">Nuevo</span>
     </a>
-    <a href="/catalogo" class="block py-2 font-display font-bold text-gray-900 hover:text-jimaco-primary text-lg">Catálogo de productos</a>
     <a href="/sobre-jimaco" class="block py-2 font-display font-bold text-gray-900 hover:text-jimaco-primary text-lg">Sobre Jimaco</a>
     <a href="/politica-de-calidad" class="block pl-4 py-1 text-sm text-gray-600 hover:text-jimaco-primary">↳ Política de Calidad y Objetivos</a>
     <div class="pt-2"></div>
-    <a href="/suministros" class="block py-2 font-display font-bold text-gray-900 hover:text-jimaco-primary text-lg">Suministros</a>
-    <a href="/suministros-de-energia-solar" class="block pl-4 py-1 text-sm text-gray-600 hover:text-jimaco-primary">↳ Energías Renovables</a>
-    <a href="/suministros-para-construccion" class="block pl-4 py-1 text-sm text-gray-600 hover:text-jimaco-primary">↳ Obras y Construcción</a>
-    <a href="/suministros-para-proteccion-personal" class="block pl-4 py-1 text-sm text-gray-600 hover:text-jimaco-primary">↳ Protección Personal</a>
+    <a href="/catalogo" class="block py-2 font-display font-bold text-gray-900 hover:text-jimaco-primary text-lg">Suministros</a>
+    {GROUPS.map((g) => (
+      <a href={`/catalogo#grupo=${groupSlug(g)}`} class="block pl-4 py-1 text-sm text-gray-600 hover:text-jimaco-primary">↳ {g}</a>
+    ))}
     <div class="pt-2"></div>
     <a href="/ponte-en-contacto" class="block py-2 font-display font-bold text-gray-900 hover:text-jimaco-primary text-lg">Ponte en Contacto</a>
     <div class="pt-4">
@@ -142,25 +150,32 @@ const navLinks = [
         Cotizar por WhatsApp
       </a>
     </div>
-  </div>
+    </div>
+  </aside>
 </header>
 
 <script>
   function setupMobileMenu() {
     const btn = document.getElementById('mobile-menu-btn');
     const menu = document.getElementById('mobile-menu');
-    if (btn && menu) {
-      btn.onclick = (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('hidden');
-      };
-      document.addEventListener('click', (e) => {
-        const target = e.target;
-        if (target && !menu.contains(target) && !btn.contains(target)) {
-          menu.classList.add('hidden');
-        }
-      });
-    }
+    const overlay = document.getElementById('menu-overlay');
+    const closeBtn = document.getElementById('menu-close-btn');
+    if (!btn || !menu || !overlay) return;
+
+    const setOpen = (open: boolean) => {
+      menu.classList.toggle('translate-x-full', !open);
+      overlay.classList.toggle('opacity-0', !open);
+      overlay.classList.toggle('pointer-events-none', !open);
+      menu.setAttribute('aria-hidden', String(!open));
+      if (open) menu.removeAttribute('inert'); else menu.setAttribute('inert', '');
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+
+    btn.onclick = (e) => { e.stopPropagation(); setOpen(true); };
+    closeBtn?.addEventListener('click', () => setOpen(false));
+    overlay.addEventListener('click', () => setOpen(false));
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
   }
   setupMobileMenu();
 </script>
