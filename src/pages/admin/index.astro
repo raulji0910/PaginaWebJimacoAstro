@@ -15,7 +15,7 @@ const withPending = PRODUCTS.filter(p => p.pending.length > 0).length;
       <!-- Logo y Nombre del Módulo -->
       <div class="flex items-center gap-3">
         <a href="/catalogo" class="flex items-center gap-2" title="Volver al catálogo">
-          <img src="/images/logo-horizontal.png" alt="JIMACO" class="h-8 w-auto object-contain brightness-0 invert" />
+          <img src="/images/logos/logo-horizontal.png" alt="JIMACO" class="h-8 w-auto object-contain brightness-0 invert" />
         </a>
         <div class="h-6 w-px bg-white/20 hidden sm:block"></div>
         <div class="flex items-center gap-2">
@@ -353,7 +353,7 @@ const withPending = PRODUCTS.filter(p => p.pending.length > 0).length;
               type="text"
               id="form-prod-image"
               required
-              value="/images/Taladro.jpeg"
+              value="/images/productos/Taladro.jpeg"
               placeholder="/images/nombre-foto.jpg"
               class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-800 focus:outline-none focus:border-jimaco-primary font-mono"
             />
@@ -361,14 +361,14 @@ const withPending = PRODUCTS.filter(p => p.pending.length > 0).length;
               id="form-prod-image-preset"
               class="bg-gray-100 border border-gray-200 rounded-xl px-2 py-2 text-xs text-gray-700 font-medium cursor-pointer"
             >
-              <option value="/images/Taladro.jpeg">Foto: Taladro</option>
-              <option value="/images/varilla-cobre.jpg">Foto: Varilla Cobre</option>
-              <option value="/images/tuberia-galvanizada.jpg">Foto: Tubería</option>
-              <option value="/images/tubos-sanitario.jpg">Foto: Sanitarios</option>
-              <option value="/images/terminal-tipo-pala.jpg">Foto: Terminal Pala</option>
-              <option value="/images/terminal-tipo-pin.jpg">Foto: Terminal Pin</option>
-              <option value="/images/placa-subterranea.jpg">Foto: Placa Subterránea</option>
-              <option value="/images/pic-proteccion.jpg">Foto: Protección EPP</option>
+              <option value="/images/productos/Taladro.jpeg">Foto: Taladro</option>
+              <option value="/images/productos/varilla-cobre.jpg">Foto: Varilla Cobre</option>
+              <option value="/images/productos/tuberia-galvanizada.jpg">Foto: Tubería</option>
+              <option value="/images/productos/tubos-sanitario.jpg">Foto: Sanitarios</option>
+              <option value="/images/productos/terminal-tipo-pala.jpg">Foto: Terminal Pala</option>
+              <option value="/images/productos/terminal-tipo-pin.jpg">Foto: Terminal Pin</option>
+              <option value="/images/productos/placa-subterranea.jpg">Foto: Placa Subterránea</option>
+              <option value="/images/secciones/pic-proteccion.jpg">Foto: Protección EPP</option>
             </select>
           </div>
         </div>
@@ -553,7 +553,7 @@ const withPending = PRODUCTS.filter(p => p.pending.length > 0).length;
           const catId = catSelect.value;
           const catName = catSelect.options[catSelect.selectedIndex].text;
           const sku = document.getElementById('form-prod-sku').value.trim();
-          const image = document.getElementById('form-prod-image').value.trim() || '/images/Taladro.jpeg';
+          const image = document.getElementById('form-prod-image').value.trim() || '/images/productos/Taladro.jpeg';
 
           const tbody = document.getElementById('admin-products-table-body');
           if (tbody) {

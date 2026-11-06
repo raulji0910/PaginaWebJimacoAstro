@@ -1,16 +1,25 @@
 ---
 import { PRODUCTS as CATALOG } from '../data/products';
+import { PRODUCTS as STORE } from '../data/store';
 
+// Carrusel solar: fotos reales de obra + productos del catálogo y la tienda para energía solar
+const solarPhotos = [
+  { img: '/images/entregas/placas-tendido-parque-solar.jpg', title: 'Placas de protección en parque solar' },
+  { img: '/images/entregas/tramos-descarga-camion.jpg', title: 'Descarga de tubería PEAD HDPE' },
+  { img: '/images/entregas/placas-instalacion-zanja.jpg', title: 'Instalación de placas en zanja' },
+  { img: '/images/entregas/entrega-contenedor-2.jpg', title: 'Despacho de tubería en contenedor' }
+];
+const solarCatalogIds = [
+  'cable-fotovoltaico', 'cable-xlpe', 'cable-de-cobre-desnudo', 'terminal-de-ojo', 'terminal-cable-aislado',
+  'varilla-cooper', 'conector-varilla', 'caja-puesta-a-tierra-material-plastico', 'tuberia-conduit',
+  'accesorios-tuberia', 'reflector-solar', 'lampara-led-con-panel-solar', 'advertencia-fuente-de-potencia-fotovoltaica'
+];
 const solarProducts = [
-  { img: '/images/placa-proteccion-subterranea.jpg', title: 'Placa Protección Subterránea' },
-  { img: '/images/placa-subterranea-resistente.jpg', title: 'Placa Subterránea Resistente' },
-  { img: '/images/cables-fotovoltaicos-1.jpg', title: 'Cables Fotovoltaicos Certificados' },
-  { img: '/images/Conectores-MC4-1.jpg', title: 'Conectores MC4 & en Y' },
-  { img: '/images/terminal-tipo-pala.jpg', title: 'Terminales Tipo Pala' },
-  { img: '/images/terminal-tipo-ojal.jpg', title: 'Terminales Tipo Ojal' },
-  { img: '/images/varilla-cobre.jpg', title: 'Varilla de Cobre' },
-  { img: '/images/accesorios-PEAD.jpg', title: 'Accesorios PEAD' },
-  { img: '/images/cinta-plastica-peligro-alta-tension.jpg', title: 'Cinta Plástica Peligro' }
+  ...STORE.filter((p) => p.category === 'energia-solar').map((p) => ({ img: p.image, title: p.name, href: '/tienda' })),
+  ...solarCatalogIds
+    .map((id) => CATALOG.find((p) => p.id === id))
+    .filter(Boolean)
+    .map((p) => ({ img: p!.image, title: p!.name, href: `/catalogo#info=${p!.id}` }))
 ];
 
 // Carrusel de construcción: todos los productos del Catálogo de productos
@@ -161,14 +170,23 @@ const eppProducts = CATALOG
         </button>
 
         <div class="carousel-track track-neon flex gap-4 overflow-x-auto scroll-smooth pt-2 pb-4 w-full">
-          {solarProducts.map((p) => (
+          {solarPhotos.map((p) => (
             <div class="shrink-0 w-64 sm:w-72 h-80 sm:h-96 rounded-xl overflow-hidden shadow-md relative bg-white border border-gray-100 group/card">
-              <img src={p.img} alt={p.title} class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" />
+              <img src={p.img} alt={p.title} loading="lazy" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" draggable="false" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-              <p class="absolute bottom-4 left-4 right-4 text-white font-display font-bold text-sm leading-snug">
-                {p.title}
-              </p>
+              <p class="absolute bottom-4 left-4 right-4 text-white font-display font-bold text-sm leading-snug">{p.title}</p>
             </div>
+          ))}
+          {solarProducts.map((p) => (
+            <a
+              href={p.href}
+              class="shrink-0 w-56 sm:w-60 h-80 sm:h-96 rounded-xl overflow-hidden shadow-md relative bg-white border border-gray-100 group/card flex flex-col"
+            >
+              <div class="flex-1 min-h-0 flex items-center justify-center p-4 bg-white">
+                <img src={p.img} alt={p.title} loading="lazy" class="max-h-full w-auto object-contain group-hover/card:scale-105 transition-transform duration-500" draggable="false" />
+              </div>
+              <p class="px-4 py-3 border-t border-gray-100 text-[#0B1E02] font-display font-bold text-sm leading-snug line-clamp-2 group-hover/card:text-[#1C6521] transition-colors">{p.title}</p>
+            </a>
           ))}
         </div>
 

@@ -23,49 +23,49 @@ const products = [
     category: 'Placas',
     title: 'Placa subterránea de protección para canalización',
     desc: 'Incorpora placas subterráneas que refuerzan la seguridad eléctrica y estructural del proyecto, protegiendo los cables enterrados ante excavaciones y cargas pesadas.',
-    images: ['/images/placa-proteccion-subterranea.jpg', '/images/placa-subterranea-resistente.jpg']
+    images: ['/images/productos/placa-proteccion-subterranea.jpg', '/images/productos/placa-subterranea-resistente.jpg']
   },
   {
     num: '002',
     category: 'Tubería',
     title: 'Tubería PEAD corrugada, tubería conduit, tubería EMT, accesorios',
     desc: 'Optimiza la conducción y protección del cableado en instalaciones solares, garantizando máxima resistencia a la intemperie, compresión y rayos UV.',
-    images: ['/images/G-Conduit-2.jpg', '/images/G-Conduit-5.jpg']
+    images: ['/images/productos/G-Conduit-2.jpg', '/images/productos/G-Conduit-5.jpg']
   },
   {
     num: '003',
     category: 'Terminales',
     title: 'Terminales ojal, terminales pala, terminales pin',
     desc: 'Garantiza una fijación segura y de alta conductividad del cableado en tableros, cajas de combinación e inversores, evitando puntos calientes y fallas.',
-    images: ['/images/terminal-tipo-pin.jpg', '/images/terminal-tipo-pala.jpg', '/images/terminal-tipo-ojal.jpg']
+    images: ['/images/productos/terminal-tipo-pin.jpg', '/images/productos/terminal-tipo-pala.jpg', '/images/productos/terminal-tipo-ojal.jpg']
   },
   {
     num: '004',
     category: 'Cable',
     title: 'Cable fotovoltaico 4mm y 6mm, cable cobre THHN',
     desc: 'Impulsa la conexión y transmisión confiable de energía solar con conductores certificados bajo norma internacional, resistentes a radiación solar extrema y abrasión.',
-    images: ['/images/cables-fotovoltaicos-1.jpg', '/images/cables-fotovoltaicos-2.jpg']
+    images: ['/images/productos/cables-fotovoltaicos-1.jpg', '/images/productos/cables-fotovoltaicos-2.jpg']
   },
   {
     num: '005',
     category: 'Tierras',
     title: 'Varilla copperweld, conectores de puesta a tierra, abrazaderas',
     desc: 'Asegura la protección integral y disipación de sobretensiones de los sistemas fotovoltaicos mediante elementos de puesta a tierra certificados RETIE.',
-    images: ['/images/varilla-de-cobre.jpg', '/images/conectores-puesta-a-tierra.jpg']
+    images: ['/images/productos/varilla-de-cobre.jpg', '/images/productos/conectores-puesta-a-tierra.jpg']
   },
   {
     num: '006',
     category: 'Conectores',
     title: 'Conectores MC4, conectores rápidos y en Y',
     desc: 'Fortalece la unión hermética IP68 y confiable entre módulos solares y cadenas de inversores, optimizando el rendimiento y simplificando el montaje en campo.',
-    images: ['/images/Conectores-MC4-1.jpg', '/images/Conectores-rapidos.jpg']
+    images: ['/images/productos/Conectores-MC4-1.jpg', '/images/productos/Conectores-rapidos.jpg']
   },
   {
     num: '007',
     category: 'Señalización',
     title: 'Señales de advertencia y cintas de peligro',
     desc: 'Cumple rigurosamente con la normativa RETIE y eleva los estándares de seguridad industrial en todos los parques solares e instalaciones sobre cubierta.',
-    images: ['/images/cinta-plastica-peligro-alta-tension.jpg']
+    images: ['/images/productos/cinta-plastica-peligro-alta-tension.jpg']
   }
 ];
 ---
@@ -86,7 +86,7 @@ const products = [
         muted
         playsinline
         preload="none"
-        poster="/images/bg-hero-energia-solar.jpg"
+        poster="/images/portada/bg-hero-energia-solar.jpg"
         class="w-full h-full object-cover object-center lazy-bg-video"
         data-src="/videos/insumos-energia-solar.mp4"
       >
@@ -98,7 +98,7 @@ const products = [
       
       <!-- Green Contour Wave Overlay -->
       <img
-        src="/images/vertical-waves.png"
+        src="/images/portada/vertical-waves.png"
         alt=""
         class="absolute left-0 bottom-0 h-full w-auto opacity-35 pointer-events-none mix-blend-screen"
       />
@@ -151,7 +151,7 @@ const products = [
   <section class="py-16 sm:py-24 bg-[#0B1E02] text-white relative overflow-hidden">
     <!-- Contour curve overlay -->
     <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-screen">
-      <img src="/images/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
+      <img src="/images/portada/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative z-10 space-y-10 sm:space-y-12">
@@ -211,7 +211,7 @@ const products = [
       <div class="lg:col-span-6">
         <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-100 bg-black/5 group relative">
           <img
-            src="/images/background-parque-solar-4-1.jpg"
+            src="/images/portada/background-parque-solar-4-1.jpg"
             alt="Asesoría y Suministros Solares JIMACO"
             class="w-full h-[360px] sm:h-[480px] object-cover object-center group-hover:scale-103 transition-transform duration-700"
             loading="lazy"
@@ -336,13 +336,13 @@ const products = [
         <!-- Background Photo: Solar CTA -->
         <div class="absolute inset-0 z-0">
           <img
-            src="/images/bghero-cta-energiasolar.jpg"
+            src="/images/portada/bghero-cta-energiasolar.jpg"
             alt="Suministros de Energía Solar"
             class="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-700"
           />
           <div class="absolute inset-0 bg-gradient-to-r from-[#0B1E02]/95 via-[#0B1E02]/85 to-black/40"></div>
           <img
-            src="/images/vertical-waves.png"
+            src="/images/portada/vertical-waves.png"
             alt=""
             class="absolute left-0 bottom-0 h-full w-auto opacity-35 pointer-events-none mix-blend-screen"
           />
@@ -380,7 +380,7 @@ const products = [
     <!-- Panoramic Solar Farm Background Image -->
     <div class="absolute inset-0 z-0">
       <img
-        src="/images/bg-seccion-energia-solar.jpg"
+        src="/images/portada/bg-seccion-energia-solar.jpg"
         alt="Parque Solar JIMACO"
         class="w-full h-full object-cover object-center"
       />
@@ -391,7 +391,7 @@ const products = [
 
       <!-- Circular Green Contour Curves Overlay -->
       <img
-        src="/images/vertical-waves.png"
+        src="/images/portada/vertical-waves.png"
         alt=""
         class="absolute right-0 bottom-0 h-full w-auto opacity-40 pointer-events-none mix-blend-screen scale-110"
       />

@@ -1,44 +1,128 @@
 ---
+import { PRODUCTS as STORE } from '../data/store';
+import { PRODUCTS as CATALOG, GROUPS } from '../data/products';
+
+const formatCOP = (n: number) =>
+  new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
+const toPages = <T,>(items: T[]) => {
+  const filled = [...items];
+  while (filled.length % 3 !== 0) filled.push(items[filled.length % items.length]);
+  return Array.from({ length: filled.length / 3 }, (_, i) => filled.slice(i * 3, i * 3 + 3));
+};
+
+// Tienda Virtual: todos los productos, destacados primero
+const storeAll = [...STORE.filter((p) => p.isFeatured), ...STORE.filter((p) => !p.isFeatured)];
+const storePages = toPages(storeAll.map((p) => ({ name: p.name, image: p.image, sub: formatCOP(p.price), href: '/tienda' })));
+
+// Suministros (catálogo): todos los productos, intercalando las secciones para dar variedad
+const byGroup = GROUPS.map((g) => CATALOG.filter((p) => p.group === g));
+const catalogMixed: typeof CATALOG = [];
+for (let i = 0; byGroup.some((l) => i < l.length); i++) byGroup.forEach((l) => { if (i < l.length) catalogMixed.push(l[i]); });
+const catalogPages = toPages(catalogMixed.map((p) => ({ name: p.name, image: p.image, sub: p.categoryName, href: `/catalogo#info=${p.id}` })));
+
+// Sección "Dotación industrial y seguridad" del catálogo
+const dotacionPages = toPages(
+  CATALOG.filter((p) => p.group === 'Dotación industrial y seguridad')
+    .map((p) => ({ name: p.name, image: p.image, sub: p.categoryName, href: `/catalogo#info=${p.id}` }))
+);
+
+// Proyectos y granjas solares (con la posición de cada pin sobre la silueta de Colombia, en %)
+const projectList = [
+  { name: 'Solar Yuma', sub: 'Flandes, Tolima', image: '/images/mapa/map-project-yuma.jpg', x: 38.5, y: 50.5 },
+  { name: 'Solar Dulima', sub: 'Chicoral, Tolima', image: '/images/mapa/map-project-dulima.jpg', x: 40.5, y: 54 },
+  { name: 'Solar Baranoa', sub: 'Baranoa, Atlántico', image: '/images/mapa/map-project-baranoa.jpg', x: 41, y: 8.5 },
+  { name: 'Parque solar Cartagena', sub: 'Cartagena, Bolívar', image: '/images/mapa/map-project-cartagena.jpg', x: 35, y: 12 },
+  { name: 'Parque solar Valledupar', sub: 'Valledupar, Cesar', image: '/images/mapa/map-project-valledupar.jpg', x: 52, y: 15.5 }
+].map((p) => ({ ...p, href: '/#llegando-lejos' }));
+const projectPages = Array.from({ length: Math.ceil(projectList.length / 3) }, (_, i) => projectList.slice(i * 3, i * 3 + 3));
+
+const panels = {
+  store: {
+    badge: 'Tienda Virtual',
+    title: 'Visita nuestra tienda',
+    text: 'Compra en línea con precios claros e IVA incluido, y recibe asesoría por WhatsApp. ¡Aprovecha las referencias con stock disponible!',
+    button: 'Ir a la tienda',
+    href: '/tienda',
+    pages: storePages,
+    price: true
+  },
+  catalog: {
+    badge: 'Suministros',
+    title: 'Conoce nuestros suministros',
+    text: `Más de ${CATALOG.length} productos para energía, construcción e industria: cables, tuberías, herramientas, señalización y dotación. ¡Pide tu cotización!`,
+    button: 'Ver todos los suministros',
+    href: '/catalogo',
+    pages: catalogPages,
+    price: false
+  },
+  dotacion: {
+    badge: 'Dotación y seguridad',
+    title: 'Dotación industrial y seguridad',
+    text: 'Cascos, guantes, calzado, arneses y más equipos para cuidar a quienes hacen posible cada proyecto. ¡Pide tu cotización!',
+    button: 'Ver dotación y seguridad',
+    href: '/catalogo#grupo=dotacion-industrial-y-seguridad',
+    pages: dotacionPages,
+    price: false
+  },
+  projects: {
+    badge: 'Proyectos',
+    title: 'Llegando lejos',
+    text: 'Granjas solares y proyectos de energía en todo el país, con suministros de calidad y respaldo técnico.',
+    button: 'Ver mapa de proyectos',
+    href: '/#llegando-lejos',
+    pages: projectPages,
+    price: false,
+    map: true
+  }
+};
+
 const slides = [
   {
     id: 1,
-    titleDark: 'JIMACO estará en',
-    titleLight: 'ExpoSolar Colombia 2026',
+    titleDark: 'No esperes más a comprar',
+    titleLight: 'nuestras últimas importaciones',
     subtitle: 'El evento más importante de energías renovables en Colombia y la región. Conectamos soluciones, impulsamos el futuro.',
     dateSede: '28 - 30 OCTUBRE 2026 | BOGOTÁ, CORFERIAS',
-    link: '/suministros/energia-solar',
+    link: '/catalogo',
     linkText: 'Ver más',
-    image: '/images/NoticiaExposolar.png',
-    badge: 'Evento Internacional • Energías Renovables'
+    image: '/images/portada/NoticiaExposolar.png',
+    badge: 'Nuevas importaciones • Tienda Virtual',
+    panel: 'store',
+    video: '/videos/hero-jimaco.mp4',
+    poster: '/images/portada/hero-jimaco-poster.jpg'
   },
   {
     id: 2,
-    titleDark: 'Soluciones industriales',
-    titleLight: 'que impulsan el futuro',
+    titleDark: 'Conoce nuestros',
+    titleLight: 'suministros',
+    panel: 'catalog',
     subtitle: 'Conoce todos los insumos y suministros que tenemos para tu industria.',
-    link: '/suministros/energia-solar',
+    link: '/catalogo',
     linkText: 'Ver más',
-    image: '/images/bg-solar.jpg',
+    image: '/images/portada/bg-solar.jpg',
     badge: 'Energías Renovables & Infraestructura'
   },
   {
     id: 3,
-    titleDark: 'Estamos en el negocio de',
-    titleLight: 'la energía limpia',
+    titleDark: 'Trabajamos con',
+    titleLight: 'clientes',
+    countTo: 46,
+    panel: 'projects',
     subtitle: 'Encuentra suministros para la construcción de ese proyecto ambicioso.',
-    link: '/suministros/energia-solar',
+    link: '/catalogo',
     linkText: 'Ver más',
-    image: '/images/Portada-home-JIMACO.jpg',
+    image: '/images/portada/Portada-home-JIMACO.jpg?v=2',
     badge: 'Suministro Fotovoltaico Especializado'
   },
   {
     id: 4,
-    titleDark: 'Crecemos cuando juntos',
-    titleLight: 'cuidamos del talento humano',
+    titleDark: 'Cuida la seguridad',
+    titleLight: 'de tu personal',
+    panel: 'dotacion',
     subtitle: 'Conoce cómo cuidar a quienes hacen posible cada proyecto con equipos certificados.',
-    link: '/suministros/proteccion-personal',
+    link: '/catalogo',
     linkText: 'Ver más',
-    image: '/images/hero-worker.jpg',
+    image: '/images/portada/hero-worker.jpg',
     badge: 'Seguridad Industrial & EPP'
   }
 ];
@@ -53,16 +137,30 @@ const slides = [
     >
       <!-- Background Image -->
       <div class="absolute inset-0">
-        <img
-          src={slide.image}
-          alt={slide.titleDark}
-          class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-[7000ms] ease-out slide-bg-zoom"
-        />
+        {slide.video ? (
+          <video
+            class="hero-bg-video w-full h-full object-cover object-center"
+            src={slide.video}
+            poster={slide.poster}
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+          ></video>
+        ) : (
+          <img
+            src={slide.image}
+            alt={slide.titleDark}
+            class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-[7000ms] ease-out slide-bg-zoom"
+          />
+        )}
         <!-- Dark gradient & wave overlays -->
         <div class="absolute inset-0 bg-gradient-to-r from-[#0B1E02]/90 via-[#0B1E02]/50 to-transparent"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-[#0B1E02]/80 via-transparent to-black/20"></div>
         <!-- Decorative contour waves graphic if available -->
-        <img src="/images/vertical-waves.png" alt="" class="absolute left-0 bottom-0 h-full w-auto opacity-30 pointer-events-none mix-blend-screen" />
+        <img src="/images/portada/vertical-waves.png" alt="" class="absolute left-0 bottom-0 h-full w-auto opacity-30 pointer-events-none mix-blend-screen" />
       </div>
 
       <!-- Slide Content -->
@@ -76,31 +174,93 @@ const slides = [
               {slide.badge}
             </span>
             <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
-              <span class="text-[#88D67C] block drop-shadow-md slide-anim-item">{slide.titleDark}</span>
-              <span class="text-white block drop-shadow-lg slide-anim-item">{slide.titleLight}</span>
+              {slide.countTo ? (
+                <>
+                  <span class="text-[#88D67C] block drop-shadow-md slide-anim-item">{slide.titleDark}</span>
+                  <span class="text-white block drop-shadow-lg slide-anim-item">
+                    <span class="text-[#88D67C]">+ de</span>
+                    <span class="count-up inline-block tabular-nums text-[#88D67C]" data-to={slide.countTo} aria-label={String(slide.countTo)}>{slide.countTo}</span>
+                    {slide.titleLight}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span class="text-[#88D67C] block drop-shadow-md slide-anim-item">{slide.titleDark}</span>
+                  <span class="text-white block drop-shadow-lg slide-anim-item">{slide.titleLight}</span>
+                </>
+              )}
             </h1>
           </div>
 
-          <!-- Right: Text Description Box + Link -->
-          <div class="lg:col-span-4 bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-white/20 shadow-2xl space-y-4 max-w-md slide-anim-item">
-            <p class="text-white/90 text-sm sm:text-base leading-relaxed text-justify">
-              {slide.subtitle}
-            </p>
-            {slide.dateSede && (
-              <div class="text-xs sm:text-sm font-extrabold text-[#88D67C] tracking-wide uppercase pt-1">
-                {slide.dateSede}
+          <!-- Right: card de productos (Tienda o Suministros) o caja de texto -->
+          {slide.panel ? (
+            <div class="lg:col-span-4 bg-white/10 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-white/20 shadow-2xl space-y-4 max-w-md slide-anim-item">
+              <div class={panels[slide.panel].map ? 'flex gap-4 items-center' : ''}>
+                {panels[slide.panel].map && (
+                  <div class="relative w-[84px] shrink-0 hidden sm:block" aria-hidden="true">
+                    <img src="/images/mapa/map-colombia.png" alt="" class="w-full h-auto" style="filter: brightness(2.3) saturate(1.5); opacity: 0.9;" />
+                    {projectList.map((pr) => (
+                      <span class="absolute -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-jimaco-orange ring-2 ring-white/90 shadow-md animate-pulse" style={`left:${pr.x}%;top:${pr.y}%;`}></span>
+                    ))}
+                  </div>
+                )}
+                <div class="space-y-1.5">
+                  <span class="inline-block bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider font-display">{panels[slide.panel].badge}</span>
+                  <h2 class="font-display text-xl sm:text-2xl font-extrabold text-white leading-tight">{panels[slide.panel].title}</h2>
+                  <p class="text-white/85 text-xs sm:text-sm leading-relaxed">{panels[slide.panel].text}</p>
+                </div>
               </div>
-            )}
-            <div class="pt-2">
-              <a
-                href={slide.link}
-                class="inline-flex items-center gap-2 text-jimaco-orange hover:text-jimaco-orangeHover font-display font-extrabold uppercase text-sm tracking-wider group"
-              >
-                <span>{slide.linkText}</span>
-                <span class="group-hover:translate-x-1.5 transition-transform text-lg">→</span>
+              <div class="hero-store hidden sm:block">
+                <div class="relative">
+                  <button type="button" class="hero-store-prev absolute -left-3.5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white text-jimaco-primary shadow-lg border border-gray-200 flex items-center justify-center hover:bg-jimaco-primary hover:text-white transition-all cursor-pointer" aria-label="Productos anteriores">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                  </button>
+                  <button type="button" class="hero-store-next absolute -right-3.5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-jimaco-orange text-white shadow-lg flex items-center justify-center hover:bg-jimaco-orangeHover transition-all cursor-pointer" aria-label="Productos siguientes">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                  </button>
+                  <div class="hero-store-track flex overflow-x-hidden scroll-smooth snap-x snap-mandatory">
+                    {panels[slide.panel].pages.map((page) => (
+                      <div class="shrink-0 w-full grid grid-cols-3 gap-2 snap-start">
+                        {page.map((p) => (
+                          <a href={p.href} class="group bg-white rounded-xl p-2 flex flex-col gap-1 hover:shadow-xl transition-all">
+                            <div class={panels[slide.panel].map ? 'aspect-square overflow-hidden rounded-lg' : 'aspect-square flex items-center justify-center'}>
+                              <img src={p.image} alt={p.name} class={panels[slide.panel].map ? 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-500' : 'max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500'} loading="lazy" decoding="async" draggable="false" />
+                            </div>
+                            <p class="text-[10px] font-display font-bold text-jimaco-dark leading-snug line-clamp-2 min-h-[2.4em]">{p.name}</p>
+                            <p class={panels[slide.panel].price ? 'text-xs font-display font-extrabold text-jimaco-primary' : 'text-[10px] font-display font-bold text-jimaco-primary uppercase tracking-wide truncate'}>{p.sub}</p>
+                          </a>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div class="hero-store-dots flex justify-center items-center gap-1.5 pt-2.5" aria-hidden="true">
+                  {panels[slide.panel].pages.length <= 10
+                    ? panels[slide.panel].pages.map(() => <span class="hero-store-dot h-1.5 w-1.5 rounded-full bg-white/40 transition-all"></span>)
+                    : <span class="hero-store-count text-[11px] font-display font-bold text-white/80 tracking-wider"></span>}
+                </div>
+              </div>
+              <a href={panels[slide.panel].href} class="inline-flex items-center justify-center gap-2 w-full bg-jimaco-orange hover:bg-jimaco-orangeHover text-white font-display font-extrabold uppercase text-xs tracking-wider px-5 py-3 rounded-xl shadow-md transition-all">
+                <span>{panels[slide.panel].button}</span>
+                <span>→</span>
               </a>
             </div>
-          </div>
+          ) : (
+            <div class="lg:col-span-4 bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-white/20 shadow-2xl space-y-4 max-w-md slide-anim-item">
+              <p class="text-white/90 text-sm sm:text-base leading-relaxed text-justify">
+                {slide.subtitle}
+              </p>
+              <div class="pt-2">
+                <a
+                  href={slide.link}
+                  class="inline-flex items-center gap-2 text-jimaco-orange hover:text-jimaco-orangeHover font-display font-extrabold uppercase text-sm tracking-wider group"
+                >
+                  <span>{slide.linkText}</span>
+                  <span class="group-hover:translate-x-1.5 transition-transform text-lg">→</span>
+                </a>
+              </div>
+            </div>
+          )}
         </div>
 
         <!-- Bottom Banner Overlay inside Slider -->
@@ -157,6 +317,17 @@ const slides = [
 </section>
 
 <style>
+  .count-up { min-width: 2ch; text-align: center; }
+  .count-up.is-counting { text-shadow: 0 0 22px rgba(136, 214, 124, 0.85); }
+  .count-up.is-done { animation: countPop 0.7s cubic-bezier(0.2, 1.4, 0.4, 1); }
+  @keyframes countPop {
+    0% { transform: scale(1); text-shadow: 0 0 0 rgba(136, 214, 124, 0); }
+    45% { transform: scale(1.28); text-shadow: 0 0 34px rgba(136, 214, 124, 1); }
+    100% { transform: scale(1); text-shadow: 0 0 0 rgba(136, 214, 124, 0); }
+  }
+  .hero-store-track { scrollbar-width: none; }
+  .hero-store-track::-webkit-scrollbar { display: none; }
+  .hero-store-dot.is-active { width: 1.25rem; background: #FF6A1C; }
   .slide-bg-zoom {
     animation: zoomSlow 7s infinite alternate;
   }
@@ -180,6 +351,38 @@ const slides = [
     const total = slides.length;
     let timer;
 
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const countTimers = new WeakMap();
+
+    // Cuenta de 1 al valor final (rápido, con desaceleración) y un "pop" al terminar
+    function runCount(slideEl) {
+      slideEl.querySelectorAll('.count-up').forEach((el) => {
+        const to = Number(el.getAttribute('data-to')) || 0;
+        const prevId = countTimers.get(el);
+        if (prevId) cancelAnimationFrame(prevId);
+        el.classList.remove('is-done');
+        if (reduceMotion) { el.textContent = String(to); return; }
+        const duration = 1300;
+        const start = performance.now();
+        el.classList.add('is-counting');
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = String(Math.max(1, Math.round(eased * to)));
+          if (t < 1) {
+            countTimers.set(el, requestAnimationFrame(tick));
+          } else {
+            el.textContent = String(to);
+            el.classList.remove('is-counting');
+            void el.offsetWidth;
+            el.classList.add('is-done');
+          }
+        };
+        el.textContent = '1';
+        countTimers.set(el, requestAnimationFrame(tick));
+      });
+    }
+
     function showSlide(index) {
       slides.forEach((s, i) => {
         if (i === index) {
@@ -202,6 +405,7 @@ const slides = [
       });
 
       current = index;
+      runCount(slides[index]);
     }
 
     function nextSlide() {
@@ -232,8 +436,38 @@ const slides = [
     slider.onmouseleave = () => startAuto();
 
     startAuto();
+
+    // Respeta "reducir movimiento": el video queda detenido en su primer cuadro
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    slider.querySelectorAll('video').forEach((v) => { if (reduce) v.pause(); });
   }
 
+  function setupHeroStore() {
+    document.querySelectorAll('.hero-store').forEach((root) => {
+      const track = root.querySelector('.hero-store-track');
+      const dots = Array.from(root.querySelectorAll('.hero-store-dot'));
+      const count = root.querySelector('.hero-store-count');
+      const total = track ? track.children.length : 0;
+      if (!track || total < 2) return;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let page = 0;
+      let paused = false;
+      const show = (i) => {
+        page = (i + total) % total;
+        track.scrollTo({ left: page * track.clientWidth, behavior: 'smooth' });
+        dots.forEach((d, n) => d.classList.toggle('is-active', n === page));
+        if (count) count.textContent = (page + 1) + ' / ' + total;
+      };
+      root.addEventListener('mouseenter', () => { paused = true; });
+      root.addEventListener('mouseleave', () => { paused = false; });
+      root.querySelector('.hero-store-prev')?.addEventListener('click', () => show(page - 1));
+      root.querySelector('.hero-store-next')?.addEventListener('click', () => show(page + 1));
+      show(0);
+      if (!reduce) setInterval(() => { if (!paused && !document.hidden) show(page + 1); }, 3500);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupHeroStore);
   document.addEventListener('DOMContentLoaded', setupHeroSlider);
   document.addEventListener('astro:after-swap', setupHeroSlider);
 </script>

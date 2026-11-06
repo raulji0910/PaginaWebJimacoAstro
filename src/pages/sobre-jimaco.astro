@@ -6,17 +6,17 @@ const pillars = [
   {
     title: 'Compromiso con la calidad',
     desc: 'Cada producto y entrega cumple los más altos estándares del sector.',
-    icon: '/images/icono-calidad.jpg'
+    icon: '/images/iconos/icono-calidad.jpg'
   },
   {
     title: 'Un paso adelante en Innovación',
     desc: 'Buscamos nuevas soluciones para un mercado en evolución constante.',
-    icon: '/images/icono-expertise-innovacion.jpg'
+    icon: '/images/iconos/icono-expertise-innovacion.jpg'
   },
   {
     title: 'Excelencia en el servicio',
     desc: 'Atendemos con cercanía, conocimiento y responsabilidad.',
-    icon: '/images/icono-servicio.jpg'
+    icon: '/images/iconos/icono-servicio.jpg'
   }
 ];
 
@@ -53,7 +53,7 @@ const differentiators = [
         muted
         playsinline
         preload="none"
-        poster="/images/Oficina-Ferreteria-Industrial-Jimaco.jpg"
+        poster="/images/secciones/Oficina-Ferreteria-Industrial-Jimaco.jpg"
         class="w-full h-full object-cover object-center lazy-bg-video"
         data-src="/videos/Oficina-Ferreteria-Industrial-Jimaco.mp4"
       >
@@ -65,7 +65,7 @@ const differentiators = [
       
       <!-- Green Contour Wave Overlay -->
       <img
-        src="/images/vertical-waves.png"
+        src="/images/portada/vertical-waves.png"
         alt=""
         class="absolute left-0 bottom-0 h-full w-auto opacity-35 pointer-events-none mix-blend-screen"
       />
@@ -107,7 +107,12 @@ const differentiators = [
   </div>
 
   <!-- 3. GREEN SECTION: HISTORIA Y PROPÓSITO + 2.013 + FOTO Y TEXTO LADO A LADO -->
-  <section class="py-16 sm:py-28 bg-[#15591C] text-white relative overflow-hidden">
+  <section class="py-16 sm:py-28 bg-[#050A04] text-white relative overflow-hidden">
+    <!-- Fondo negro con verde JIMACO -->
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 70% 60% at 100% 0%, rgba(28,101,33,0.55) 0%, rgba(28,101,33,0) 70%), radial-gradient(ellipse 60% 55% at 0% 100%, rgba(21,89,28,0.45) 0%, rgba(21,89,28,0) 70%), linear-gradient(180deg, #050A04 0%, #0B1E02 55%, #07130A 100%);"></div>
+    <div class="absolute inset-0 opacity-[0.08] pointer-events-none mix-blend-screen">
+      <img src="/images/portada/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
+    </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative z-10 space-y-10 sm:space-y-16">
       
       <!-- Top Tag & Horizontal Divider Line -->
@@ -151,20 +156,12 @@ const differentiators = [
         <div class="lg:col-span-6 relative">
           <div class="rounded-2xl overflow-hidden shadow-2xl border-4 border-white/15 bg-black/20 group">
             <img
-              src="/images/pic-nosotros-feria-solar.jpg"
-              alt="Oficinas e Instalaciones JIMACO"
-              class="w-full h-[300px] sm:h-[460px] object-cover object-center group-hover:scale-103 transition-transform duration-700"
+              src="/images/secciones/pic-nosotros-feria-solar.jpg"
+              alt="Asesora de JIMACO en el stand de ExpoSolar Colombia"
+              class="w-full h-[300px] sm:h-[460px] object-cover object-[48%_center] group-hover:scale-103 transition-transform duration-700"
             />
           </div>
 
-          <!-- Overlaid Colombia Map Silhouette on top-left -->
-          <div class="absolute -top-4 -left-4 sm:-top-6 sm:-left-6 w-24 sm:w-36 pointer-events-none drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]">
-            <img
-              src="/images/map-colombia.png"
-              alt="Cobertura Colombia"
-              class="w-full h-auto object-contain opacity-95"
-            />
-          </div>
         </div>
 
         <!-- Right: Text Paragraphs with Balanced Justification -->
@@ -187,7 +184,7 @@ const differentiators = [
   <section class="py-16 sm:py-28 bg-[#F7F5F0] relative overflow-hidden border-b border-gray-200">
     <!-- Contour curves background overlay -->
     <div class="absolute inset-0 pointer-events-none opacity-30 mix-blend-multiply">
-      <img src="/images/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
+      <img src="/images/portada/vertical-waves.png" alt="" class="w-full h-full object-cover object-left" />
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-[40px] relative z-10">
