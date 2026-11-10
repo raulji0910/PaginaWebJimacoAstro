@@ -1,0 +1,121 @@
+---
+// Notificaciones de compras en vivo - esquina inferior derecha
+---
+
+<div id="notifications-container" class="fixed bottom-24 right-4 z-50 space-y-3 pointer-events-none"></div>
+
+<script>
+const firstNames = ['Carlos', 'María', 'Juan', 'Ana', 'Luis', 'Patricia', 'Diego', 'Sandra', 'Roberto', 'Claudia', 'Miguel', 'Gabriela', 'Fernando', 'Catalina', 'Andrés', 'Vanessa', 'Rafael', 'Daniela', 'Javier', 'Alejandra', 'Ramón', 'Sofía', 'Rodrigo', 'Valentina', 'Gonzalo', 'Marcela', 'Arturo', 'Irene', 'Héctor', 'Lorena'];
+const lastNames = ['García', 'Rodríguez', 'Martínez', 'López', 'Hernández', 'Pérez', 'González', 'Sánchez', 'Ramírez', 'Torres', 'Rivera', 'Flores', 'Morales', 'Gutiérrez', 'Vargas', 'Mendoza', 'Castillo', 'Díaz', 'Rojas', 'Navarro', 'Suárez', 'Ortiz', 'Campos', 'Ruiz', 'Medina', 'Guerrero', 'Aguilar', 'Domínguez', 'Reyes', 'Velázquez'];
+const products = ['Cable cobre aislado THHN', 'Cable fotovoltaico', 'Tubería Conduit', 'Tubería EMT', 'Varilla cooper', 'Soldadura exotérmica', 'Cajas metálicas', 'Caja de circuitos', 'Riel chanel', 'Telurómetro', 'Pinza voltiamperimétrica', 'Bombillo LED', 'Taladro', 'Llave de impacto', 'Martillo percutor', 'Cascos de seguridad', 'Guantes anticorte', 'Gafas de seguridad', 'Botas de seguridad', 'Arnés de seguridad', 'Generador Hyundai', 'Bomba de agua sumergible', 'Motobomba de succión', 'Herramientas manuales', 'Cinta aislante', 'Amarres plásticos', 'Funda termoencogible', 'Destornillador', 'Pinza de punta', 'Alicate electricista'];
+
+let availableNames: string[] = [];
+
+function generateAndShuffleNames() {
+  const names: string[] = [];
+  for (let first of firstNames) {
+    for (let last of lastNames) {
+      names.push(`${first} ${last}`);
+    }
+  }
+  for (let i = names.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [names[i], names[j]] = [names[j], names[i]];
+  }
+  return names;
+}
+
+function getRandomName(): string {
+  if (availableNames.length === 0) {
+    availableNames = generateAndShuffleNames();
+  }
+  return availableNames.pop() || 'Cliente JIMACO';
+}
+
+function getRandomProduct() {
+  return products[Math.floor(Math.random() * products.length)];
+}
+
+function createNotification(name: string, product: string) {
+  const container = document.getElementById('notifications-container');
+  if (!container) return;
+  const notification = document.createElement('div');
+  notification.className = 'animate-slideInRight bg-white border-l-4 border-jimaco-green rounded-lg shadow-xl p-3 sm:p-4 max-w-xs pointer-events-auto';
+  notification.style.borderLeftColor = '#1C6521';
+
+  notification.innerHTML = `
+    <div class="flex items-start gap-3">
+      <div class="flex-shrink-0 text-jimaco-green">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs sm:text-sm font-semibold text-gray-900">${name}</p>
+        <p class="text-xs text-gray-600">Compró <strong>${product}</strong></p>
+      </div>
+    </div>
+  `;
+
+  container.appendChild(notification);
+
+  setTimeout(() => {
+    notification.style.opacity = '0';
+    notification.style.transform = 'translateX(400px)';
+    notification.style.transition = 'all 0.4s ease-out';
+    setTimeout(() => notification.remove(), 400);
+  }, 4000);
+}
+
+function showRandomNotification() {
+  const probability = Math.random();
+
+  if (probability < 0.35) {
+    // 35% de probabilidad: mostrar 2 o 3 notificaciones
+    const count = Math.random() < 0.5 ? 2 : 3;
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        const name = getRandomName();
+        const product = getRandomProduct();
+        createNotification(name, product);
+      }, i * 250); // Delay de 250ms entre notificaciones
+    }
+  } else {
+    // 65% de probabilidad: mostrar 1 notificación
+    const name = getRandomName();
+    const product = getRandomProduct();
+    createNotification(name, product);
+  }
+}
+
+function scheduleNextNotification() {
+  const randomDelay = Math.floor(Math.random() * (60000 - 10000 + 1)) + 10000; // Entre 10 a 60 segundos
+  setTimeout(() => {
+    showRandomNotification();
+    scheduleNextNotification();
+  }, randomDelay);
+}
+
+// Primera notificación a los 2 segundos
+setTimeout(() => {
+  showRandomNotification();
+  scheduleNextNotification();
+}, 2000);
+</script>
+
+<style>
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(400px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+</style>

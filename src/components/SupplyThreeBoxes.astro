@@ -7,66 +7,88 @@ const boxes = [
     image: '/images/fichas/placa-de-proteccion.jpg',
     link: '/placas-de-proteccion',
     desc: 'Protege y señaliza canalizaciones eléctricas subterráneas.',
+    icon: 'shield',
     specs: [
       ['Material', 'PE-HD (polietileno de alta densidad)'],
       ['Medidas', '1000 × 250 mm'],
       ['Unión', 'Macho-hembra'],
       ['Seguridad', 'Libre de plomo y estable a UV']
-    ]
+    ],
+    highlights: ['PE-HD de alta densidad', 'Estable a UV', 'Libre de plomo', 'Unión macho-hembra']
   },
   {
     title: 'Tubería PEAD (HDPE)',
     image: '/images/fichas/tuberia-pead-hdpe-roja.jpg',
     link: '/tuberia-pead-hdpe-tramos',
     desc: 'Protección y canalización de cables eléctricos y de telecomunicaciones.',
+    icon: 'pipe',
     specs: [
       ['Material', 'PEAD (polietileno de alta densidad)'],
       ['Construcción', 'Doble pared'],
       ['Resistencia a la tensión', '≥ 10 MPa'],
       ['Presentación', 'Tramos de ½" a 8"']
-    ]
+    ],
+    highlights: ['Doble pared', 'Resistencia ≥ 10 MPa', 'Tramos ½" a 8"', 'PEAD de alta densidad']
   },
   {
     title: 'Tubería PEAD negra',
     image: '/images/fichas/tuberia-pead-negra.jpg',
     link: '/tuberia-pead-hdpe',
     desc: 'Protección y canalización de cables eléctricos y de telecomunicaciones.',
+    icon: 'sun',
     specs: [
       ['Material', 'PEAD (polietileno de alta densidad)'],
       ['Construcción', 'Doble pared'],
       ['Protección UV', 'Estabilizada para exposición exterior'],
       ['Resistencia a la tensión', '≥ 10 MPa']
-    ]
+    ],
+    highlights: ['Protección UV', 'Doble pared', 'Exposición exterior', 'Resistencia ≥ 10 MPa']
   },
   {
     title: 'Caja de inspección',
     image: '/images/catalogo/caja-de-inspeccion-polipropileno.jpg',
     link: '/caja-de-inspeccion',
     desc: 'Protege y da acceso a instalaciones eléctricas y de telecomunicaciones.',
+    icon: 'door',
     specs: [
       ['Material', 'Polipropileno de alta densidad (PP)'],
       ['Resistencia mecánica', 'Hasta 15 toneladas'],
       ['Temperatura', '-40 °C a +80 °C'],
       ['Seguridad', 'Resistente a humedad y fuego']
-    ]
+    ],
+    highlights: ['Hasta 15 toneladas', 'Polipropileno de alta densidad', '-40°C a +80°C', 'Resistente a humedad y fuego']
   },
   {
     title: 'Varilla Copperweld',
     image: '/images/catalogo/varillas-copperweld.jpg',
     link: '/varilla-copperweld',
     desc: 'Electrodo de puesta a tierra para disipar fallas y descargas atmosféricas.',
+    icon: 'bolt',
     specs: [
       ['Núcleo', 'Acero de alta resistencia'],
       ['Recubrimiento', 'Cobre adherido molecularmente'],
       ['Corrosión', 'Resistente en contacto con el suelo'],
       ['Instalación', 'Vertical, por hincado']
-    ]
+    ],
+    highlights: ['En cobre', 'Acero de alta resistencia', 'Resistente a corrosión', 'Puesta a tierra']
   }
 ];
+
+function getIcon(type: string) {
+  const icons: Record<string, string> = {
+    shield: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401h-4.753c-.832 0-1.243.885-.556 1.40l3.837 2.788-1.47 4.432c-.321.772.128 1.693.91 1.693.504 0 .988-.294 1.207-.705l3.828-5.99 3.83 5.99c.22.41.703.705 1.207.705.78 0 1.23-.921.909-1.693l-1.47-4.432 3.837-2.788c.687-.515.276-1.40-.556-1.40H13.572l-1.83-4.401z" clip-rule="evenodd"/></svg>',
+    pipe: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M4 12c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2s2-.9 2-2v-4c0-1.1-.9-2-2-2zm0-2c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm12 0c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2s2-.9 2-2v-4c0-1.1-.9-2-2-2zm-6-2c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2s2-.9 2-2v-4c0-1.1-.9-2-2-2z"/></svg>',
+    sun: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.707a1 1 0 00-1.414-1.414l-3 3a1 1 0 101.414 1.414l3-3zM10 5a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>',
+    door: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2H3a1 1 0 110-2V4zm2 0v12h8V4H6zm4 5a1 1 0 11-2 0 1 1 0 012 0z"/></svg>',
+    bolt: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0110 2v5H6a1 1 0 00-.82 1.573l6.92 8.4a1 1 0 001.82-.126V11h4a1 1 0 00.82-1.573l-6.92-8.4z" clip-rule="evenodd"/></svg>'
+  };
+  return icons[type] || icons.shield;
+}
 ---
 
-<section class="py-12 bg-white">
+<section class="py-12 bg-white" data-scroll-animate="up">
   <div class="max-w-7xl mx-auto px-4 sm:px-[40px]">
+    <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-jimaco-dark mb-8" data-scroll-animate="up">Importaciones</h2>
     <div class="boxes-root relative z-30 -mt-[30px]">
       <button type="button" class="boxes-prev hidden absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-white text-jimaco-primary shadow-lg border border-gray-200 items-center justify-center hover:bg-jimaco-primary hover:text-white transition-all cursor-pointer" aria-label="Fichas anteriores">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
@@ -79,6 +101,7 @@ const boxes = [
         <a
           href={b.link}
           class="group relative shrink-0 snap-start w-full md:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.84rem)] xl:w-[calc(25%-0.9375rem)] min-h-[26rem] rounded-2xl overflow-hidden shadow-2xl border border-white/20 flex flex-col p-6 bg-gradient-to-br from-[#0B1E02] via-[#0F3A14] to-[#1C6521] transform hover:-translate-y-2 transition-all duration-500"
+          data-scroll-animate="up"
         >
           <!-- Imagen del producto -->
           <div class="flex justify-end">
@@ -94,7 +117,10 @@ const boxes = [
 
           <!-- Ficha técnica -->
           <div class="relative z-10 mt-auto space-y-3 text-white">
-            <span class="inline-block bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider font-display">
+            <span class="inline-flex items-center gap-1.5 bg-jimaco-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider font-display">
+              <div class="w-4 h-4 flex items-center justify-center">
+                <Fragment set:html={getIcon(b.icon)} />
+              </div>
               Ficha técnica
             </span>
             <h3 class="font-display text-2xl font-bold leading-tight group-hover:text-jimaco-accent transition-colors">
@@ -103,14 +129,13 @@ const boxes = [
             <p class="text-xs sm:text-sm text-white/80 leading-relaxed">
               {b.desc}
             </p>
-            <dl class="divide-y divide-white/15 border-y border-white/15 text-xs">
-              {b.specs.map(([k, v]) => (
-                <div class="flex justify-between gap-3 py-1.5">
-                  <dt class="text-white/60">{k}</dt>
-                  <dd class="font-semibold text-right text-white">{v}</dd>
+            <div class="grid grid-cols-2 gap-2 pt-2">
+              {(b as any).highlights.map((h: string) => (
+                <div class="bg-white/10 rounded-lg p-2.5 border border-white/15 hover:bg-white/15 transition-colors min-h-[50px] flex items-center justify-center">
+                  <div class="text-xs font-semibold text-white text-center line-clamp-3">{h}</div>
                 </div>
               ))}
-            </dl>
+            </div>
             <div class="pt-1 flex items-center gap-2 text-jimaco-orange font-display font-bold uppercase text-xs tracking-wider">
               <span>Ver más</span>
               <span class="group-hover:translate-x-1.5 transition-transform text-sm">→</span>

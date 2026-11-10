@@ -5,7 +5,7 @@ import { PRODUCTS } from '../data/store';
 const galleryItems = PRODUCTS.map((p) => ({ img: p.image, alt: p.name }));
 ---
 
-<section class="w-full py-12 sm:py-16 bg-white overflow-hidden border-b border-gray-100">
+<section class="w-full py-12 sm:py-16 bg-white overflow-hidden border-b border-gray-100" data-scroll-animate="up">
   <div class="relative w-full">
     <!-- Continuous Infinite Scrolling Track -->
     <div class="gallery-marquee-track flex w-max gap-4 sm:gap-6 items-center select-none">
